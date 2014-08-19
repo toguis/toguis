@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Toguis</string>
+    <string name="action_settings">Configuración</string>
+    <string name="title_activity_login">Ingresar</string>
+    <string name="login_txt_email_hint">email@dominio.com</string>
+    <string name="login_txt_password_hint">Contraseña</string>
+    <string name="login_lbl_email_text">Email</string>
+    <string name="login_lbl_password_text">Contraseña</string>
+    <string name="login_btn_signin_text">Ingresar</string>
+    <string name="login_btn_forgot_password_text">Olvidé mi contraseña</string>
+    <string name="create_account_txt_email_hint">email@dominio.com</string>
+    <string name="create_account_lbl_email_text">Email</string>
+    <string name="create_account_txt_password_hint">Mínimo 6 caracteres</string>
+    <string name="create_account_lbl_password_text">Contraseña</string>
+    <string name="create_account_txt_names_hint">Nombre y apellido</string>
+    <string name="create_account_lbl_names_text">Nombres</string>
+    <string name="create_account_txt_repeat_password_hint">repetir</string>
+    <string name="create_account_lbl_repeat_password_text">Repetir</string>
+    <string name="create_account_btn_signin_text">Ingresar</string>
+    <string name="title_activity_create_account">Crear cuenta</string>
+    <string name="main_img_splash_description">splash image</string>
+    <string name="title_activity_config_login">Bienvenido</string>
+    <string name="config_login_img_title_description">title</string>
+    <string name="config_login_btn_google_login_text">Ingresar con Google</string>
+    <string name="config_login_btn_facebook_Login_text">Ingresar con Facebook</string>
+    <string name="config_login_btn_create_account_text">Crear una cuenta</string>
+    <string name="config_login_btn_signin_text">Ingresar</string>
+    <string name="general_login_successfully_title">Bienvenido</string>
+    <string name="general_login_successfully_message">Bienvenido a Toguis</string>
+    <string name="general_login_error_title">No se puede autenticar</string>
+    <string name="general_login_error_message">Tu nombre de usuario o contraseña son incorrectos</string>
+    <string name="general_login_error_message2">Ha ocurrido un error al autenticar</string>
+    <string name="general_login_button_text">Cerrar</string>
+    <string name="general_email_invalid_message">Debes ingresar un Email</string>
+    <string name="general_email_invalid_message2">Email no válido</string>
+    <string name="general_email_invalid_message3">Este nombre de usuario ya existe</string>
+    <string name="general_password_invalid_message">Debes ingresar una contraseña</string>
+    <string name="general_password_invalid_message2">Mínimo 6 caracteres para la contraseña</string>
+    <string name="general_password_invalid_message3">Las contraseñas no coinciden</string>
+    <string name="general_names_invalid_message">Debes ingresar tu nombre y apellido </string>
+    <string name="general_message_warning">Advertencia</string>
+    <string name="general_message_notice">Aviso</string>
+    <string name="general_message_error">Error</string>
+    <string name="general_save_db_error">Ha ocurrido un error al almacenar la información</string>
+    <string name="title_activity_forgot_password">Recuperar contraseña</string>
+    <string name="forgot_password_lbl_message_text">Por favor escribe el email que usas para ingresar</string>
+    <string name="forgot_password_txt_verify_email_hint">email@domain.com</string>
+    <string name="forgot_password_btn_send_email_text">Enviar</string>
+    <string name="app_id">735670486470675</string>
+    <string name="title_activity_content">ContentActivity</string>
+    <string name="hello_world">Hello world!</string>
+
+</resources>

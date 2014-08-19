@@ -1,0 +1,72 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="co.edu.uniajc.vtf.LoginActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <EditText
+        android:id="@+id/txtEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/lblPassword"
+        android:ems="10"
+        android:hint="@string/login_txt_email_hint"
+        android:inputType="textEmailAddress" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/lblEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/txtEmail"
+        android:layout_alignBottom="@+id/txtEmail"
+        android:layout_alignParentLeft="true"
+        android:text="@string/login_lbl_email_text" />
+
+    <EditText
+        android:id="@+id/txtPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/lblPassword"
+        android:layout_alignBottom="@+id/lblPassword"
+        android:layout_alignLeft="@+id/txtEmail"
+        android:layout_alignParentRight="true"
+        android:ems="10"
+        android:hint="@string/login_txt_password_hint"
+        android:inputType="textPassword" />
+
+    <TextView
+        android:id="@+id/lblPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/txtEmail"
+        android:layout_marginTop="18dp"
+        android:text="@string/login_lbl_password_text" />
+
+    <Button
+        android:id="@+id/btnSignIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/txtPassword"
+        android:layout_marginTop="14dp"
+        android:onClick="onClick_Login"
+        android:text="@string/login_btn_signin_text" />
+
+    <Button
+        android:id="@+id/btnForgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/btnSignIn"
+        android:onClick="onClick_NavigateForgotPassword"
+        android:text="@string/login_btn_forgot_password_text" />
+
+</RelativeLayout>
