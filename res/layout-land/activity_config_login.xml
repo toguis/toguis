@@ -27,6 +27,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/imageView1"
         android:layout_marginTop="46dp"
         android:baselineAligned="false" >
@@ -37,19 +39,21 @@
             android:layout_height="wrap_content"
             android:layout_weight="50"
             android:orientation="vertical" >
+            
         	<com.facebook.widget.LoginButton
                 android:id="@+id/btnFacebookLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 facebook:confirm_logout="false"
                 facebook:fetch_user_info="true"
-                android:text="@string/config_login_btn_facebook_Login_text"
-                />
-            <Button
-                android:id="@+id/btnGoogleLogin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/config_login_btn_google_login_text" />
+                android:text="@string/config_login_btn_facebook_Login_text"/>
+        	
+			<com.google.android.gms.common.SignInButton
+			    android:id="@+id/btnGoogleLogin"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:onClick="onClick_GoogleLogin"
+			    android:text="@string/config_login_btn_google_login_text" />
 
         </LinearLayout>
 

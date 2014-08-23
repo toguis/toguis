@@ -4,11 +4,14 @@ import java.util.Arrays;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.IntentSender.SendIntentException;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import co.edu.uniajc.vtf.R;
 import co.edu.uniajc.vtf.security.controller.ConfigLoginController;
 import co.edu.uniajc.vtf.security.interfaces.IConfigLogin;
+import co.edu.uniajc.vtf.utils.ResourcesManager;
 import co.edu.uniajc.vtf.utils.SessionManager;
 
 import com.facebook.Session;
@@ -16,48 +19,52 @@ import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.plus.Plus;
+import com.google.android.gms.plus.model.people.Person;
 
-public class ConfigLoginActivity extends Activity implements IConfigLogin {
+public class ConfigLoginActivity extends Activity implements IConfigLogin,
+															 LoginButton.UserInfoChangedCallback,
+															 GoogleApiClient.ConnectionCallbacks, 
+															 GoogleApiClient.OnConnectionFailedListener, 
+															 View.OnClickListener,
+															 Session.StatusCallback{
 	private ConfigLoginController coController;
-	private GraphUser coUser;
-	private UiLifecycleHelper coUiHelper;
-    private Session.StatusCallback coCallback = new Session.StatusCallback() {
-        @Override
-        public void call(Session session, SessionState state, Exception exception) {
-            onFacebookSessionStateChange(session, state, exception);
-        }
-    };
+	private int ciSignInType = -1;
+	
+	//Facebook Utilities
+	private GraphUser coFacebookUser;
+	private UiLifecycleHelper coFacebookSignInHelper;
+	private Session.StatusCallback coCallback = this;
+	 
+	//Google+ Utilities
+	private static final int RC_SIGN_IN = 0;
+	private Person coGoogleUser;
+    private GoogleApiClient coGoogleSignInHelper;
+    private boolean cboIntentInProgress;
+    private ConnectionResult coConnectionResult;
+    private boolean cboSignInClicked;
     
+   
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_config_login);
-		this.coController = new ConfigLoginController(this);
+		this.coController = new ConfigLoginController(this);	
+		this.configureGoogleSession();
 		this.configureFacebookSession(savedInstanceState);
 	}
-
+	
+	
+	//Facebook configuration
 	private void configureFacebookSession(Bundle savedInstanceState){
-        coUiHelper = new UiLifecycleHelper(this, coCallback);
-        coUiHelper.onCreate(savedInstanceState);
+        coFacebookSignInHelper = new UiLifecycleHelper(this, coCallback);
+        coFacebookSignInHelper.onCreate(savedInstanceState);
 		LoginButton loLoginButton =  (LoginButton) findViewById(R.id.btnFacebookLogin);
 		loLoginButton.setReadPermissions(Arrays.asList("public_profile","email"));
-		loLoginButton.setUserInfoChangedCallback(
-			new LoginButton.UserInfoChangedCallback(){
-				@Override
-				public void onUserInfoFetched(GraphUser user) {
-					if(user != null){
-						ConfigLoginActivity.this.coUser = user;	
-						ConfigLoginActivity.this.coController.createSession(SessionManager.FACEBOOK_SESSION);
-						ConfigLoginActivity.this.coController.navigateContent();
-						try {
-							ConfigLoginActivity.this.finish();;
-						} catch (Throwable e) {
-
-						}
-					}										
-				}				
-			}
-		);       
+		loLoginButton.setUserInfoChangedCallback(this);       
 	}
 	
 	protected void onFacebookSessionStateChange(Session session, SessionState state,Exception exception) {
@@ -67,60 +74,205 @@ public class ConfigLoginActivity extends Activity implements IConfigLogin {
 	    	
 	    }	
 	}
+	
+	@Override
+	public void onUserInfoFetched(GraphUser user) {
+		if(user != null){
+			ConfigLoginActivity.this.coFacebookUser = user;	
+			this.ciSignInType = SessionManager.FACEBOOK_SESSION;
+			ConfigLoginActivity.this.coController.createSession(SessionManager.FACEBOOK_SESSION);
+			ConfigLoginActivity.this.coController.navigateContent();
+			try {
+				ConfigLoginActivity.this.finish();;
+			} catch (Throwable e) {
 
+			}
+		}	
+		
+	}
+	
+	@Override
+	public void call(Session session, SessionState state, Exception exception) {
+		onFacebookSessionStateChange(session, state, exception);
+	}	
+	
+	
+	//Google+ configuration
+	private void configureGoogleSession(){
+		this.coGoogleSignInHelper = new GoogleApiClient.Builder(this)
+										.addConnectionCallbacks(this)
+										.addOnConnectionFailedListener(this)		
+										.addApi(Plus.API)
+										.addScope(Plus.SCOPE_PLUS_PROFILE)
+										.build();
+		this.findViewById(R.id.btnGoogleLogin).setOnClickListener(this);
+		this.setGooglePlusButtonText((SignInButton)findViewById(R.id.btnGoogleLogin), com.google.android.gms.R.string.common_signin_button_text_long);		
+	}
+	
+	public void onClick_GoogleLogin(View view){
+		if (view.getId() == R.id.btnGoogleLogin  && !this.coGoogleSignInHelper.isConnecting()) {
+			cboSignInClicked = true;
+			resolveSignInError();
+		}	
+	}
+	
+
+	@Override
+	public void onConnectionFailed(ConnectionResult result) {
+		if (!cboIntentInProgress) {
+			coConnectionResult = result;		
+			if (cboSignInClicked) {
+				resolveSignInError();
+			}
+		}		
+	}
+
+	@Override
+	public void onConnected(Bundle connectionHint) {
+		if (Plus.PeopleApi.getCurrentPerson(this.coGoogleSignInHelper) != null) {
+			this.ciSignInType = SessionManager.GOOGLE_SESSION;
+			this.coGoogleUser = Plus.PeopleApi.getCurrentPerson(this.coGoogleSignInHelper);		
+			this.coController.createSession(SessionManager.GOOGLE_SESSION);
+			this.coController.navigateContent();						
+		}
+	
+	}
+
+	@Override
+	public void onConnectionSuspended(int cause) {
+		this.coGoogleSignInHelper.connect();
+		
+	}
+
+	private void resolveSignInError() {
+		if (coConnectionResult.hasResolution()) {
+			try {
+				cboIntentInProgress = true;
+				startIntentSenderForResult(coConnectionResult.getResolution().getIntentSender(), RC_SIGN_IN, null, 0, 0, 0);
+			} 
+			catch (SendIntentException e) {
+				cboIntentInProgress = false;
+				this.coGoogleSignInHelper.connect();
+			}
+		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		this.onClick_GoogleLogin(v);	
+	}
+	
+	protected void setGooglePlusButtonText(SignInButton pSignInButton, int pButtonText) {
+	    // Find the TextView that is inside of the SignInButton and set its text
+		ResourcesManager loResource = new ResourcesManager(this);	
+		
+	    for (int i = 0; i < pSignInButton.getChildCount(); i++) {
+	        View v = pSignInButton.getChildAt(i);
+
+	        if (v instanceof TextView) {
+	            TextView loTextView = (TextView) v;
+	            loTextView.setText(loResource.getStringResource(pButtonText));
+	            return;
+	        }
+	    }
+	}
+	
+	
 	public void onClick_GoLogin(View view){
-		this.coController.openLoginView();
+		this.coController.navigateLoginView();
 	}
 	
 	public void onClick_NavigateCreateAccount(View view){
 		this.coController.navigateCreateAccount();;
 	}
 	
+	
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		this.coGoogleSignInHelper.connect();
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+	    if (this.coGoogleSignInHelper.isConnected()) {
+	    	this.coGoogleSignInHelper.disconnect();
+	     }
+	}	
+	
 	@Override
 	public void onResume() {
 	    super.onResume();
-	    coUiHelper.onResume();
+	    this.coFacebookSignInHelper.onResume();
 	}
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 	    super.onActivityResult(requestCode, resultCode, data);
-	    coUiHelper.onActivityResult(requestCode, resultCode, data);
+	    this.coFacebookSignInHelper.onActivityResult(requestCode, resultCode, data);
+	    
+		if (requestCode == RC_SIGN_IN) {
+		    if (resultCode != RESULT_OK) {
+		        cboSignInClicked = false;
+		    }			
+			cboIntentInProgress = false;
+			if (!this.coGoogleSignInHelper.isConnecting()) {
+				this.coGoogleSignInHelper.connect();
+			}
+		}	    
 	}
 
 	@Override
 	public void onPause() {
 	    super.onPause();
-	    coUiHelper.onPause();
+	    this.coFacebookSignInHelper.onPause();
 	}
 
 	@Override
 	public void onDestroy() {
 	    super.onDestroy();
-	    coUiHelper.onDestroy();
+	    this.coFacebookSignInHelper.onDestroy();
 	}
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 	    super.onSaveInstanceState(outState);
-	    coUiHelper.onSaveInstanceState(outState);
+	    this.coFacebookSignInHelper.onSaveInstanceState(outState);
 	}
 	
 	@Override
 	public String getEmail(){
-		String lsResult = "";
-		if(Session.getActiveSession().isOpened() && this.coUser != null){		
-			lsResult = this.coUser.asMap().get("email").toString();
+		String lsResult = "";			
+		if(this.ciSignInType == SessionManager.FACEBOOK_SESSION){
+			if(Session.getActiveSession().isOpened() && this.coFacebookUser != null){		
+				lsResult = this.coFacebookUser.asMap().get("email").toString();
+			}					
 		}
+		else if(this.ciSignInType == SessionManager.GOOGLE_SESSION){
+			if(this.coGoogleSignInHelper.isConnected() && this.coGoogleUser != null){
+				lsResult = Plus.AccountApi.getAccountName(this.coGoogleSignInHelper);
+			}
+		}
+					
 		return lsResult;
 	}
 	
 	@Override
 	public String getNames(){
-		String lsResult = "";
-		if(Session.getActiveSession().isOpened() && this.coUser != null){
-			lsResult = this.coUser.getFirstName() + " "  + this.coUser.getLastName();
+		String lsResult = "";				
+		if(this.ciSignInType == SessionManager.FACEBOOK_SESSION){
+			if(Session.getActiveSession().isOpened() && this.coFacebookUser != null){		
+				lsResult = this.coFacebookUser.getFirstName() + " "  + this.coFacebookUser.getLastName();
+			}					
 		}
-		return lsResult;		
+		else if(this.ciSignInType == SessionManager.GOOGLE_SESSION){
+			if(this.coGoogleSignInHelper.isConnected() && this.coGoogleUser != null){
+				lsResult = this.coGoogleUser.getDisplayName();;
+			}
+		}				
+		return lsResult;			
 	}
+
 }

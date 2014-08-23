@@ -16,7 +16,7 @@ public class ConfigLoginController {
 		this.coView = pView;
 	}
 	
-	public void openLoginView(){
+	public void navigateLoginView(){
 		Activity loActivity = (Activity)coView;
 		Intent loIntent = new Intent(loActivity, LoginActivity.class);
 		loActivity.startActivity(loIntent);	
