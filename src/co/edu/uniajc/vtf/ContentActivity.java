@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import co.edu.uniajc.vtf.security.ConfigLoginActivity;
-import co.edu.uniajc.vtf.security.model.UserEntity;
 import co.edu.uniajc.vtf.utils.SessionManager;
 
 import com.facebook.Session;

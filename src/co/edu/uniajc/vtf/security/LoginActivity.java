@@ -49,7 +49,7 @@ public class LoginActivity extends Activity implements ILogin {
 	}
 
 	public void onClick_Login(View view){
-		this.coController.CheckCredentials();
+		this.coController.checkCredentialsAsync();
 	}
 	
 	public void onClick_NavigateForgotPassword(View view){

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import co.edu.uniajc.vtf.R;
 import co.edu.uniajc.vtf.security.controller.ConfigLoginController;
 import co.edu.uniajc.vtf.security.interfaces.IConfigLogin;
+import co.edu.uniajc.vtf.utils.AlertDialogManager;
 import co.edu.uniajc.vtf.utils.ResourcesManager;
 import co.edu.uniajc.vtf.utils.SessionManager;
 
@@ -20,6 +21,7 @@ import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
@@ -96,7 +98,6 @@ public class ConfigLoginActivity extends Activity implements IConfigLogin,
 		onFacebookSessionStateChange(session, state, exception);
 	}	
 	
-	
 	//Google+ configuration
 	private void configureGoogleSession(){
 		this.coGoogleSignInHelper = new GoogleApiClient.Builder(this)
@@ -159,7 +160,20 @@ public class ConfigLoginActivity extends Activity implements IConfigLogin,
 
 	@Override
 	public void onClick(View v) {
-		this.onClick_GoogleLogin(v);	
+		if(this.googlePlusIsInstalled()){
+			this.onClick_GoogleLogin(v);
+		}
+		else{
+			ResourcesManager loResource = new ResourcesManager(this);	
+			AlertDialogManager.showAlertDialog(this, loResource.getStringResource(R.string.general_message_warning), loResource.getStringResource(R.string.general_google_play_not_installed), AlertDialogManager.WARNING);
+		}
+			
+	}
+	
+	
+	public boolean googlePlusIsInstalled(){
+		int liErrorCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+		return liErrorCode == ConnectionResult.SUCCESS ? true : false;
 	}
 	
 	protected void setGooglePlusButtonText(SignInButton pSignInButton, int pButtonText) {
@@ -167,10 +181,10 @@ public class ConfigLoginActivity extends Activity implements IConfigLogin,
 		ResourcesManager loResource = new ResourcesManager(this);	
 		
 	    for (int i = 0; i < pSignInButton.getChildCount(); i++) {
-	        View v = pSignInButton.getChildAt(i);
+	        View loView = pSignInButton.getChildAt(i);
 
-	        if (v instanceof TextView) {
-	            TextView loTextView = (TextView) v;
+	        if (loView instanceof TextView) {
+	            TextView loTextView = (TextView) loView;
 	            loTextView.setText(loResource.getStringResource(pButtonText));
 	            return;
 	        }
@@ -185,8 +199,6 @@ public class ConfigLoginActivity extends Activity implements IConfigLogin,
 	public void onClick_NavigateCreateAccount(View view){
 		this.coController.navigateCreateAccount();;
 	}
-	
-	
 	
 	@Override
 	protected void onStart() {
