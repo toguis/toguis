@@ -1,39 +1,45 @@
 package co.edu.uniajc.vtf.utils;
 
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 
 import android.os.AsyncTask;
 
 public class RestAsyncTask extends AsyncTask<String, Long, String> {
-	private final HttpClient Client = new DefaultHttpClient();
+	private final HttpClient coClient;
 	private ArrayList<RestAsyncTaskListener> coAsyncTaskListener;
 	private boolean cbohasError;
 	
-	public RestAsyncTask(){
+	public RestAsyncTask(){		
+		HttpParams httpParameters = new BasicHttpParams();
+		HttpConnectionParams.setConnectionTimeout(httpParameters, 3000);
+		HttpConnectionParams.setSoTimeout(httpParameters, 10000);		
+		this.coClient = new DefaultHttpClient(httpParameters);
 		this.cbohasError = false;
 		this.coAsyncTaskListener = new ArrayList<RestAsyncTaskListener>();
 	}
 	
 	@Override
 	protected String doInBackground(String... params) {
-		String csResult = "";
+		String lsResult = "";
 		try {
-			HttpGet loRequest = new HttpGet(params[0].toString());	
-			HttpResponse loResponse = Client.execute(loRequest);
-			csResult = EntityUtils.toString(loResponse.getEntity());			
+			HttpGet loRequest = new HttpGet(params[0].toString());			
+			HttpResponse loResponse = coClient.execute(loRequest);
+			lsResult = EntityUtils.toString(loResponse.getEntity());					
 		} catch (Exception ex) {
 			this.cbohasError = true;
-			for (RestAsyncTaskListener item : this.coAsyncTaskListener){
-				item.onQueryError(ex.getMessage());
-			}
+			lsResult = ex.getMessage();
 		} 
-		return csResult;
+		return lsResult;
 	}
 
 	 @Override
@@ -43,6 +49,11 @@ public class RestAsyncTask extends AsyncTask<String, Long, String> {
 			for (RestAsyncTaskListener item : this.coAsyncTaskListener){
 				item.onQuerySuccessful(result);
 			}				
+		}
+		else{
+			for (RestAsyncTaskListener item : this.coAsyncTaskListener){
+				item.onQueryError(result);
+			}	
 		}
 	}
 	
