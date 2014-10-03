@@ -1,6 +1,5 @@
 package co.edu.uniajc.vtf.utils;
 
-import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 
 import org.apache.http.HttpResponse;
