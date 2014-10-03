@@ -22,7 +22,7 @@ public class LoginModel implements RestAsyncTaskListener {
 	}
 	
 	public void getUserAsync(String pId){		
-		String lsQueryUrl = String.format(this.csBaseUrl + "ToguisSecurity.svc/getUser?login=%s", pId);
+		String lsQueryUrl = String.format(this.csBaseUrl + "ToguisSecurity.svc/get_user?login=%s", pId);
 		this.csMethod = "getAsyncUser1";
 		RestAsyncTask loTask = new RestAsyncTask();
 		loTask.addAsyncTaskListener(this);
@@ -56,15 +56,7 @@ public class LoginModel implements RestAsyncTaskListener {
 	public void addModelListener(LoginModelListener pModelListener){
 		this.coModelListener.add(pModelListener);
 	}
-	
-	public boolean checkCredentials(UserEntity pUser){
-		boolean lboResult = false;
-		if(pUser.getEmail().toLowerCase().equals("email@email.com") && pUser.getPassword().equals("c22b5f9178342609428d6f51b2c5af4c0bde6a42")){
-			lboResult = true;
-		}
-		return lboResult;
-	}
-	
+		
 	@Override
 	public void onQuerySuccessful(String result) {
 		if(this.csMethod.equals("getAsyncUser1")){
