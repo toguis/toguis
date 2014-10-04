@@ -4,6 +4,7 @@ public class UserEntity {
 	private String csEmail;
 	private String csPassword;
 	private String csNames;
+	private int ciGender;
 	
 	public String getEmail() {
 		return csEmail;
@@ -29,5 +30,12 @@ public class UserEntity {
 		this.csNames = pNames;
 	}
 	
+	public int getGender(){
+		return this.ciGender;
+	}
+	
+	public void setGender(int pGender){
+		this.ciGender = pGender;
+	}
 	
 }

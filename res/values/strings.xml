@@ -16,9 +16,14 @@
     <string name="create_account_lbl_password_text">Contraseña</string>
     <string name="create_account_txt_names_hint">Nombre y apellido</string>
     <string name="create_account_lbl_names_text">Nombres</string>
-    <string name="create_account_txt_repeat_password_hint">repetir</string>
+    <string name="create_account_txt_repeat_password_hint">Repetir</string>
     <string name="create_account_lbl_repeat_password_text">Repetir</string>
     <string name="create_account_btn_signin_text">Ingresar</string>
+    <string name="create_account_lbl_gender_text">Género</string>
+    <string name="create_account_rbt_male_text">Hombre</string>
+    <string name="create_account_rbt_female_text">Mujer</string>
+    <string name="create_account_successfully_message">Cuenta creada con éxito</string>
+    <string name="create_account_error_message">Este usuario ya ha sido escogido</string>   
     <string name="title_activity_create_account">Crear cuenta</string>
     <string name="main_img_splash_description">splash image</string>
     <string name="title_activity_config_login">Bienvenido</string>

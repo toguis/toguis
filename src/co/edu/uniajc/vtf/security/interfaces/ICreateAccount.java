@@ -12,4 +12,10 @@ public interface ICreateAccount {
 	
 	String getNames();
 	void setNames(String pNames);
+	
+	boolean getMale();
+	void setMale(boolean pState);
+	
+	boolean getFemale();
+	void setFemale(boolean pState);	
 }

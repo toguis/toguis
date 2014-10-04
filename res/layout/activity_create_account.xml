@@ -95,13 +95,43 @@
         android:hint="@string/create_account_txt_names_hint"
         android:maxLength="250" />
 
+    <TextView
+        android:id="@+id/lblGender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/txtNames"
+        android:layout_marginTop="22dp"
+        android:text="@string/create_account_lbl_gender_text" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/rbtFemale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/create_account_rbt_female_text" />
+
+        <RadioButton
+            android:id="@+id/rbtMale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/create_account_rbt_male_text" />
+    </RadioGroup>
+
     <Button
         android:id="@+id/btnSignIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtNames"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/radioGroup1"
         android:onClick="onClick_CreateAccount"
         android:text="@string/create_account_btn_signin_text" />
 

@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import co.edu.uniajc.vtf.R;
 import co.edu.uniajc.vtf.security.controller.CreateAccountController;
@@ -71,9 +72,33 @@ public class CreateAccountActivity extends Activity implements ICreateAccount {
 		loControl.setText(pNames);
 		
 	}
+	
+	@Override
+	public boolean getMale() {
+		RadioButton loControl = (RadioButton) this.findViewById(R.id.rbtMale);	
+		return loControl.isChecked();
+	}
 
+	@Override
+	public void setMale(boolean pState) {
+		RadioButton loControl = (RadioButton) this.findViewById(R.id.rbtMale);	
+		loControl.setChecked(pState);
+	}
+	
+	@Override
+	public boolean getFemale() {
+		RadioButton loControl = (RadioButton) this.findViewById(R.id.rbtFemale);	
+		return loControl.isChecked();
+	}
+
+	@Override
+	public void setFemale(boolean pState) {
+		RadioButton loControl = (RadioButton) this.findViewById(R.id.rbtFemale);	
+		loControl.setChecked(pState);
+	}
+	
 	public void onClick_CreateAccount(View pview){		
-		this.coController.createAccount();
+		this.coController.createAccountAsync();
 	}
 	
 	@Override
@@ -81,4 +106,6 @@ public class CreateAccountActivity extends Activity implements ICreateAccount {
 		this.coController.navigateHome(item);
 		return super.onOptionsItemSelected(item);
 	}
+
+
 }

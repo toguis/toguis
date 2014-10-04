@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
@@ -31,9 +33,22 @@ public class RestAsyncTask extends AsyncTask<String, Long, String> {
 	protected String doInBackground(String... params) {
 		String lsResult = "";
 		try {
-			HttpGet loRequest = new HttpGet(params[0].toString());			
-			HttpResponse loResponse = coClient.execute(loRequest);
-			lsResult = EntityUtils.toString(loResponse.getEntity());					
+			if(params[0].equals("0")){
+				HttpGet loRequest = new HttpGet(params[1].toString());			
+				HttpResponse loResponse = coClient.execute(loRequest);
+				lsResult = EntityUtils.toString(loResponse.getEntity());					
+			}
+			else if(params[0].equals("1")){
+				HttpPost loRequest = new HttpPost(params[1].toString());	
+				StringEntity lsData = new StringEntity(params[2].toString());
+				loRequest.setEntity(lsData);
+				loRequest.setHeader("Accept", "application/json");
+				loRequest.setHeader("Content-type", "application/json");
+	            
+				HttpResponse loResponse = coClient.execute(loRequest);
+				lsResult = EntityUtils.toString(loResponse.getEntity());				
+			}
+				
 		} catch (Exception ex) {
 			this.cbohasError = true;
 			lsResult = ex.getMessage();

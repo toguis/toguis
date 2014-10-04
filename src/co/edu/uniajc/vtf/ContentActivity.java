@@ -44,7 +44,7 @@ public class ContentActivity extends Activity implements GoogleApiClient.Connect
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_content);
-		TextView loControl = (TextView) this.findViewById(R.id.textView1);
+		TextView loControl = (TextView) this.findViewById(R.id.lblGender);
 		SessionManager se = new SessionManager(this);
 		loControl.setText("Hola:"  + se.getNames());
 		this.coApiClient = new GoogleApiClient.Builder(this)

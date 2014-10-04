@@ -10,15 +10,15 @@ import co.edu.uniajc.vtf.security.ConfigLoginActivity;
 import co.edu.uniajc.vtf.security.ForgotPasswordActivity;
 import co.edu.uniajc.vtf.security.interfaces.ILogin;
 import co.edu.uniajc.vtf.security.model.LoginModel;
-import co.edu.uniajc.vtf.security.model.LoginModelListener;
 import co.edu.uniajc.vtf.security.model.UserEntity;
 import co.edu.uniajc.vtf.utils.AlertDialogManager;
 import co.edu.uniajc.vtf.utils.DigestManager;
+import co.edu.uniajc.vtf.utils.ModelListener;
 import co.edu.uniajc.vtf.utils.ResourcesManager;
 import co.edu.uniajc.vtf.utils.SessionManager;
 
 
-public class LoginController implements LoginModelListener {
+public class LoginController implements ModelListener {
 	private ILogin coView;
 	private LoginModel coModel;
 	
@@ -30,7 +30,7 @@ public class LoginController implements LoginModelListener {
 		this.coModel.addModelListener(this);
 	}
 	
-	private void CheckCredentials(UserEntity pUser){
+	private void checkCredentials(UserEntity pUser){
 		String loEmail = this.coView.getEmail();
 		String loPassword = this.coView.getPassword();
 		ResourcesManager loResource = new ResourcesManager((Activity)this.coView);
@@ -117,12 +117,12 @@ public class LoginController implements LoginModelListener {
 	}
 	
 	@Override
-	public void onGetUser(UserEntity pUser) {
-		this.CheckCredentials(pUser);
+	public void onGetData(Object pData, int type) {
+		this.checkCredentials((UserEntity)pData);
 	}
 
 	@Override
-	public void onError(String pData) {
+	public void onError(Object pData, int type) {
 		ResourcesManager loResource = new ResourcesManager((Activity)this.coView);
 		AlertDialogManager.showAlertDialog((Activity)coView, loResource.getStringResource(R.string.general_message_error), loResource.getStringResource(R.string.general_db_error), AlertDialogManager.ERROR);			
 	}	
