@@ -108,8 +108,8 @@
         android:id="@+id/radioGroup1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/txtNames"
+        android:layout_alignTop="@+id/lblGender"
         android:orientation="horizontal" >
 
         <RadioButton
@@ -132,6 +132,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/radioGroup1"
+        android:layout_marginTop="20dp"
         android:onClick="onClick_CreateAccount"
         android:text="@string/create_account_btn_signin_text" />
 
