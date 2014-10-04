@@ -1,0 +1,138 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="co.edu.uniajc.vtf.security.CreateAccountActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <EditText
+        android:id="@+id/txtEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/lblPassword"
+        android:ems="10"
+        android:hint="@string/create_account_txt_email_hint"
+        android:inputType="textEmailAddress"
+        android:maxLength="250" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/lblEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/txtEmail"
+        android:layout_alignBottom="@+id/txtEmail"
+        android:layout_alignParentLeft="true"
+        android:text="@string/create_account_lbl_email_text" />
+
+    <EditText
+        android:id="@+id/txtPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/lblPassword"
+        android:layout_alignBottom="@+id/lblPassword"
+        android:layout_alignLeft="@+id/txtEmail"
+        android:layout_alignParentRight="true"
+        android:ems="10"
+        android:hint="@string/create_account_txt_password_hint"
+        android:inputType="textPassword"
+        android:maxLength="50" />
+
+    <TextView
+        android:id="@+id/lblPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/txtEmail"
+        android:layout_marginTop="18dp"
+        android:text="@string/create_account_lbl_password_text" />
+
+    <TextView
+        android:id="@+id/lblRepeatPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/txtPassword"
+        android:layout_marginTop="24dp"
+        android:text="@string/create_account_lbl_repeat_password_text" />
+
+    <EditText
+        android:id="@+id/txtRepeatPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/lblRepeatPassword"
+        android:layout_alignBottom="@+id/lblRepeatPassword"
+        android:layout_alignLeft="@+id/txtPassword"
+        android:layout_alignParentRight="true"
+        android:ems="10"
+        android:hint="@string/create_account_txt_repeat_password_hint"
+        android:inputType="textPassword"
+        android:maxLength="50" />
+
+    <TextView
+        android:id="@+id/lblNames"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/txtRepeatPassword"
+        android:layout_marginTop="27dp"
+        android:text="@string/create_account_lbl_names_text" />
+
+    <EditText
+        android:id="@+id/txtNames"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/lblNames"
+        android:layout_alignBottom="@+id/lblNames"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/lblPassword"
+        android:ems="10"
+        android:hint="@string/create_account_txt_names_hint"
+        android:maxLength="250" />
+
+    <TextView
+        android:id="@+id/lblGender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/txtNames"
+        android:layout_marginTop="22dp"
+        android:text="@string/create_account_lbl_gender_text" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txtNames"
+        android:layout_alignTop="@+id/lblGender"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/rbtFemale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/create_account_rbt_female_text" />
+
+        <RadioButton
+            android:id="@+id/rbtMale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/create_account_rbt_male_text" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btnSignIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/radioGroup1"
+        android:onClick="onClick_CreateAccount"
+        android:text="@string/create_account_btn_signin_text" />
+
+</RelativeLayout>
