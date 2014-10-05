@@ -12,8 +12,7 @@ public class CreateAccountModel implements RestAsyncTaskListener  {
 	private String csMethod;
 	private String csBaseUrl;
 	private ArrayList<ModelListener> coModelListener;
-	
-	
+		
 	public CreateAccountModel(String pBaseUrl) {
 		this.csBaseUrl = pBaseUrl;
 		this.csMethod = "";

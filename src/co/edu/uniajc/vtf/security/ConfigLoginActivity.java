@@ -281,10 +281,39 @@ public class ConfigLoginActivity extends Activity implements IConfigLogin,
 		}
 		else if(this.ciSignInType == SessionManager.GOOGLE_SESSION){
 			if(this.coGoogleSignInHelper.isConnected() && this.coGoogleUser != null){
-				lsResult = this.coGoogleUser.getDisplayName();;
+				lsResult = this.coGoogleUser.getDisplayName();
 			}
 		}				
 		return lsResult;			
+	}
+	
+	public int getGender(){
+		int liResult = 0;			
+		if(this.ciSignInType == SessionManager.FACEBOOK_SESSION){
+			if(Session.getActiveSession().isOpened() && this.coFacebookUser != null){	
+				String lsTempResult = this.coFacebookUser.asMap().get("gender").toString();
+				if(lsTempResult.equals("male")){
+					liResult = 1;
+				}
+				else{
+					liResult = 2;
+				}
+				
+			}					
+		}
+		else if(this.ciSignInType == SessionManager.GOOGLE_SESSION){
+			if(this.coGoogleSignInHelper.isConnected() && this.coGoogleUser != null){
+				int liTempResult = this.coGoogleUser.getGender();
+				if(liTempResult == 0){
+					liResult = 1;
+				}
+				else{
+					liResult = 2;
+				}				
+			}
+		}	
+					
+		return liResult;
 	}
 
 }

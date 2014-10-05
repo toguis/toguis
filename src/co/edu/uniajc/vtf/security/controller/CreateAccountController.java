@@ -116,8 +116,7 @@ public class CreateAccountController implements ModelListener {
 		
 		if(pResult == 0){
 			this.navigateContent();
-		}
-		
+		}		
 	}
 	
 	public void navigateHome(MenuItem item){
