@@ -36,7 +36,7 @@ public class ForgotPasswordActivity extends Activity implements IForgotPassword 
 	}
 	
 	public void onClick_SendRecoveryMail(View view){
-		this.coController.sendRecoveryMail();	
+		this.coController.sendRecoveryMailAsync();	
 	}
 
 	@Override

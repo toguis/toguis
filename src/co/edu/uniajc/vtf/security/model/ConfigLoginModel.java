@@ -3,29 +3,25 @@ package co.edu.uniajc.vtf.security.model;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import co.edu.uniajc.vtf.utils.BaseModel;
 import co.edu.uniajc.vtf.utils.DateUtilities;
 import co.edu.uniajc.vtf.utils.ModelListener;
 import co.edu.uniajc.vtf.utils.RestAsyncTask;
-import co.edu.uniajc.vtf.utils.RestAsyncTaskListener;
 
-public class ConfigLoginModel implements RestAsyncTaskListener  {
-	private String csMethod;
-	private String csBaseUrl;
-	private ArrayList<ModelListener> coModelListener;
+public class ConfigLoginModel  extends BaseModel {
 	private int ciAuthId;
 	private UserEntity coUser;
 	
 	public ConfigLoginModel(String pBaseUrl) {
-		this.csBaseUrl = pBaseUrl;
-		this.csMethod = "";
-		this.coModelListener = new ArrayList<ModelListener>();		
+		super.csBaseUrl = pBaseUrl;
+		super.csMethod = "";
+		super.coModelListener = new ArrayList<ModelListener>();		
 	}
 	
 	public void updateAccountAsync(UserEntity pUser, int pAuthId){
-
 		String lsData = this.getFomattedData(pUser, pAuthId);
-		String lsQueryUrl = this.csBaseUrl + "ToguisSecurity.svc/update_user";		
-		this.csMethod = "updateAccountAsync";
+		String lsQueryUrl = super.csBaseUrl + "ToguisSecurity.svc/update_user";		
+		super.csMethod = "updateAccountAsync";
 		RestAsyncTask loTask = new RestAsyncTask();
 		loTask.addAsyncTaskListener(this);		
 		loTask.execute("1", lsQueryUrl, lsData);
@@ -53,8 +49,8 @@ public class ConfigLoginModel implements RestAsyncTaskListener  {
 		this.coUser = pUser;
 		this.ciAuthId = pAuthId;
 		String lsData = this.getFomattedData(pUser, pAuthId);
-		String lsQueryUrl = this.csBaseUrl + "ToguisSecurity.svc/create_user";		
-		this.csMethod = "createAccountAsync";
+		String lsQueryUrl = super.csBaseUrl + "ToguisSecurity.svc/create_user";		
+		super.csMethod = "createAccountAsync";
 		RestAsyncTask loTask = new RestAsyncTask();
 		loTask.addAsyncTaskListener(this);		
 		loTask.execute("1", lsQueryUrl, lsData);
@@ -90,13 +86,10 @@ public class ConfigLoginModel implements RestAsyncTaskListener  {
 		return loData.toString();
 	}
 	
-	public void addModelListener(ModelListener pModelListener){
-		this.coModelListener.add(pModelListener);
-	}
 	
 	@Override
 	public void onQuerySuccessful(String pResult) {
-		if(this.csMethod.equals("updateAccountAsync")){
+		if(super.csMethod.equals("updateAccountAsync")){
 			this.updateAccount(pResult);
 		}	
 		else if(this.csMethod.equals("createAccountAsync")){
@@ -107,10 +100,10 @@ public class ConfigLoginModel implements RestAsyncTaskListener  {
 	@Override
 	public void onQueryError(String error) {
 		for (ModelListener item : this.coModelListener){
-			if(this.csMethod.equals("updateAccountAsync")){
+			if(super.csMethod.equals("updateAccountAsync")){
 				item.onError(error, 0);
 			}	
-			else if(this.csMethod.equals("createAccountAsync")){
+			else if(super.csMethod.equals("createAccountAsync")){
 				item.onError(error, 1);
 			}
 		}	

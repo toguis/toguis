@@ -3,20 +3,17 @@ package co.edu.uniajc.vtf.security.model;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import co.edu.uniajc.vtf.utils.BaseModel;
 import co.edu.uniajc.vtf.utils.DateUtilities;
 import co.edu.uniajc.vtf.utils.ModelListener;
 import co.edu.uniajc.vtf.utils.RestAsyncTask;
-import co.edu.uniajc.vtf.utils.RestAsyncTaskListener;
 
-public class CreateAccountModel implements RestAsyncTaskListener  {
-	private String csMethod;
-	private String csBaseUrl;
-	private ArrayList<ModelListener> coModelListener;
+public class CreateAccountModel extends BaseModel  {
 		
 	public CreateAccountModel(String pBaseUrl) {
-		this.csBaseUrl = pBaseUrl;
-		this.csMethod = "";
-		this.coModelListener = new ArrayList<ModelListener>();
+		super.csBaseUrl = pBaseUrl;
+		super.csMethod = "";
+		super.coModelListener = new ArrayList<ModelListener>();
 		
 	}
 
@@ -36,8 +33,8 @@ public class CreateAccountModel implements RestAsyncTaskListener  {
 		loData.append("\"USR_PHONE_NUMBER\":null");
 		loData.append("}");
 		
-		String lsQueryUrl = this.csBaseUrl + "ToguisSecurity.svc/create_user";		
-		this.csMethod = "createAccountAsync";
+		String lsQueryUrl = super.csBaseUrl + "ToguisSecurity.svc/create_user";		
+		super.csMethod = "createAccountAsync";
 		RestAsyncTask loTask = new RestAsyncTask();
 		loTask.addAsyncTaskListener(this);		
 		loTask.execute("1",lsQueryUrl,loData.toString());
@@ -62,13 +59,9 @@ public class CreateAccountModel implements RestAsyncTaskListener  {
 		}			
 	}
 	
-	public void addModelListener(ModelListener pModelListener){
-		this.coModelListener.add(pModelListener);
-	}
-	
 	@Override
 	public void onQuerySuccessful(String pResult) {
-		if(this.csMethod.equals("createAccountAsync")){
+		if(super.csMethod.equals("createAccountAsync")){
 			this.createAccount(pResult);
 		}
 		
@@ -77,7 +70,7 @@ public class CreateAccountModel implements RestAsyncTaskListener  {
 	@Override
 	public void onQueryError(String error) {
 		for (ModelListener item : this.coModelListener){
-			if(this.csMethod.equals("createAccountAsync")){
+			if(super.csMethod.equals("createAccountAsync")){
 				item.onError(error, 0);
 			}			
 		}	

@@ -32,6 +32,7 @@
     <string name="config_login_btn_facebook_Login_text">Ingresar con Facebook</string>
     <string name="config_login_btn_create_account_text">Crear una cuenta</string>
     <string name="config_login_btn_signin_text">Ingresar</string>
+    <string name="config_login_error_message">Ha ocurrido un error al actualizar los datos</string>
     <string name="general_login_successfully_title">Bienvenido</string>
     <string name="general_login_successfully_message">Bienvenido a Toguis</string>
     <string name="general_login_error_title">No se puede autenticar</string>
@@ -56,6 +57,7 @@
     <string name="forgot_password_lbl_message_text">Por favor escribe el email que usas para ingresar</string>
     <string name="forgot_password_txt_verify_email_hint">email@domain.com</string>
     <string name="forgot_password_btn_send_email_text">Enviar</string>
+    <string name="forgot_password_message">El correo ha sido enviado</string>
     <string name="app_id">735670486470675</string>
     <string name="title_activity_content">ContentActivity</string>
     <string name="hello_world">Hello world!</string>

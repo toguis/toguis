@@ -5,26 +5,22 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import co.edu.uniajc.vtf.utils.BaseModel;
 import co.edu.uniajc.vtf.utils.ModelListener;
 import co.edu.uniajc.vtf.utils.RestAsyncTask;
-import co.edu.uniajc.vtf.utils.RestAsyncTaskListener;
 
-public class LoginModel implements RestAsyncTaskListener {
-
-	private String csBaseUrl;
-	private String csMethod;
-	private ArrayList<ModelListener> coModelListener;
+public class LoginModel extends BaseModel {
 	
 	public LoginModel(String pBaseUrl){
-		this.csBaseUrl = pBaseUrl;
-		this.csMethod = "";
-		this.coModelListener = new ArrayList<ModelListener>();
+		super.csBaseUrl = pBaseUrl;
+		super.csMethod = "";
+		super.coModelListener = new ArrayList<ModelListener>();
 		
 	}
 	
 	public void getUserAsync(String pId){		
 		String lsQueryUrl = String.format(this.csBaseUrl + "ToguisSecurity.svc/get_user?login=%s", pId);
-		this.csMethod = "getUserAsync";
+		super.csMethod = "getUserAsync";
 		RestAsyncTask loTask = new RestAsyncTask();
 		loTask.addAsyncTaskListener(this);		
 		loTask.execute("0",lsQueryUrl);
@@ -56,13 +52,10 @@ public class LoginModel implements RestAsyncTaskListener {
 		}		
 	}
 	
-	public void addModelListener(ModelListener pModelListener){
-		this.coModelListener.add(pModelListener);
-	}
 		
 	@Override
 	public void onQuerySuccessful(String pResult) {
-		if(this.csMethod.equals("getUserAsync")){
+		if(super.csMethod.equals("getUserAsync")){
 			this.getUser(pResult);
 		}
 	}

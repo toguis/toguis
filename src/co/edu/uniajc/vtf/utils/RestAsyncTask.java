@@ -1,5 +1,6 @@
 package co.edu.uniajc.vtf.utils;
 
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 
 import org.apache.http.HttpResponse;
@@ -49,10 +50,14 @@ public class RestAsyncTask extends AsyncTask<String, Long, String> {
 				lsResult = EntityUtils.toString(loResponse.getEntity());				
 			}
 				
-		} catch (Exception ex) {
+		} catch (SocketTimeoutException ex) {
 			this.cbohasError = true;
-			lsResult = ex.getMessage();
-		} 
+			lsResult = "Timeout exception";
+		} catch (Exception ex){
+			this.cbohasError = true;
+			lsResult = ex.getMessage();			
+		}
+		 
 		return lsResult;
 	}
 
