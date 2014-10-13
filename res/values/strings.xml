@@ -23,7 +23,7 @@
     <string name="create_account_rbt_male_text">Hombre</string>
     <string name="create_account_rbt_female_text">Mujer</string>
     <string name="create_account_successfully_message">Cuenta creada con éxito</string>
-    <string name="create_account_error_message">Este usuario ya ha sido escogido</string>   
+    <string name="create_account_error_message">Este usuario ya ha sido escogido</string>
     <string name="title_activity_create_account">Crear cuenta</string>
     <string name="main_img_splash_description">splash image</string>
     <string name="title_activity_config_login">Bienvenido</string>
@@ -61,5 +61,12 @@
     <string name="app_id">735670486470675</string>
     <string name="title_activity_content">ContentActivity</string>
     <string name="hello_world">Hello world!</string>
-	
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="title_activity_swipe_content">SwipeContentActivity</string>
+    <string name="list_point_item_img_point_content_description">point image</string>
+	<string name="list_point_item_lbl_point_title_text">point title</string>
+	<string name="list_point_item_lbl_point_desc_text">point description</string>
 </resources>
