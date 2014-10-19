@@ -65,7 +65,7 @@
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
-    <string name="title_activity_swipe_content">SwipeContentActivity</string>
+    <string name="title_activity_swipe_content">Toguis</string>
     <string name="list_point_item_img_point_content_description">point image</string>
 	<string name="list_point_item_lbl_point_title_text">point title</string>
 	<string name="list_point_item_lbl_point_desc_text">point description</string>

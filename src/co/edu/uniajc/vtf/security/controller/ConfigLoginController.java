@@ -3,8 +3,8 @@ package co.edu.uniajc.vtf.security.controller;
 import android.app.Activity;
 import android.content.Intent;
 import android.widget.Toast;
-import co.edu.uniajc.vtf.ContentActivity;
 import co.edu.uniajc.vtf.R;
+import co.edu.uniajc.vtf.content.SwipeContentActivity;
 import co.edu.uniajc.vtf.security.CreateAccountActivity;
 import co.edu.uniajc.vtf.security.LoginActivity;
 import co.edu.uniajc.vtf.security.interfaces.IConfigLogin;
@@ -65,7 +65,7 @@ public class ConfigLoginController implements ModelListener {
 	
 	public void navigateContent(){
 		Activity loActivity = (Activity)coView;
-		Intent loIntent = new Intent(loActivity, ContentActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK);
+		Intent loIntent = new Intent(loActivity, SwipeContentActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK);
 		loActivity.startActivity(loIntent);	
 		((Activity)coView).finish();
 	}

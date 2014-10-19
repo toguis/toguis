@@ -5,6 +5,8 @@ package co.edu.uniajc.vtf.content;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
+import android.content.Intent;
+import android.content.IntentSender.SendIntentException;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -12,18 +14,32 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import co.edu.uniajc.vtf.R;
+import co.edu.uniajc.vtf.security.ConfigLoginActivity;
+import co.edu.uniajc.vtf.security.model.LogoutListener;
+import co.edu.uniajc.vtf.utils.SessionManager;
 
-public class SwipeContentActivity extends FragmentActivity  implements ActionBar.TabListener {
+import com.facebook.Session;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.plus.Plus;
+
+public class SwipeContentActivity extends FragmentActivity  implements ActionBar.TabListener,GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,LogoutListener {
 	private AppSectionsPagerAdapter coAppSectionsPagerAdapter;
 	private ViewPager coViewPager;
 	
+	private static final int RC_SIGN_IN = 0;
+    private GoogleApiClient coApiClient;
+    private boolean coIntentInProgress;
+    private ConnectionResult coConnectionResult;
+    private boolean coSignInClicked;
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_swipe_content);
 		
 		//get the pager
-		this.coAppSectionsPagerAdapter = new AppSectionsPagerAdapter(this.getSupportFragmentManager());
+		this.coAppSectionsPagerAdapter = new AppSectionsPagerAdapter(this.getSupportFragmentManager(), this);
 		coViewPager = (ViewPager) findViewById(R.id.pagPagerContainer);
 		coViewPager.setAdapter(coAppSectionsPagerAdapter);
 		
@@ -39,16 +55,28 @@ public class SwipeContentActivity extends FragmentActivity  implements ActionBar
 		actionBar.setHomeButtonEnabled(false);
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		
-		actionBar.addTab(actionBar.newTab().setText("Tab1").setTabListener(this));
-		actionBar.addTab(actionBar.newTab().setText("Tab2").setTabListener(this));
-		actionBar.addTab(actionBar.newTab().setText("Tab3").setTabListener(this));
-		actionBar.addTab(actionBar.newTab().setText("Tab4").setTabListener(this));
+		actionBar.addTab(actionBar.newTab().setText("Sitios").setTabListener(this));
+		actionBar.addTab(actionBar.newTab().setText("Mapa").setTabListener(this));
+		actionBar.addTab(actionBar.newTab().setText("Cámara").setTabListener(this));
+		actionBar.addTab(actionBar.newTab().setText("Configuración").setTabListener(this));
+		
+
+		//get the google api client 
+		this.coApiClient = new GoogleApiClient.Builder(this)
+			.addConnectionCallbacks(this)
+			.addOnConnectionFailedListener(this)		
+			.addApi(Plus.API)
+			.addScope(Plus.SCOPE_PLUS_PROFILE)
+			.build();		
+		
 	}
 	
 	public static class AppSectionsPagerAdapter extends FragmentPagerAdapter {
 
-		public AppSectionsPagerAdapter(FragmentManager fm) {
+		private FragmentActivity coFragment;
+		public AppSectionsPagerAdapter(FragmentManager fm, FragmentActivity fragment) {
 			super(fm);
+			this.coFragment = fragment;
 		}
 
 		@Override
@@ -61,7 +89,9 @@ public class SwipeContentActivity extends FragmentActivity  implements ActionBar
 			case 2:
 				return new RALauncherFragment();
 			case 3:
-				return new SettingsFragment();
+				SettingsFragment loSettingFrament = new SettingsFragment();
+				loSettingFrament.AddLogoutListener((LogoutListener)this.coFragment);
+				return loSettingFrament;
 			}
 			return null;
 		}
@@ -81,14 +111,102 @@ public class SwipeContentActivity extends FragmentActivity  implements ActionBar
 
 	@Override
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+
+	}
+
+	@Override
+	public void onTabReselected(Tab tab, FragmentTransaction ft) {
+
+	}
+
+	@Override
+	public void onConnectionFailed(ConnectionResult result) {
+		if (!coIntentInProgress) {
+			coConnectionResult = result;	
+			if (coSignInClicked) {
+				resolveSignInError();
+			}
+		}	
+		
+	}
+
+	@Override
+	public void onConnected(Bundle connectionHint) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void onTabReselected(Tab tab, FragmentTransaction ft) {
-		// TODO Auto-generated method stub
+	public void onConnectionSuspended(int cause) {
+		this.coApiClient.connect();
 		
 	}
+	
+	public void deleteSesion(){
+		SessionManager loSession = new SessionManager(this);
+		switch(loSession.getSessionType()){
+			case SessionManager.FACEBOOK_SESSION:
+				if(Session.getActiveSession() != null)
+					Session.getActiveSession().closeAndClearTokenInformation();
+				break;
+			case SessionManager.GOOGLE_SESSION:	
+				if(coApiClient.isConnected()){
+					Plus.AccountApi.clearDefaultAccount(coApiClient);
+					coApiClient.disconnect();					
+				}
+				
+		}
+		
+		loSession.endSession();
+		//implements inside of a controller
+    	Intent loIntent = new Intent(this, ConfigLoginActivity.class);
+    	this.startActivity(loIntent);
+    	this.finish();		
+	}
 
+	@Override
+	protected void onStart() {
+		super.onStart();
+		this.coApiClient.connect();
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+	    if (this.coApiClient.isConnected()) {
+	    	this.coApiClient.disconnect();
+	     }
+	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    
+		if (requestCode == RC_SIGN_IN) {
+		    if (resultCode != RESULT_OK) {
+		        coSignInClicked = false;
+		    }			
+			coIntentInProgress = false;
+			if (!this.coApiClient.isConnecting()) {
+				this.coApiClient.connect();
+			}
+		}	    
+	}
+	
+	private void resolveSignInError() {
+		if (coConnectionResult.hasResolution()) {
+			try {
+				coIntentInProgress = true;
+				startIntentSenderForResult(coConnectionResult.getResolution().getIntentSender(), RC_SIGN_IN, null, 0, 0, 0);
+			} 
+			catch (SendIntentException e) {
+				coIntentInProgress = false;
+				this.coApiClient.connect();
+			}
+		}
+	}
+
+	@Override
+	public void logout() {
+		this.deleteSesion();
+	}	
 }

@@ -43,7 +43,6 @@ public class PointOfInterestEntity {
 	}
 	public Bitmap getImage() {
 		byte[] loData = Base64.decode(this.csImage, Base64.DEFAULT);
-		BitmapFactory.Options f = new BitmapFactory.Options();
 		Bitmap loBitmap = BitmapFactory.decodeByteArray(loData, 0, loData.length);	
 		return loBitmap;
 	}

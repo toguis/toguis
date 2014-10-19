@@ -13,9 +13,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import co.edu.uniajc.vtf.R;
+import co.edu.uniajc.vtf.content.interfaces.IListSites;
 import co.edu.uniajc.vtf.content.model.PointOfInterestEntity;
 
-public class ListSitesFragment extends Fragment {
+public class ListSitesFragment extends Fragment implements IListSites {
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_sites_list, container, false);              
     }
@@ -42,8 +43,7 @@ public class ListSitesFragment extends Fragment {
     	points.add(loPoint1);
     	points.add(loPoint2);
     	ListPointsAdapter adapter = new ListPointsAdapter(this.getActivity(), points);
-    	ListView list = (ListView)this.getView().findViewById(R.id.lstPoints);
-    	list.setAdapter(adapter);
+    	this.setAdapter(adapter);
     	
     	
     }
@@ -142,4 +142,17 @@ public class ListSitesFragment extends Fragment {
 
 	
     }
+
+	@Override
+	public void setAdapter(ListPointsAdapter pAdapter) {
+    	ListView loList = (ListView)this.getView().findViewById(R.id.lstPoints);
+    	loList.setAdapter(pAdapter);
+		
+	}
+
+	@Override
+	public ListPointsAdapter getAdapter() {
+    	ListView loList = (ListView)this.getView().findViewById(R.id.lstPoints);
+		return (ListPointsAdapter)loList.getAdapter();
+	}
 }

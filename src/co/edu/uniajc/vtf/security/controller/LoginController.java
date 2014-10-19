@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
-import co.edu.uniajc.vtf.ContentActivity;
 import co.edu.uniajc.vtf.R;
+import co.edu.uniajc.vtf.content.SwipeContentActivity;
 import co.edu.uniajc.vtf.security.ConfigLoginActivity;
 import co.edu.uniajc.vtf.security.ForgotPasswordActivity;
 import co.edu.uniajc.vtf.security.interfaces.ILogin;
@@ -92,7 +92,7 @@ public class LoginController implements ModelListener {
 	
 	public void navigateContent(){
 		Activity loActivity = (Activity)coView;
-		Intent loIntent = new Intent(loActivity, ContentActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK);
+		Intent loIntent = new Intent(loActivity, SwipeContentActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK);
 		loActivity.startActivity(loIntent);			
 		((Activity)coView).finish();
 	}

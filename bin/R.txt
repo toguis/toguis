@@ -193,9 +193,9 @@ int id btnFacebookLogin 0x7f040019
 int id btnForgotPassword 0x7f04002f
 int id btnGoogleLogin 0x7f04001a
 int id btnSendEmail 0x7f04002e
+int id btnSessionLogout 0x7f04001f
 int id btnSignIn 0x7f04002b
 int id btnSignin 0x7f04001c
-int id button1 0x7f04001f
 int id buyButton 0x7f04000c
 int id buy_now 0x7f040011
 int id buy_with_google 0x7f040010
