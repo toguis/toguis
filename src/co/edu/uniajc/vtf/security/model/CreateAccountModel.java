@@ -18,26 +18,12 @@ public class CreateAccountModel extends BaseModel  {
 	}
 
 	public void createAccountAsync(UserEntity pUser){
-		StringBuilder loData = new StringBuilder();
-		String loDate = DateUtilities.getFormattedDate(Calendar.getInstance());
-		loData.append("{");
-		loData.append("\"AUTH_ID\":3,");
-		loData.append("\"GND_ID\":\"").append(pUser.getGender()).append("\",");
-		loData.append("\"ROL_ID\":2,");
-		loData.append("\"USR_EMAIL\":\"").append(pUser.getEmail()).append("\",");
-		loData.append("\"USR_ID\":\"").append(pUser.getEmail()).append("\",");
-		loData.append("\"USR_IMAGE\":null,");
-		loData.append("\"USR_LAST_LOGIN\":\"" + loDate +  "\",");
-		loData.append("\"USR_NAME\":\"").append(pUser.getNames()).append("\",");
-		loData.append("\"USR_PASWORD\":\"").append(pUser.getPassword()).append("\",");
-		loData.append("\"USR_PHONE_NUMBER\":null");
-		loData.append("}");
-		
+		String lsData = this.getFomattedData(pUser);
 		String lsQueryUrl = super.csBaseUrl + "ToguisSecurity.svc/create_user";		
 		super.csMethod = "createAccountAsync";
 		RestAsyncTask loTask = new RestAsyncTask();
 		loTask.addAsyncTaskListener(this);		
-		loTask.execute("1",lsQueryUrl,loData.toString());
+		loTask.execute("1",lsQueryUrl,lsData);
 	}
 	
 	private void createAccount(String pResult){
@@ -57,6 +43,25 @@ public class CreateAccountModel extends BaseModel  {
 				item.onGetData(2, 0);
 			}							
 		}			
+	}
+	
+	
+	private String getFomattedData(UserEntity pUser){
+		StringBuilder loData = new StringBuilder();
+		String loDate = DateUtilities.getFormattedDate(Calendar.getInstance());
+		loData.append("{");
+		loData.append("\"AUTH_ID\":3,");
+		loData.append("\"GND_ID\":\"").append(pUser.getGender()).append("\",");
+		loData.append("\"ROL_ID\":2,");
+		loData.append("\"USR_EMAIL\":\"").append(pUser.getEmail()).append("\",");
+		loData.append("\"USR_ID\":\"").append(pUser.getEmail()).append("\",");
+		loData.append("\"USR_IMAGE\":null,");
+		loData.append("\"USR_LAST_LOGIN\":\"" + loDate +  "\",");
+		loData.append("\"USR_NAME\":\"").append(pUser.getNames()).append("\",");
+		loData.append("\"USR_PASWORD\":\"").append(pUser.getPassword()).append("\",");
+		loData.append("\"USR_PHONE_NUMBER\":null");
+		loData.append("}");
+		return loData.toString();
 	}
 	
 	@Override

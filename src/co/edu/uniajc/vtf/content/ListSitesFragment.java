@@ -3,6 +3,7 @@ package co.edu.uniajc.vtf.content;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,39 +14,60 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import co.edu.uniajc.vtf.R;
+import co.edu.uniajc.vtf.content.controller.ListSitesController;
 import co.edu.uniajc.vtf.content.interfaces.IListSites;
 import co.edu.uniajc.vtf.content.model.PointOfInterestEntity;
 
-public class ListSitesFragment extends Fragment implements IListSites {
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+
+public class ListSitesFragment extends Fragment implements 
+	   IListSites,
+	   GoogleApiClient.ConnectionCallbacks,
+	   GoogleApiClient.OnConnectionFailedListener,
+       LocationListener
+{
+	private ListSitesController coController;
+	private Location coLastLocation;
+    private GoogleApiClient coGoogleApiClient;
+    private LocationRequest coLocationRequest;
+
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_sites_list, container, false);              
+        return inflater.inflate(R.layout.fragment_sites_list, container, false);                
     }
 	
     @Override
     public void onActivityCreated(Bundle state) {
     	super.onActivityCreated(state);
-    	PointOfInterestEntity loPoint1 = new PointOfInterestEntity();
-    	loPoint1.setTitle("Gato del rio");
-    	loPoint1.setDescription("El Gato del Río es una obra del pintor y escultor Hernando Tejada la cual donó a la ciudad de Cali y que fue instalada en la ribera del río tutelar de la ciudad, en el sector noroeste de la ciudad, conocido como Normandía. ");
-    	loPoint1.setSiteType(1);
-    	loPoint1.setVisited(true);
-    	loPoint1.setFavorite(false);
+    }
     	
-    	PointOfInterestEntity loPoint2 = new PointOfInterestEntity();
-    	loPoint2.setTitle("Museo La tertulia");
-    	loPoint2.setDescription("El Museo La Tertulia es uno de los Museos de Arte del Valle del Cauca, el primero de Arte Moderno y el que tiene la colección de obras en soporte de papel más importante del país, conformada por 1500 piezas.");
-    	loPoint2.setSiteType(2);
-    	loPoint2.setVisited(false);
-    	loPoint2.setFavorite(true);   
-    	
-    	ArrayList<PointOfInterestEntity> points = new ArrayList<PointOfInterestEntity>();
-    	
-    	points.add(loPoint1);
-    	points.add(loPoint2);
-    	ListPointsAdapter adapter = new ListPointsAdapter(this.getActivity(), points);
-    	this.setAdapter(adapter);
-    	
-    	
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+    	super.onCreate(savedInstanceState);
+       	
+        coGoogleApiClient = new GoogleApiClient.Builder(this.getActivity())
+        .addConnectionCallbacks(this)
+        .addOnConnectionFailedListener(this)
+        .addApi(LocationServices.API)
+        .build();
+            	
+    	this.coController = new ListSitesController(this);	
+    	this.coLastLocation = null;    	
+    	this.loadList();
+    }
+    
+    @Override
+    public void onStart() {
+    	super.onStart();
+    }
+    
+    @Override
+    public void onStop() {
+    	super.onStop();
     }
     
     public static class ListPointsAdapter extends BaseAdapter{
@@ -145,14 +167,78 @@ public class ListSitesFragment extends Fragment implements IListSites {
 
 	@Override
 	public void setAdapter(ListPointsAdapter pAdapter) {
-    	ListView loList = (ListView)this.getView().findViewById(R.id.lstPoints);
-    	loList.setAdapter(pAdapter);
-		
+		//unknown exception here, I dont know waht happen but
+		//I insert this ex block for protect the app over this bug.
+		try{
+	    	ListView loList = (ListView)this.getView().findViewById(R.id.lstPoints);
+	    	loList.setAdapter(pAdapter);			
+		}
+		catch(Exception ex){
+	
+		}
 	}
 
 	@Override
 	public ListPointsAdapter getAdapter() {
     	ListView loList = (ListView)this.getView().findViewById(R.id.lstPoints);
 		return (ListPointsAdapter)loList.getAdapter();
+	}
+
+	@Override
+	public void setAdapterData(ArrayList<PointOfInterestEntity> pPoints) {		
+		this.coController.hideProgressDialog();
+    	ListPointsAdapter loAdapter = new ListPointsAdapter(this.getActivity(), pPoints);
+    	this.setAdapter(loAdapter);		
+	}
+
+	@Override
+	public void onLocationChanged(Location location) {				
+		this.coLastLocation = location;
+		if(location.hasAccuracy()){
+			if(location.getAccuracy() <= 40){
+				this.coController.getSiteListAsync();
+				LocationServices.FusedLocationApi.removeLocationUpdates(coGoogleApiClient, this);				
+			}
+		}
+		
+	}
+
+	@Override
+	public void onConnectionFailed(ConnectionResult result) {
+		
+	}
+
+	@Override
+	public void onConnected(Bundle connectionHint) {
+		coLocationRequest = LocationRequest.create();
+        coLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        coLocationRequest.setInterval(1000); // Update location every second
+        LocationServices.FusedLocationApi.requestLocationUpdates(coGoogleApiClient, coLocationRequest, this);
+        this.coController.showProgressDialog();
+	}
+
+	@Override
+	public void onConnectionSuspended(int cause) {
+		
+	}
+
+	@Override
+	public Location getCurrentLocation() {
+		this.coLastLocation = LocationServices.FusedLocationApi.getLastLocation(coGoogleApiClient);		
+		return this.coLastLocation;
+	}
+
+	public boolean googlePlusIsInstalled(){
+		int liErrorCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this.getActivity());
+		return liErrorCode == ConnectionResult.SUCCESS ? true : false;
+	}
+	
+	public void loadList(){		
+		//load the list when we connect with google play services
+    	coGoogleApiClient.connect();
+	}
+	
+	public void unloadList(){
+		coGoogleApiClient.disconnect();
 	}
 }

@@ -31,11 +31,11 @@ public class LoginModel extends BaseModel {
 			UserEntity loUser = null;
 			
 			if(!pData.equals("")){
-				JSONObject jsonObj = new JSONObject(pData);
-				String lsId = jsonObj.getString("USR_ID");
-				String lsPassword = jsonObj.getString("USR_PASWORD");
-				String lsNames = jsonObj.getString("USR_NAME");
-				int liGender = jsonObj.getInt("GND_ID");
+				JSONObject loJsonObj = new JSONObject(pData);
+				String lsId = loJsonObj.getString("USR_ID");
+				String lsPassword = loJsonObj.getString("USR_PASWORD");
+				String lsNames = loJsonObj.getString("USR_NAME");
+				int liGender = loJsonObj.getInt("GND_ID");
 				loUser = new UserEntity();
 				loUser.setEmail(lsId);
 				loUser.setPassword(lsPassword);

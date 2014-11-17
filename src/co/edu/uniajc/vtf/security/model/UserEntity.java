@@ -5,9 +5,13 @@ public class UserEntity {
 	private String csPassword;
 	private String csNames;
 	private int ciGender;
+
+	public String getUserName() {
+		return this.csEmail;
+	}
 	
 	public String getEmail() {
-		return csEmail;
+		return this.csEmail;
 	}
 	
 	public void setEmail(String pEmail) {

@@ -1,7 +1,5 @@
 package co.edu.uniajc.vtf.content;
 
-
-
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
@@ -16,6 +14,7 @@ import android.support.v4.view.ViewPager;
 import co.edu.uniajc.vtf.R;
 import co.edu.uniajc.vtf.security.ConfigLoginActivity;
 import co.edu.uniajc.vtf.security.model.LogoutListener;
+import co.edu.uniajc.vtf.utils.ResourcesManager;
 import co.edu.uniajc.vtf.utils.SessionManager;
 
 import com.facebook.Session;
@@ -23,7 +22,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
 
-public class SwipeContentActivity extends FragmentActivity  implements ActionBar.TabListener,GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,LogoutListener {
+public class SwipeContentActivity extends FragmentActivity  implements  ActionBar.TabListener,GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,LogoutListener {
 	private AppSectionsPagerAdapter coAppSectionsPagerAdapter;
 	private ViewPager coViewPager;
 	
@@ -40,14 +39,15 @@ public class SwipeContentActivity extends FragmentActivity  implements ActionBar
 		
 		//get the pager
 		this.coAppSectionsPagerAdapter = new AppSectionsPagerAdapter(this.getSupportFragmentManager(), this);
-		coViewPager = (ViewPager) findViewById(R.id.pagPagerContainer);
-		coViewPager.setAdapter(coAppSectionsPagerAdapter);
-		
+		this.coViewPager = (ViewPager) findViewById(R.id.pagPagerContainer);
+		this.coViewPager.setAdapter(coAppSectionsPagerAdapter);
+
 		//get the action bar
 		final ActionBar actionBar = this.getActionBar();
 		coViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
+            	//SwipeContentActivity.this.loadSitesList(position);
                 actionBar.setSelectedNavigationItem(position);
             }
         });	
@@ -55,12 +55,12 @@ public class SwipeContentActivity extends FragmentActivity  implements ActionBar
 		actionBar.setHomeButtonEnabled(false);
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		
-		actionBar.addTab(actionBar.newTab().setText("Sitios").setTabListener(this));
-		actionBar.addTab(actionBar.newTab().setText("Mapa").setTabListener(this));
-		actionBar.addTab(actionBar.newTab().setText("Cámara").setTabListener(this));
-		actionBar.addTab(actionBar.newTab().setText("Configuración").setTabListener(this));
+		ResourcesManager loResource = new ResourcesManager(this);		
+		actionBar.addTab(actionBar.newTab().setText(loResource.getStringResource(R.string.swipe_content_tab_site)).setTabListener(this));
+		actionBar.addTab(actionBar.newTab().setText(loResource.getStringResource(R.string.swipe_content_tab_map)).setTabListener(this));
+		actionBar.addTab(actionBar.newTab().setText(loResource.getStringResource(R.string.swipe_content_tab_ar)).setTabListener(this));
+		actionBar.addTab(actionBar.newTab().setText(loResource.getStringResource(R.string.swipe_content_tab_settings)).setTabListener(this));
 		
-
 		//get the google api client 
 		this.coApiClient = new GoogleApiClient.Builder(this)
 			.addConnectionCallbacks(this)
@@ -68,11 +68,16 @@ public class SwipeContentActivity extends FragmentActivity  implements ActionBar
 			.addApi(Plus.API)
 			.addScope(Plus.SCOPE_PLUS_PROFILE)
 			.build();		
-		
+
 	}
 	
 	public static class AppSectionsPagerAdapter extends FragmentPagerAdapter {
+        private Fragment mCurrentFragment;
 
+        public Fragment getCurrentFragment() {
+            return mCurrentFragment;
+        }
+        
 		private FragmentActivity coFragment;
 		public AppSectionsPagerAdapter(FragmentManager fm, FragmentActivity fragment) {
 			super(fm);
@@ -105,8 +110,8 @@ public class SwipeContentActivity extends FragmentActivity  implements ActionBar
 
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
-		this.coViewPager.setCurrentItem(tab.getPosition());
-		
+		this.coViewPager.setCurrentItem(tab.getPosition());		
+		this.loadSitesList(tab.getPosition());
 	}
 
 	@Override
@@ -208,5 +213,25 @@ public class SwipeContentActivity extends FragmentActivity  implements ActionBar
 	@Override
 	public void logout() {
 		this.deleteSesion();
-	}	
+	}
+
+	private void loadSitesList(int pPosition){
+    	//Load the fragment list on page select
+    	if(pPosition == 0){
+    		//this part is a selective loading for the list site fragment, because we need load when the user
+    		//swipe the tab and it select the tab 0
+       		String lsTag = "android:switcher:" + SwipeContentActivity.this.coViewPager.getId() + ":0";
+    		ListSitesFragment loListSitesFragment = (ListSitesFragment)this.getSupportFragmentManager().findFragmentByTag(lsTag);
+    		if(loListSitesFragment != null)
+    			loListSitesFragment.loadList();	        	
+    	}
+    	else {
+       		String lsTag = "android:switcher:" + SwipeContentActivity.this.coViewPager.getId() + ":0";
+    		ListSitesFragment loListSitesFragment = (ListSitesFragment)this.getSupportFragmentManager().findFragmentByTag(lsTag);
+    		if(loListSitesFragment != null)
+    			loListSitesFragment.unloadList();	                 		
+    	}		
+    	
+	}
+	
 }

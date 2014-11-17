@@ -7,9 +7,9 @@ import co.edu.uniajc.vtf.security.model.UserEntity;
 
 public class SessionManager {
 	
-	SharedPreferences coShared;
-	Context coContext;
-	Editor coEditor;
+	private SharedPreferences coShared;
+	private Context coContext;
+	private Editor coEditor;
 	private static final String PREF_NAME = "toguisSession";
 	private static final String KEY_NAMES = "names";
 	private static final String KEY_EMAIL = "email";
@@ -31,6 +31,10 @@ public class SessionManager {
 	}
 	
 	public String getEmail(){
+		return this.coShared.getString(KEY_EMAIL, "");
+	}
+	
+	public String getUserName(){
 		return this.coShared.getString(KEY_EMAIL, "");
 	}
 	
