@@ -1,6 +1,5 @@
 package co.edu.uniajc.vtf.utils;
 
-import co.edu.uniajc.vtf.security.model.UserEntity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -21,6 +20,7 @@ public class OptionsManager {
 	private static final String OPTION_FILTER_EVENT = "event";
 	private static final String OPTION_CITY = "cityId";
 	private static final String OPTION_RANGE_AREA = "area";
+	private static final String OPTION_SEARCH = "search";
 	
 	public OptionsManager(Context pContext){
 		this.coContext = pContext;
@@ -28,7 +28,7 @@ public class OptionsManager {
 		this.coEditor = this.coShared.edit();
 	}
 		
-	public int getLanguageId() {
+	/*public int getLanguageId() {
 		return this.coShared.getInt(OPTION_LANGUAGE, 1);
 	}
 	
@@ -72,6 +72,26 @@ public class OptionsManager {
 		return this.coShared.getInt(OPTION_RANGE_AREA, 10);
 	}
 
+	public String getSearch(){
+		return this.coShared.getString(OPTION_SEARCH, "");
+	}
+	*/
+	public OptionsEntity getOptions(){
+		OptionsEntity loOptions = new OptionsEntity();
+		loOptions.setLanguageId(this.coShared.getInt(OPTION_LANGUAGE, 1));
+		loOptions.setFilterMonument(this.coShared.getBoolean(OPTION_FILTER_MONUMENT, true));
+		loOptions.setFilterMuseum(this.coShared.getBoolean(OPTION_FILTER_MUSEUM, true));
+		loOptions.setFilterHotel(this.coShared.getBoolean(OPTION_FILTER_HOTEL, true));
+		loOptions.setFilterRestaurant(this.coShared.getBoolean(OPTION_FILTER_RESTAURANT, true));
+		loOptions.setFilterInterest(this.coShared.getBoolean(OPTION_FILTER_INTEREST, true));
+		loOptions.setFilterBuilding(this.coShared.getBoolean(OPTION_FILTER_BUILDING, true));
+		loOptions.setFilterTransport(this.coShared.getBoolean(OPTION_FILTER_TRANSPORT, true));
+		loOptions.setFilterEvent(this.coShared.getBoolean(OPTION_FILTER_EVENT, true));
+		loOptions.setCityId(this.coShared.getInt(OPTION_CITY, 1));
+		loOptions.setArea(this.coShared.getInt(OPTION_RANGE_AREA, 100));
+		loOptions.setSearch(this.coShared.getString(OPTION_SEARCH, ""));
+		return loOptions;
+	}
 	
 	public void createOptions(OptionsEntity pOptions){
 		if(this.coEditor != null){
@@ -86,6 +106,7 @@ public class OptionsManager {
 			this.coEditor.putBoolean(OPTION_FILTER_EVENT, pOptions.isFilterEvent());
 			this.coEditor.putInt(OPTION_CITY, pOptions.getCityId());
 			this.coEditor.putInt(OPTION_RANGE_AREA, pOptions.getArea());
+			this.coEditor.putString(OPTION_SEARCH, pOptions.getSearch());
 			this.coEditor.commit();
 		}
 	}

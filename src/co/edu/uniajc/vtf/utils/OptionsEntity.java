@@ -2,16 +2,17 @@ package co.edu.uniajc.vtf.utils;
 
 public class OptionsEntity {
 	private int ciLanguageId;
-	private boolean lboFilterMonument;
-	private boolean lboFilterMuseum;
-	private boolean lboFilterHotel;
-	private boolean FilterRestaurant;
-	private boolean FilterInterest;
-	private boolean FilterBuilding;
-	private boolean FilterTransport;
-	private boolean FilterEvent;
-	private int CityId;
-	private int Area;
+	private boolean cboFilterMonument;
+	private boolean cboFilterMuseum;
+	private boolean cboFilterHotel;
+	private boolean cboFilterRestaurant;
+	private boolean cboFilterInterest;
+	private boolean cboFilterBuilding;
+	private boolean cboFilterTransport;
+	private boolean cboFilterEvent;
+	private int ciCityId;
+	private int ciArea;
+	private String csSearch;
 	
 	public int getLanguageId() {
 		return ciLanguageId;
@@ -20,65 +21,72 @@ public class OptionsEntity {
 		ciLanguageId = languageId;
 	}
 	public boolean isFilterMonument() {
-		return lboFilterMonument;
+		return cboFilterMonument;
 	}
 	public void setFilterMonument(boolean filterMonument) {
-		lboFilterMonument = filterMonument;
+		cboFilterMonument = filterMonument;
 	}
 	public boolean isFilterMuseum() {
-		return lboFilterMuseum;
+		return cboFilterMuseum;
 	}
 	public void setFilterMuseum(boolean filterMuseum) {
-		lboFilterMuseum = filterMuseum;
+		cboFilterMuseum = filterMuseum;
 	}
 	public boolean isFilterHotel() {
-		return lboFilterHotel;
+		return cboFilterHotel;
 	}
 	public void setFilterHotel(boolean filterHotel) {
-		lboFilterHotel = filterHotel;
+		cboFilterHotel = filterHotel;
 	}
 	public boolean isFilterRestaurant() {
-		return FilterRestaurant;
+		return cboFilterRestaurant;
 	}
 	public void setFilterRestaurant(boolean filterRestaurant) {
-		FilterRestaurant = filterRestaurant;
+		cboFilterRestaurant = filterRestaurant;
 	}
 	public boolean isFilterInterest() {
-		return FilterInterest;
+		return cboFilterInterest;
 	}
 	public void setFilterInterest(boolean filterInterest) {
-		FilterInterest = filterInterest;
+		cboFilterInterest = filterInterest;
 	}
 	public boolean isFilterBuilding() {
-		return FilterBuilding;
+		return cboFilterBuilding;
 	}
 	public void setFilterBuilding(boolean filterBuilding) {
-		FilterBuilding = filterBuilding;
+		cboFilterBuilding = filterBuilding;
 	}
 	public boolean isFilterTransport() {
-		return FilterTransport;
+		return cboFilterTransport;
 	}
 	public void setFilterTransport(boolean filterTransport) {
-		FilterTransport = filterTransport;
+		cboFilterTransport = filterTransport;
 	}
 	public boolean isFilterEvent() {
-		return FilterEvent;
+		return cboFilterEvent;
 	}
 	public void setFilterEvent(boolean filterEvent) {
-		FilterEvent = filterEvent;
+		cboFilterEvent = filterEvent;
 	}
 	public int getCityId() {
-		return CityId;
+		return ciCityId;
 	}
 	public void setCityId(int cityId) {
-		CityId = cityId;
+		ciCityId = cityId;
 	}
 	public int getArea() {
-		return Area;
+		return ciArea;
 	}
 	public void setArea(int area) {
-		Area = area;
+		ciArea = area;
 	}
+	public String getSearch() {
+		return csSearch;
+	}
+	public void setSearch(String search) {
+		csSearch = search;
+	}
+	
 	
 	
 	

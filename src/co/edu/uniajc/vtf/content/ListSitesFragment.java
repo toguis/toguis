@@ -2,14 +2,21 @@ package co.edu.uniajc.vtf.content;
 
 import java.util.ArrayList;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -17,6 +24,8 @@ import co.edu.uniajc.vtf.R;
 import co.edu.uniajc.vtf.content.controller.ListSitesController;
 import co.edu.uniajc.vtf.content.interfaces.IListSites;
 import co.edu.uniajc.vtf.content.model.PointOfInterestEntity;
+import co.edu.uniajc.vtf.utils.OptionsEntity;
+import co.edu.uniajc.vtf.utils.OptionsManager;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -35,9 +44,10 @@ public class ListSitesFragment extends Fragment implements
 	private Location coLastLocation;
     private GoogleApiClient coGoogleApiClient;
     private LocationRequest coLocationRequest;
-
+    private boolean cboForceUpdate;
+    
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_sites_list, container, false);                
+        return inflater.inflate(R.layout.fragment_sites_list, container, false);        
     }
 	
     @Override
@@ -48,7 +58,9 @@ public class ListSitesFragment extends Fragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
-       	
+    	this.setHasOptionsMenu(true);    
+
+    	
         coGoogleApiClient = new GoogleApiClient.Builder(this.getActivity())
         .addConnectionCallbacks(this)
         .addOnConnectionFailedListener(this)
@@ -103,6 +115,7 @@ public class ListSitesFragment extends Fragment implements
 			else{
 				loView = convertView;
 			}
+			
 			PointOfInterestEntity loPoint = this.coData.get(position);
 			
 			TextView loTitle = (TextView)loView.findViewById(R.id.lblPointTitle);
@@ -142,7 +155,7 @@ public class ListSitesFragment extends Fragment implements
 			ImageView loImage = (ImageView)loView.findViewById(R.id.imgPoint);
 			loImage.setImageResource(liImage);
 			
-			ImageView loVisited =  (ImageView)loView.findViewById(R.id.imgPointVisited);
+			ImageView loVisited = (ImageView)loView.findViewById(R.id.imgPointVisited);
 			if(loPoint.isVisited()){		
 				loVisited.setImageResource(R.drawable.visited16);	
 			}
@@ -167,8 +180,8 @@ public class ListSitesFragment extends Fragment implements
 
 	@Override
 	public void setAdapter(ListPointsAdapter pAdapter) {
-		//unknown exception here, I dont know waht happen but
-		//I insert this ex block for protect the app over this bug.
+		//unknown exception here, I don't know what happen but
+		//I insert this ex block for protect the app against this bug.
 		try{
 	    	ListView loList = (ListView)this.getView().findViewById(R.id.lstPoints);
 	    	loList.setAdapter(pAdapter);			
@@ -196,7 +209,8 @@ public class ListSitesFragment extends Fragment implements
 		this.coLastLocation = location;
 		if(location.hasAccuracy()){
 			if(location.getAccuracy() <= 40){
-				this.coController.getSiteListAsync();
+				this.coController.getSiteListAsync(this.cboForceUpdate);
+				ListSitesFragment.this.cboForceUpdate = false; 
 				LocationServices.FusedLocationApi.removeLocationUpdates(coGoogleApiClient, this);				
 			}
 		}
@@ -210,11 +224,7 @@ public class ListSitesFragment extends Fragment implements
 
 	@Override
 	public void onConnected(Bundle connectionHint) {
-		coLocationRequest = LocationRequest.create();
-        coLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        coLocationRequest.setInterval(1000); // Update location every second
-        LocationServices.FusedLocationApi.requestLocationUpdates(coGoogleApiClient, coLocationRequest, this);
-        this.coController.showProgressDialog();
+		this.createLocationRequest();
 	}
 
 	@Override
@@ -241,4 +251,79 @@ public class ListSitesFragment extends Fragment implements
 	public void unloadList(){
 		coGoogleApiClient.disconnect();
 	}
+	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {		
+	    inflater.inflate(R.menu.menu_fragment_sites_list, menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.action_search:
+				Dialog loDialog = this.createDialog();
+				loDialog.show();
+		    	OptionsManager loOptions = new OptionsManager(this.getActivity()); 
+		    	OptionsEntity loOptionsData = loOptions.getOptions();
+		    	EditText loSearchControl = (EditText)loDialog.findViewById(R.id.txtSearch);
+		    	loSearchControl.setText(loOptionsData.getSearch());				
+				break;
+			case R.id.action_refresh:
+				this.createLocationRequest();
+				break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	
+	public Dialog createDialog(){
+    	LayoutInflater loInflater = this.getActivity().getLayoutInflater(); 	
+    	
+    	AlertDialog.Builder loAlert = new AlertDialog.Builder(getActivity());
+    	loAlert.setView(loInflater.inflate(R.layout.dialog_search, null));
+    	loAlert.setPositiveButton(R.string.general_menus_search, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+            	OptionsManager loOptions = new OptionsManager(ListSitesFragment.this.getActivity()); 
+            	OptionsEntity loOptionsData = loOptions.getOptions();
+            	EditText loSearchControl = (EditText)((AlertDialog)dialog).findViewById(R.id.txtSearch);
+            	loOptionsData.setSearch(loSearchControl.getText().toString());
+            	loOptions.createOptions(loOptionsData);
+            	ListSitesFragment.this.cboForceUpdate = true;
+            	ListSitesFragment.this.createLocationRequest();
+            }
+        });
+    	
+    	loAlert.setNegativeButton(R.string.general_menus_cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+            	dialog.cancel();
+            }
+        });
+    	
+    	loAlert.setNeutralButton(R.string.general_menus_clear, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+            	OptionsManager loOptions = new OptionsManager(ListSitesFragment.this.getActivity()); 
+            	OptionsEntity loOptionsData = loOptions.getOptions();
+            	loOptionsData.setSearch("");
+            	loOptions.createOptions(loOptionsData);
+            	EditText loSearchControl = (EditText)((AlertDialog)dialog).findViewById(R.id.txtSearch);
+            	loSearchControl.setText("");
+            	ListSitesFragment.this.cboForceUpdate = true;
+            	ListSitesFragment.this.createLocationRequest();            	
+            }
+        });	
+    	return loAlert.create();		
+    }
+	
+	
+	//here we create and call the location callback to get the current location
+	public void createLocationRequest(){
+		coLocationRequest = LocationRequest.create();
+        coLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        coLocationRequest.setInterval(1000); // Update location every second
+        LocationServices.FusedLocationApi.requestLocationUpdates(coGoogleApiClient, coLocationRequest, this);
+        this.coController.showProgressDialog();		
+	}
+	
 }

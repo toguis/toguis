@@ -33,10 +33,11 @@ public class ListSitesModel extends BaseModel{
 								 int pLanguage,
 								 double pLatitude,
 								 double pLongitude,
-								 int pMaxDistance)
+								 int pMaxDistance,
+								 String pSearch)
 	{
 		
-		String lsQueryUrl = super.csBaseUrl + "ToguisPoints.svc/get_pointsDistance?";
+		String lsQueryUrl = super.csBaseUrl + "ToguisPoints.svc/" + (pSearch.equals("") ? "get_pointsDistance?" : "search_points?");
 		StringBuilder lsParams = new StringBuilder();
 		lsParams.append("login=").append(pUserName).append("&");
 		lsParams.append("cityid=").append(pCityId).append("&");
@@ -52,6 +53,9 @@ public class ListSitesModel extends BaseModel{
 		lsParams.append("userlatitude=").append(pLatitude).append("&");
 		lsParams.append("userlongitude=").append(pLongitude).append("&");
 		lsParams.append("maxdistance=").append(pMaxDistance);
+		if(!pSearch.equals("")){
+			lsParams.append("&search=").append(pSearch);
+		}
 		lsQueryUrl += lsParams.toString();
 		super.csMethod = "getSiteListAsync";
 		RestAsyncTask loTask = new RestAsyncTask();

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/action_search"
+          android:icon="@drawable/search48"
+          android:title="@string/general_menus_search"/>
+    <item android:id="@+id/action_refresh"
+          android:icon="@drawable/refresh48"
+          android:title="@string/general_menus_refresh"/>    
+
+</menu>

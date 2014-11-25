@@ -12,6 +12,7 @@ import co.edu.uniajc.vtf.content.model.PointOfInterestEntity;
 import co.edu.uniajc.vtf.utils.AlertDialogManager;
 import co.edu.uniajc.vtf.utils.ExtendedApplicationContext;
 import co.edu.uniajc.vtf.utils.ModelListener;
+import co.edu.uniajc.vtf.utils.OptionsEntity;
 import co.edu.uniajc.vtf.utils.OptionsManager;
 import co.edu.uniajc.vtf.utils.ResourcesManager;
 import co.edu.uniajc.vtf.utils.SessionManager;
@@ -35,30 +36,34 @@ public class ListSitesController implements ModelListener{
 
 	public void getSiteListAsync(boolean pForceLoad){
 		SessionManager loSession = new SessionManager(((Fragment)this.coView).getActivity());  
-		OptionsManager loOptions = new OptionsManager(((Fragment)this.coView).getActivity()); 
-		String lsUserName = loSession.getUserName();
-		int liLanguage = loOptions.getLanguageId();
-		boolean lboMonument = loOptions.isFilterMonument();
-		boolean lboMuseum = loOptions.isFilterMuseum();
-		boolean lboBuilding = loOptions.isFilterBuilding();
-		boolean lboEvent = loOptions.isFilterEvent();
-		boolean lboHotel = loOptions.isFilterHotel();
-		boolean lboInterest = loOptions.isFilterInterest();
-		boolean lboRestaurant = loOptions.isFilterRestaurant();
-		boolean lboTransport = loOptions.isFilterTransport();
-		int liCityId = loOptions.getCityId();
-		int liArea = loOptions.getArea();
+		OptionsManager loOptions = new OptionsManager(((Fragment)this.coView).getActivity()); 		
+		String lsUserName = loSession.getUserName();		
+		OptionsEntity loOptionsData =  loOptions.getOptions();
+		
+		int liLanguage =loOptionsData.getLanguageId();
+		boolean lboMonument = loOptionsData.isFilterMonument();
+		boolean lboMuseum = loOptionsData.isFilterMuseum();
+		boolean lboBuilding = loOptionsData.isFilterBuilding();
+		boolean lboEvent = loOptionsData.isFilterEvent();
+		boolean lboHotel = loOptionsData.isFilterHotel();
+		boolean lboInterest = loOptionsData.isFilterInterest();
+		boolean lboRestaurant = loOptionsData.isFilterRestaurant();
+		boolean lboTransport = loOptionsData.isFilterTransport();
+		int liCityId = loOptionsData.getCityId();
+		int liArea = loOptionsData.getArea();
+		String lsSearch = loOptionsData.getSearch();
+		
 		Location loCurrentLocation = this.coView.getCurrentLocation();
 		if(!pForceLoad){					
 			if(this.coLastKnownLocation	== null){
 				this.coLastKnownLocation = loCurrentLocation;
-				this.coModel.getSiteListAsync(lsUserName, liCityId, lboMonument, lboMuseum, lboHotel, lboRestaurant, lboInterest, lboBuilding, lboTransport, lboEvent, liLanguage, loCurrentLocation.getLatitude(), loCurrentLocation.getLongitude(), liArea);
+				this.coModel.getSiteListAsync(lsUserName, liCityId, lboMonument, lboMuseum, lboHotel, lboRestaurant, lboInterest, lboBuilding, lboTransport, lboEvent, liLanguage, loCurrentLocation.getLatitude(), loCurrentLocation.getLongitude(), liArea, lsSearch);
 			}
 			else{
 				float lfDistance = loCurrentLocation.distanceTo(this.coLastKnownLocation);
 				if(lfDistance >= 50f){
 					this.coLastKnownLocation = loCurrentLocation;	
-					this.coModel.getSiteListAsync(lsUserName, liCityId, lboMonument, lboMuseum, lboHotel, lboRestaurant, lboInterest, lboBuilding, lboTransport, lboEvent, liLanguage, loCurrentLocation.getLatitude(), loCurrentLocation.getLongitude(), liArea);
+					this.coModel.getSiteListAsync(lsUserName, liCityId, lboMonument, lboMuseum, lboHotel, lboRestaurant, lboInterest, lboBuilding, lboTransport, lboEvent, liLanguage, loCurrentLocation.getLatitude(), loCurrentLocation.getLongitude(), liArea, lsSearch);
 				}
 				else{
 					ExtendedApplicationContext loContext = (ExtendedApplicationContext)((Fragment)this.coView).getActivity().getApplication();
@@ -67,13 +72,13 @@ public class ListSitesController implements ModelListener{
 						this.coView.setAdapterData(loPoints);
 					}
 					else{
-						this.coModel.getSiteListAsync(lsUserName, liCityId, lboMonument, lboMuseum, lboHotel, lboRestaurant, lboInterest, lboBuilding, lboTransport, lboEvent, liLanguage, loCurrentLocation.getLatitude(), loCurrentLocation.getLongitude(), liArea);
+						this.coModel.getSiteListAsync(lsUserName, liCityId, lboMonument, lboMuseum, lboHotel, lboRestaurant, lboInterest, lboBuilding, lboTransport, lboEvent, liLanguage, loCurrentLocation.getLatitude(), loCurrentLocation.getLongitude(), liArea, lsSearch);
 					}
 				}
 			}
 		}
 		else{
-			this.coModel.getSiteListAsync(lsUserName, liCityId, lboMonument, lboMuseum, lboHotel, lboRestaurant, lboInterest, lboBuilding, lboTransport, lboEvent, liLanguage, loCurrentLocation.getLatitude(), loCurrentLocation.getLongitude(), liArea);
+			this.coModel.getSiteListAsync(lsUserName, liCityId, lboMonument, lboMuseum, lboHotel, lboRestaurant, lboInterest, lboBuilding, lboTransport, lboEvent, liLanguage, loCurrentLocation.getLatitude(), loCurrentLocation.getLongitude(), liArea, lsSearch);
 		}
 	
 	}
@@ -109,6 +114,6 @@ public class ListSitesController implements ModelListener{
 		ResourcesManager loResource = new ResourcesManager(((Fragment)this.coView).getActivity());
 		AlertDialogManager.showAlertDialog(((Fragment)this.coView).getActivity(), loResource.getStringResource(R.string.general_message_error), loResource.getStringResource(R.string.general_db_error), AlertDialogManager.ERROR);			
 		this.coProgressDialog.dismiss();
-	}
+	}	
 	
 }
