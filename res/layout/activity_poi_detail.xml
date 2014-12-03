@@ -1,0 +1,182 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/tile_repeat"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="co.edu.uniajc.vtf.content.PoiDetailActivity" >
+
+    <TextView
+        android:id="@+id/lblDetailTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="El gato del rio"
+        android:textColor="#cccccc"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imgSep"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:contentDescription="@string/poi_detail_image_description"
+        android:scaleType="fitXY"
+        android:src="@drawable/line" />
+
+    <ImageView
+        android:id="@+id/imgImagePoi"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginBottom="2dp"
+        android:background="#cccccc"
+        android:contentDescription="@string/poi_detail_image_description"
+        android:padding="5dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/poi_1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp" >
+
+        <ImageButton
+            android:id="@+id/btnFavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:contentDescription="@string/poi_detail_image_description"
+            android:paddingTop="2dp"
+            android:src="@drawable/favorite48" />
+
+        <ImageButton
+            android:id="@+id/btnVisited"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:contentDescription="@string/poi_detail_image_description"
+            android:paddingTop="2dp"
+            android:src="@drawable/no_visited48" />
+
+        <ImageButton
+            android:id="@+id/btnGoMap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:contentDescription="@string/poi_detail_image_description"
+            android:paddingTop="2dp"
+            android:src="@drawable/go_map48" />
+
+        <ImageButton
+            android:id="@+id/btnComments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:contentDescription="@string/poi_detail_image_description"
+            android:paddingTop="2dp"
+            android:src="@drawable/message48" />
+        
+        <ImageButton
+            android:id="@+id/btnRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:contentDescription="@string/poi_detail_image_description"
+            android:paddingTop="2dp"
+            android:src="@drawable/star48" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imgSep2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:contentDescription="@string/poi_detail_image_description"
+        android:scaleType="fitXY"
+        android:src="@drawable/line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:paddingBottom="7dp"
+        android:paddingTop="7dp" >
+
+        <TextView
+            android:id="@+id/txtRatingLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center_vertical"
+            android:layout_marginRight="15dp"
+            android:gravity="center"
+            android:text="@string/poi_detail_txt_rating_text"
+            android:textColor="#cccccc"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <RatingBar
+            android:id="@+id/rtbRating"
+            style="@style/toguisRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:isIndicator="true"
+            android:maxHeight="22dp"
+            android:minHeight="22dp"
+            android:numStars="5" />
+
+        <TextView
+            android:id="@+id/lblRating"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginLeft="10dp"
+            android:gravity="end"
+            android:text="0.0"
+            android:textColor="#cccccc"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txtDescriptionLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:gravity="center"
+        android:text="@string/poi_detail_txt_description_text"
+        android:textColor="#cccccc"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+	
+
+
+    <ScrollView
+        android:id="@+id/scrContentDescription"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+    	android:fillViewport="true" >
+	
+	      <TextView
+	          android:id="@+id/txtDescription"
+	          android:layout_width="fill_parent"
+	          android:layout_height="wrap_content"
+	          android:text="Distant cousins of the Flesh Eaters, they have lived deep beneath the surface of the Lost Land for centuries. After being exiled from their former home, they took to the mountains of Galyanna for shelter. Legend tells that they can hear the beat of a heart and smell the blood of an intruder from miles away. Like their cousins, the Flesh Eaters, they also lust for warm flesh and blood and will occasionally journey to the surface under the cover of night in search of helpless victims to drag back to their lair for them to either devour or feed to their giant spider pets. "
+	          android:textColor="#cccccc" />
+  
+    </ScrollView>
+
+</LinearLayout>

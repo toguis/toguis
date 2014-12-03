@@ -16,20 +16,16 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_GPS" />
+
     <application
+        android:name=".utils.ExtendedApplicationContext"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:name="co.edu.uniajc.vtf.utils.ExtendedApplicationContext"
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".security.LoginActivity"
@@ -68,13 +64,17 @@
             android:label="@string/title_activity_main2" >
         </activity>
         <activity
-            android:name="co.edu.uniajc.vtf.content.SwipeContentActivity"
+            android:name=".content.SwipeContentActivity"
             android:label="@string/title_activity_swipe_content" >
+        </activity>
+        <activity
+            android:name="co.edu.uniajc.vtf.content.PoiDetailActivity"
+            android:label="@string/poi_detail_title_activity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>            
+            </intent-filter>           
         </activity>
     </application>
 

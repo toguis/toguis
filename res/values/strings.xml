@@ -53,7 +53,7 @@
     <string name="general_db_error">Ha ocurrido un error al acceder al servicio</string>
     <string name="general_web_service_base_url">http://192.168.1.100/ToguisWebServices/</string>
     <string name="general_google_play_not_installed">Google play debe estar instalado</string>
-    <string name="general_progress_message">Cargando puntos de interes, por favor espera&#8230;</string>    
+    <string name="general_progress_message">Cargando puntos de interes, por favor espera&#8230;</string>
     <string name="title_activity_forgot_password">Recuperar contraseña</string>
     <string name="forgot_password_lbl_message_text">Por favor escribe el email que usas para ingresar</string>
     <string name="forgot_password_txt_verify_email_hint">email@domain.com</string>
@@ -68,14 +68,18 @@
     <string name="title_section3">Section 3</string>
     <string name="title_activity_swipe_content">Toguis</string>
     <string name="list_point_item_img_point_content_description">point image</string>
-	<string name="list_point_item_lbl_point_title_text">point title</string>
-	<string name="list_point_item_lbl_point_desc_text">point description</string>
-	<string name="general_menus_search">Buscar</string>
-	<string name="general_menus_cancel">Cancelar</string>
-	<string name="general_menus_clear">Limpiar</string>
-	<string name="general_menus_refresh">Refrescar</string>
-	<string name="swipe_content_tab_site">Sitios</string>
-	<string name="swipe_content_tab_map">Mapa</string>
-	<string name="swipe_content_tab_ar">Realidad RA</string>
-	<string name="swipe_content_tab_settings">Configuración</string>
+    <string name="list_point_item_lbl_point_title_text">point title</string>
+    <string name="list_point_item_lbl_point_desc_text">point description</string>
+    <string name="general_menus_search">Buscar</string>
+    <string name="general_menus_cancel">Cancelar</string>
+    <string name="general_menus_clear">Limpiar</string>
+    <string name="general_menus_refresh">Refrescar</string>
+    <string name="swipe_content_tab_site">Sitios</string>
+    <string name="swipe_content_tab_map">Mapa</string>
+    <string name="swipe_content_tab_ar">Realidad RA</string>
+    <string name="swipe_content_tab_settings">Configuración</string>
+    <string name="poi_detail_title_activity">PoiDetailActivity</string>
+	<string name="poi_detail_image_description">image placeholder</string>
+	<string name="poi_detail_txt_rating_text">Puntaje: </string>
+	<string name="poi_detail_txt_description_text">Descripción: </string>
 </resources>

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.location.Location;
@@ -26,6 +27,7 @@ import co.edu.uniajc.vtf.content.interfaces.IListSites;
 import co.edu.uniajc.vtf.content.model.PointOfInterestEntity;
 import co.edu.uniajc.vtf.utils.OptionsEntity;
 import co.edu.uniajc.vtf.utils.OptionsManager;
+import co.edu.uniajc.vtf.utils.ResourcesManager;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -45,6 +47,7 @@ public class ListSitesFragment extends Fragment implements
     private GoogleApiClient coGoogleApiClient;
     private LocationRequest coLocationRequest;
     private boolean cboForceUpdate;
+    private ProgressDialog coProgressDialog;
     
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_sites_list, container, false);        
@@ -59,8 +62,10 @@ public class ListSitesFragment extends Fragment implements
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	this.setHasOptionsMenu(true);    
-
-    	
+		ResourcesManager loResource = new ResourcesManager(this.getActivity());
+		this.coProgressDialog = new ProgressDialog(this.getActivity());
+		this.coProgressDialog.setMessage(loResource.getStringResource(R.string.general_progress_message));
+		
         coGoogleApiClient = new GoogleApiClient.Builder(this.getActivity())
         .addConnectionCallbacks(this)
         .addOnConnectionFailedListener(this)
@@ -69,7 +74,8 @@ public class ListSitesFragment extends Fragment implements
             	
     	this.coController = new ListSitesController(this);	
     	this.coLastLocation = null;    	
-    	this.loadList();
+    	ListSitesFragment.this.cboForceUpdate = true;
+    	this.loadList(LoadActions.CONNECT_AND_LOAD);
     }
     
     @Override
@@ -173,9 +179,7 @@ public class ListSitesFragment extends Fragment implements
 			}
 
 			return loView;
-		}
-
-	
+		}	
     }
 
 	@Override
@@ -199,7 +203,7 @@ public class ListSitesFragment extends Fragment implements
 
 	@Override
 	public void setAdapterData(ArrayList<PointOfInterestEntity> pPoints) {		
-		this.coController.hideProgressDialog();
+		this.hideProgressDialog();
     	ListPointsAdapter loAdapter = new ListPointsAdapter(this.getActivity(), pPoints);
     	this.setAdapter(loAdapter);		
 	}
@@ -210,11 +214,10 @@ public class ListSitesFragment extends Fragment implements
 		if(location.hasAccuracy()){
 			if(location.getAccuracy() <= 40){
 				this.coController.getSiteListAsync(this.cboForceUpdate);
-				ListSitesFragment.this.cboForceUpdate = false; 
-				LocationServices.FusedLocationApi.removeLocationUpdates(coGoogleApiClient, this);				
+				LocationServices.FusedLocationApi.removeLocationUpdates(coGoogleApiClient, this);	
+				this.cboForceUpdate = false;
 			}
-		}
-		
+		}		
 	}
 
 	@Override
@@ -243,13 +246,26 @@ public class ListSitesFragment extends Fragment implements
 		return liErrorCode == ConnectionResult.SUCCESS ? true : false;
 	}
 	
-	public void loadList(){		
-		//load the list when we connect with google play services
-    	coGoogleApiClient.connect();
+	//load the list when we connect with google play services
+	public void loadList(LoadActions pLoadActions){
+		if(pLoadActions == LoadActions.CONNECT_AND_LOAD){
+			this.coGoogleApiClient.connect();
+		}
+		else if(pLoadActions == LoadActions.LOAD_DATA){
+			if(this.coGoogleApiClient.isConnected()){
+				this.createLocationRequest();				
+			}
+			else{
+				this.coGoogleApiClient.connect();
+			}
+		}
+		else if(pLoadActions == LoadActions.LOAD_CACHE){
+			this.coController.getSiteListAsync(this.cboForceUpdate);
+		}
 	}
 	
 	public void unloadList(){
-		coGoogleApiClient.disconnect();
+		this.coGoogleApiClient.disconnect();
 	}
 	
 	@Override
@@ -269,7 +285,8 @@ public class ListSitesFragment extends Fragment implements
 		    	loSearchControl.setText(loOptionsData.getSearch());				
 				break;
 			case R.id.action_refresh:
-				this.createLocationRequest();
+				ListSitesFragment.this.cboForceUpdate = true;
+				this.loadList(LoadActions.LOAD_DATA);
 				break;
 		}
 		return super.onOptionsItemSelected(item);
@@ -289,7 +306,7 @@ public class ListSitesFragment extends Fragment implements
             	loOptionsData.setSearch(loSearchControl.getText().toString());
             	loOptions.createOptions(loOptionsData);
             	ListSitesFragment.this.cboForceUpdate = true;
-            	ListSitesFragment.this.createLocationRequest();
+            	ListSitesFragment.this.loadList(LoadActions.LOAD_DATA);
             }
         });
     	
@@ -310,7 +327,7 @@ public class ListSitesFragment extends Fragment implements
             	EditText loSearchControl = (EditText)((AlertDialog)dialog).findViewById(R.id.txtSearch);
             	loSearchControl.setText("");
             	ListSitesFragment.this.cboForceUpdate = true;
-            	ListSitesFragment.this.createLocationRequest();            	
+            	ListSitesFragment.this.loadList(LoadActions.LOAD_DATA);            	
             }
         });	
     	return loAlert.create();		
@@ -318,12 +335,25 @@ public class ListSitesFragment extends Fragment implements
 	
 	
 	//here we create and call the location callback to get the current location
-	public void createLocationRequest(){
+	private void createLocationRequest(){
 		coLocationRequest = LocationRequest.create();
         coLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         coLocationRequest.setInterval(1000); // Update location every second
         LocationServices.FusedLocationApi.requestLocationUpdates(coGoogleApiClient, coLocationRequest, this);
-        this.coController.showProgressDialog();		
+        this.showProgressDialog();		
 	}
 	
+	private void showProgressDialog(){
+		this.coProgressDialog.show();
+	}
+
+	private void hideProgressDialog(){
+		this.coProgressDialog.dismiss();
+	}
+
+	public enum LoadActions{
+		CONNECT_AND_LOAD,
+		LOAD_DATA,
+		LOAD_CACHE
+	}
 }

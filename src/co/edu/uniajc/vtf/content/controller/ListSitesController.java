@@ -54,7 +54,23 @@ public class ListSitesController implements ModelListener{
 		String lsSearch = loOptionsData.getSearch();
 		
 		Location loCurrentLocation = this.coView.getCurrentLocation();
-		if(!pForceLoad){					
+		if(pForceLoad){
+			this.coModel.getSiteListAsync(lsUserName, liCityId, lboMonument, lboMuseum, lboHotel, lboRestaurant, lboInterest, lboBuilding, lboTransport, lboEvent, liLanguage, loCurrentLocation.getLatitude(), loCurrentLocation.getLongitude(), liArea, lsSearch);
+		}
+		else{
+			ExtendedApplicationContext loContext = (ExtendedApplicationContext)((Fragment)this.coView).getActivity().getApplication();
+			ArrayList<PointOfInterestEntity> loPoints = loContext.getBufferPoints();	
+			if(loPoints != null){
+				this.coView.setAdapterData(loPoints);		
+			}
+			else if(loCurrentLocation != null){
+				this.coModel.getSiteListAsync(lsUserName, liCityId, lboMonument, lboMuseum, lboHotel, lboRestaurant, lboInterest, lboBuilding, lboTransport, lboEvent, liLanguage, loCurrentLocation.getLatitude(), loCurrentLocation.getLongitude(), liArea, lsSearch);
+			}			
+		}
+		
+		
+		
+		/*if(!pForceLoad){					
 			if(this.coLastKnownLocation	== null){
 				this.coLastKnownLocation = loCurrentLocation;
 				this.coModel.getSiteListAsync(lsUserName, liCityId, lboMonument, lboMuseum, lboHotel, lboRestaurant, lboInterest, lboBuilding, lboTransport, lboEvent, liLanguage, loCurrentLocation.getLatitude(), loCurrentLocation.getLongitude(), liArea, lsSearch);
@@ -79,7 +95,7 @@ public class ListSitesController implements ModelListener{
 		}
 		else{
 			this.coModel.getSiteListAsync(lsUserName, liCityId, lboMonument, lboMuseum, lboHotel, lboRestaurant, lboInterest, lboBuilding, lboTransport, lboEvent, liLanguage, loCurrentLocation.getLatitude(), loCurrentLocation.getLongitude(), liArea, lsSearch);
-		}
+		}*/
 	
 	}
 	
@@ -91,14 +107,6 @@ public class ListSitesController implements ModelListener{
 		ExtendedApplicationContext loContext = (ExtendedApplicationContext)((Fragment)this.coView).getActivity().getApplication();
 		loContext.setBufferPoints(pPoints);		
 		this.coView.setAdapterData(pPoints);
-	}
-	
-	public void showProgressDialog(){
-		this.coProgressDialog.show();
-	}
-	
-	public void hideProgressDialog(){
-		this.coProgressDialog.dismiss();
 	}
 	
 	@SuppressWarnings("unchecked")

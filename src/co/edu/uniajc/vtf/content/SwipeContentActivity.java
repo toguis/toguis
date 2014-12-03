@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import co.edu.uniajc.vtf.R;
+import co.edu.uniajc.vtf.content.ListSitesFragment.LoadActions;
 import co.edu.uniajc.vtf.security.ConfigLoginActivity;
 import co.edu.uniajc.vtf.security.model.LogoutListener;
 import co.edu.uniajc.vtf.utils.ResourcesManager;
@@ -180,7 +181,7 @@ public class SwipeContentActivity extends FragmentActivity  implements  ActionBa
 		super.onStop();
 	    if (this.coApiClient.isConnected()) {
 	    	this.coApiClient.disconnect();
-	     }
+	    }
 	}
 	
 	@Override
@@ -219,11 +220,11 @@ public class SwipeContentActivity extends FragmentActivity  implements  ActionBa
     	//Load the fragment list on page select
     	if(pPosition == 0){
     		//this part is a selective loading for the list site fragment, because we need load when the user
-    		//swipe the tab and it select the tab 0
+    		//swipe the tab and the same select the tab 0
        		String lsTag = "android:switcher:" + SwipeContentActivity.this.coViewPager.getId() + ":0";
     		ListSitesFragment loListSitesFragment = (ListSitesFragment)this.getSupportFragmentManager().findFragmentByTag(lsTag);
     		if(loListSitesFragment != null)
-    			loListSitesFragment.loadList();	        	
+    			loListSitesFragment.loadList(LoadActions.LOAD_CACHE);	        	
     	}
     	else {
        		String lsTag = "android:switcher:" + SwipeContentActivity.this.coViewPager.getId() + ":0";

@@ -11,8 +11,7 @@ import co.edu.uniajc.vtf.utils.ModelListener;
 import co.edu.uniajc.vtf.utils.RestAsyncTask;
 
 public class ListSitesModel extends BaseModel{
-	private ArrayList<PointOfInterestEntity> coPoint;
-	
+
 	public ListSitesModel(String pBaseUrl) {
 		super.csBaseUrl = pBaseUrl;
 		super.csMethod = "";
