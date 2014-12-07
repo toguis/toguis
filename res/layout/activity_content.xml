@@ -4,6 +4,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/tile_repeat"
     android:orientation="vertical"
     tools:context="co.edu.uniajc.vtf.ContentActivity"
     tools:ignore="MergeRootFrame" >

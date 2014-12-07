@@ -132,8 +132,6 @@ public class ListSitesModel extends BaseModel{
 		for (ModelListener item : this.coModelListener){
 			item.onError(error, 0);
 		}	
-	}
-	
-	
+	}	
 	
 }

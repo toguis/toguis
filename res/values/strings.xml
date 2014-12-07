@@ -54,6 +54,8 @@
     <string name="general_web_service_base_url">http://192.168.1.100/ToguisWebServices/</string>
     <string name="general_google_play_not_installed">Google play debe estar instalado</string>
     <string name="general_progress_message">Cargando puntos de interes, por favor espera&#8230;</string>
+    <string name="general_toggle_button_text"></string>
+    
     <string name="title_activity_forgot_password">Recuperar contraseña</string>
     <string name="forgot_password_lbl_message_text">Por favor escribe el email que usas para ingresar</string>
     <string name="forgot_password_txt_verify_email_hint">email@domain.com</string>
@@ -82,4 +84,5 @@
 	<string name="poi_detail_image_description">image placeholder</string>
 	<string name="poi_detail_txt_rating_text">Puntaje: </string>
 	<string name="poi_detail_txt_description_text">Descripción: </string>
+	
 </resources>

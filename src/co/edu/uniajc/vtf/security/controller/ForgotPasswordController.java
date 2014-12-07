@@ -71,9 +71,9 @@ public class ForgotPasswordController implements ModelListener{
 	
 	public void navigateHome(MenuItem item){
 		switch (item.getItemId()) {
-		case android.R.id.home:
-			Intent loUpIntent = new Intent((Activity)this.coView, ConfigLoginActivity.class);
-			NavUtils.navigateUpTo((Activity)this.coView, loUpIntent);
+			case android.R.id.home:
+				Intent loUpIntent = new Intent((Activity)this.coView, ConfigLoginActivity.class);
+				NavUtils.navigateUpTo((Activity)this.coView, loUpIntent);
 		}
 	}
 

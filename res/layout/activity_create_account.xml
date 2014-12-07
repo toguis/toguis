@@ -3,6 +3,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/tile_repeat"
     tools:context="co.edu.uniajc.vtf.security.CreateAccountActivity"
     tools:ignore="MergeRootFrame" >
 
@@ -28,7 +29,8 @@
         android:layout_alignBaseline="@+id/txtEmail"
         android:layout_alignBottom="@+id/txtEmail"
         android:layout_alignParentLeft="true"
-        android:text="@string/create_account_lbl_email_text" />
+        android:text="@string/create_account_lbl_email_text"
+        android:textColor="#cccccc" />
 
     <EditText
         android:id="@+id/txtPassword"
@@ -50,7 +52,8 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/txtEmail"
         android:layout_marginTop="18dp"
-        android:text="@string/create_account_lbl_password_text" />
+        android:text="@string/create_account_lbl_password_text"
+        android:textColor="#cccccc" />
 
     <TextView
         android:id="@+id/lblRepeatPassword"
@@ -59,7 +62,8 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/txtPassword"
         android:layout_marginTop="24dp"
-        android:text="@string/create_account_lbl_repeat_password_text" />
+        android:text="@string/create_account_lbl_repeat_password_text"
+        android:textColor="#cccccc" />
 
     <EditText
         android:id="@+id/txtRepeatPassword"
@@ -81,7 +85,8 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/txtRepeatPassword"
         android:layout_marginTop="27dp"
-        android:text="@string/create_account_lbl_names_text" />
+        android:text="@string/create_account_lbl_names_text"
+        android:textColor="#cccccc" />
 
     <EditText
         android:id="@+id/txtNames"
@@ -102,7 +107,8 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/txtNames"
         android:layout_marginTop="22dp"
-        android:text="@string/create_account_lbl_gender_text" />
+        android:text="@string/create_account_lbl_gender_text"
+        android:textColor="#cccccc" />
 
     <RadioGroup
         android:id="@+id/radioGroup1"
@@ -116,14 +122,17 @@
             android:id="@+id/rbtFemale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/create_account_rbt_female_text" />
+            android:text="@string/create_account_rbt_female_text"
+            android:textColor="#cccccc" />
 
         <RadioButton
             android:id="@+id/rbtMale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="@string/create_account_rbt_male_text" />
+            android:text="@string/create_account_rbt_male_text"
+            android:textColor="#cccccc" />
+
     </RadioGroup>
 
     <Button

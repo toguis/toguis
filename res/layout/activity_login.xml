@@ -3,6 +3,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/tile_repeat"
     tools:context="co.edu.uniajc.vtf.LoginActivity"
     tools:ignore="MergeRootFrame" >
 
@@ -27,7 +28,8 @@
         android:layout_alignBaseline="@+id/txtEmail"
         android:layout_alignBottom="@+id/txtEmail"
         android:layout_alignParentLeft="true"
-        android:text="@string/login_lbl_email_text" />
+        android:text="@string/login_lbl_email_text"
+        android:textColor="#cccccc" />
 
     <EditText
         android:id="@+id/txtPassword"
@@ -48,7 +50,8 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/txtEmail"
         android:layout_marginTop="18dp"
-        android:text="@string/login_lbl_password_text" />
+        android:text="@string/login_lbl_password_text"
+        android:textColor="#cccccc" />
 
     <Button
         android:id="@+id/btnSignIn"

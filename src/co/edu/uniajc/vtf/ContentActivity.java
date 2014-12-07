@@ -16,24 +16,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
 
 public class ContentActivity extends Activity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
-/*	private UiLifecycleHelper coUiHelper;
-    private Session.StatusCallback coCallback = new Session.StatusCallback() {
-        @Override
-        public void call(Session session, SessionState state, Exception exception) {
-            onFacebookSessionStateChange(session, state, exception);
-        }
-    };
-	protected void onFacebookSessionStateChange(Session session, SessionState state,Exception exception) {
-	    if (state.isOpened()) {
-	    	
-	    } else if (state.isClosed()) {
-	    	SessionManager se = new SessionManager(this);
-	    	se.endSession();
-	    	Intent intt = new Intent(this, ConfigLoginActivity.class);
-	    	this.startActivity(intt);
-	    	this.finish();
-	    }	
-	}*/
+
 	private static final int RC_SIGN_IN = 0;
     private GoogleApiClient coApiClient;
     private boolean mIntentInProgress;
@@ -72,8 +55,7 @@ public class ContentActivity extends Activity implements GoogleApiClient.Connect
 		}
 		
 		se.endSession();
-		
-		
+				
     	Intent intt = new Intent(this, ConfigLoginActivity.class);
     	this.startActivity(intt);
     	this.finish();		

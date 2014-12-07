@@ -16,6 +16,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -56,6 +58,12 @@ public class ListSitesFragment extends Fragment implements
     @Override
     public void onActivityCreated(Bundle state) {
     	super.onActivityCreated(state);
+    	ListView loList = (ListView)this.getView().findViewById(R.id.lstPoints);
+    	loList.setOnItemClickListener(new OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            	ListSitesFragment.this.onClickListItem(parent,view,position,id);
+            }
+          });    	
     }
     	
     @Override
@@ -65,7 +73,7 @@ public class ListSitesFragment extends Fragment implements
 		ResourcesManager loResource = new ResourcesManager(this.getActivity());
 		this.coProgressDialog = new ProgressDialog(this.getActivity());
 		this.coProgressDialog.setMessage(loResource.getStringResource(R.string.general_progress_message));
-		
+		this.coProgressDialog.setCanceledOnTouchOutside(false);
         coGoogleApiClient = new GoogleApiClient.Builder(this.getActivity())
         .addConnectionCallbacks(this)
         .addOnConnectionFailedListener(this)
@@ -76,6 +84,12 @@ public class ListSitesFragment extends Fragment implements
     	this.coLastLocation = null;    	
     	ListSitesFragment.this.cboForceUpdate = true;
     	this.loadList(LoadActions.CONNECT_AND_LOAD);
+    	 
+    }
+    
+    public void onClickListItem(AdapterView<?> parent, View view, int position, long id){
+    	int liPoiId = ((PointOfInterestEntity)this.getAdapter().getItem(position)).getId();
+    	this.coController.navigatePoiDetail(liPoiId);
     }
     
     @Override
@@ -86,8 +100,15 @@ public class ListSitesFragment extends Fragment implements
     @Override
     public void onStop() {
     	super.onStop();
+    	this.hideProgressDialog();
     }
     
+       @Override
+    public void onPause() {
+    	super.onPause();
+    	this.hideProgressDialog();
+    }
+       
     public static class ListPointsAdapter extends BaseAdapter{
     	private Context coContext;
     	private ArrayList<PointOfInterestEntity> coData; 
@@ -166,8 +187,7 @@ public class ListSitesFragment extends Fragment implements
 				loVisited.setImageResource(R.drawable.visited16);	
 			}
 			else{
-				loVisited.setImageResource(R.drawable.empty16);	
-				
+				loVisited.setImageResource(R.drawable.empty16);					
 			}
 			
 			ImageView loFavorite =  (ImageView)loView.findViewById(R.id.imgPointFavorite);
@@ -278,6 +298,7 @@ public class ListSitesFragment extends Fragment implements
 		switch (item.getItemId()) {
 			case R.id.action_search:
 				Dialog loDialog = this.createDialog();
+				loDialog.setCanceledOnTouchOutside(false);
 				loDialog.show();
 		    	OptionsManager loOptions = new OptionsManager(this.getActivity()); 
 		    	OptionsEntity loOptionsData = loOptions.getOptions();
@@ -307,6 +328,7 @@ public class ListSitesFragment extends Fragment implements
             	loOptions.createOptions(loOptionsData);
             	ListSitesFragment.this.cboForceUpdate = true;
             	ListSitesFragment.this.loadList(LoadActions.LOAD_DATA);
+            	dialog.dismiss();
             }
         });
     	
@@ -314,6 +336,7 @@ public class ListSitesFragment extends Fragment implements
             @Override
             public void onClick(DialogInterface dialog, int id) {
             	dialog.cancel();
+            	dialog.dismiss();
             }
         });
     	
@@ -327,9 +350,11 @@ public class ListSitesFragment extends Fragment implements
             	EditText loSearchControl = (EditText)((AlertDialog)dialog).findViewById(R.id.txtSearch);
             	loSearchControl.setText("");
             	ListSitesFragment.this.cboForceUpdate = true;
-            	ListSitesFragment.this.loadList(LoadActions.LOAD_DATA);            	
+            	ListSitesFragment.this.loadList(LoadActions.LOAD_DATA);   
+            	dialog.dismiss();
             }
         });	
+    	loAlert.setCancelable(false);
     	return loAlert.create();		
     }
 	

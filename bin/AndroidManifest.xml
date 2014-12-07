@@ -26,6 +26,11 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>                      
         </activity>
         <activity
             android:name=".security.LoginActivity"
@@ -69,12 +74,7 @@
         </activity>
         <activity
             android:name="co.edu.uniajc.vtf.content.PoiDetailActivity"
-            android:label="@string/poi_detail_title_activity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>           
+            android:label="@string/poi_detail_title_activity" >                         
         </activity>
     </application>
 

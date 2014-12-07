@@ -46,25 +46,37 @@
         android:layout_width="match_parent"
         android:layout_height="35dp" >
 
-        <ImageButton
-            android:id="@+id/btnFavorite"
+        <ToggleButton
+            android:id="@+id/tglFavorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
-            android:contentDescription="@string/poi_detail_image_description"
+            android:drawableTop="@drawable/toguis_favorite_toggle_button"
+            android:gravity="center"
+            android:minHeight="32dip"
+            android:minWidth="32dip"
+            android:onClick="onClick_SetFavorite"
             android:paddingTop="2dp"
-            android:src="@drawable/favorite48" />
+            android:text="@string/general_toggle_button_text"
+            android:textOff="@string/general_toggle_button_text"
+            android:textOn="@string/general_toggle_button_text" />
 
-        <ImageButton
-            android:id="@+id/btnVisited"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@null"
-            android:contentDescription="@string/poi_detail_image_description"
-            android:paddingTop="2dp"
-            android:src="@drawable/no_visited48" />
+         <ToggleButton
+             android:id="@+id/tglVisited"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_weight="1"
+             android:background="@null"
+             android:drawableTop="@drawable/toguis_visited_toggle_button"
+             android:gravity="center"
+             android:minHeight="32dip"
+             android:minWidth="32dip"
+             android:onClick="onClick_SetVisited"
+             android:paddingTop="2dp"
+             android:text="@string/general_toggle_button_text"
+             android:textOff="@string/general_toggle_button_text"
+             android:textOn="@string/general_toggle_button_text" />
 
         <ImageButton
             android:id="@+id/btnGoMap"
@@ -171,7 +183,7 @@
     	android:fillViewport="true" >
 	
 	      <TextView
-	          android:id="@+id/txtDescription"
+	          android:id="@+id/txtDetailDescription"
 	          android:layout_width="fill_parent"
 	          android:layout_height="wrap_content"
 	          android:text="Distant cousins of the Flesh Eaters, they have lived deep beneath the surface of the Lost Land for centuries. After being exiled from their former home, they took to the mountains of Galyanna for shelter. Legend tells that they can hear the beat of a heart and smell the blood of an intruder from miles away. Like their cousins, the Flesh Eaters, they also lust for warm flesh and blood and will occasionally journey to the surface under the cover of night in search of helpless victims to drag back to their lair for them to either devour or feed to their giant spider pets. "

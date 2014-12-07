@@ -69,7 +69,7 @@ public class SwipeContentActivity extends FragmentActivity  implements  ActionBa
 			.addApi(Plus.API)
 			.addScope(Plus.SCOPE_PLUS_PROFILE)
 			.build();		
-
+		
 	}
 	
 	public static class AppSectionsPagerAdapter extends FragmentPagerAdapter {
