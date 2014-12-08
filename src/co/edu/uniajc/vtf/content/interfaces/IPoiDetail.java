@@ -11,5 +11,8 @@ public interface IPoiDetail {
 	boolean isFavorite();
 	void setVisited(boolean pWasVisited);
 	boolean wasVisited();
-	
+	void hideProgressDialog();
+	double getPersonalRating();
+	void setPersonalRating(double pRating);
+	void loadData();
 }

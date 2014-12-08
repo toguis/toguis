@@ -132,6 +132,31 @@ public class PoiDetailModel extends BaseModel {
 		}
 	}
 	
+	public void setRatingAsync(String pUserName, int pPoiId, double pRating){
+		String lsQueryUrl = super.csBaseUrl + "ToguisPoints.svc/set_rating/";
+		StringBuilder lsParams = new StringBuilder();
+		lsParams.append(pUserName).append("/");
+		lsParams.append(pPoiId).append("/");		
+		lsParams.append(pRating);	
+		super.csMethod = "setRatingAsync";
+		RestAsyncTask loTask = new RestAsyncTask();
+		loTask.addAsyncTaskListener(this);		
+		loTask.execute("1",lsQueryUrl +  lsParams.toString(),"");		
+	}
+	
+	private void setRating(int pData){
+		try {
+			for (ModelListener item : this.coModelListener){
+				item.onGetData(pData, 3);
+			}				
+		}
+		catch(Exception ex){
+			for (ModelListener item : this.coModelListener){
+				item.onError(ex.getMessage(), 0);
+			}			
+		}		
+	}
+	
 	@Override
 	public void onQuerySuccessful(String result) {
 		if(super.csMethod.equals("getPoiDetailAsync")){
@@ -143,7 +168,9 @@ public class PoiDetailModel extends BaseModel {
 		else if(super.csMethod.equals("setVisitedAsync")){
 			this.setVisited(Integer.parseInt(result));
 		}		
-		
+		else if(super.csMethod.equals("setRatingAsync")){
+			this.setRating(Integer.parseInt(result));
+		}			
 	}
 	
 	@Override

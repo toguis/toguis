@@ -53,19 +53,24 @@ public class ListSitesController implements ModelListener{
 		String lsSearch = loOptionsData.getSearch();
 		
 		Location loCurrentLocation = this.coView.getCurrentLocation();
-		if(pForceLoad){
-			this.coModel.getSiteListAsync(lsUserName, liCityId, lboMonument, lboMuseum, lboHotel, lboRestaurant, lboInterest, lboBuilding, lboTransport, lboEvent, liLanguage, loCurrentLocation.getLatitude(), loCurrentLocation.getLongitude(), liArea, lsSearch);
-		}
-		else {
-			ExtendedApplicationContext loContext = (ExtendedApplicationContext)((Fragment)this.coView).getActivity().getApplication();
-			ArrayList<PointOfInterestEntity> loPoints = loContext.getBufferPoints();	
-			if(loPoints != null){
-				this.coView.setAdapterData(loPoints);		
+		
+			if(pForceLoad){
+				if(loCurrentLocation != null){
+					this.coModel.getSiteListAsync(lsUserName, liCityId, lboMonument, lboMuseum, lboHotel, lboRestaurant, lboInterest, lboBuilding, lboTransport, lboEvent, liLanguage, loCurrentLocation.getLatitude(), loCurrentLocation.getLongitude(), liArea, lsSearch);	
+				}				
 			}
-			else if(loCurrentLocation != null){
-				this.coModel.getSiteListAsync(lsUserName, liCityId, lboMonument, lboMuseum, lboHotel, lboRestaurant, lboInterest, lboBuilding, lboTransport, lboEvent, liLanguage, loCurrentLocation.getLatitude(), loCurrentLocation.getLongitude(), liArea, lsSearch);
-			}			
-		}	
+			else {
+				ExtendedApplicationContext loContext = (ExtendedApplicationContext)((Fragment)this.coView).getActivity().getApplication();
+				ArrayList<PointOfInterestEntity> loPoints = loContext.getBufferPoints();	
+				if(loPoints != null){
+					this.coView.setAdapterData(loPoints);		
+				}
+				else if(loCurrentLocation != null){
+					this.coModel.getSiteListAsync(lsUserName, liCityId, lboMonument, lboMuseum, lboHotel, lboRestaurant, lboInterest, lboBuilding, lboTransport, lboEvent, liLanguage, loCurrentLocation.getLatitude(), loCurrentLocation.getLongitude(), liArea, lsSearch);
+				}			
+			}				
+		
+
 	}
 	
 	public void getSiteListAsync(){

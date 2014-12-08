@@ -16,7 +16,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="El gato del rio"
         android:textColor="#cccccc"
         android:textSize="20sp"
         android:textStyle="bold" />
@@ -33,14 +32,14 @@
 
     <ImageView
         android:id="@+id/imgImagePoi"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_width="240dp"
+        android:layout_height="170dp"
         android:layout_marginBottom="2dp"
         android:background="#cccccc"
+        android:layout_gravity="center_horizontal"
         android:contentDescription="@string/poi_detail_image_description"
         android:padding="5dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/poi_1" />
+        android:scaleType="fitXY" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -105,8 +104,10 @@
             android:layout_weight="1"
             android:background="@null"
             android:contentDescription="@string/poi_detail_image_description"
+            android:onClick="onClick_SetRating"
             android:paddingTop="2dp"
             android:src="@drawable/star48" />
+
     </LinearLayout>
 
     <ImageView
@@ -186,7 +187,6 @@
 	          android:id="@+id/txtDetailDescription"
 	          android:layout_width="fill_parent"
 	          android:layout_height="wrap_content"
-	          android:text="Distant cousins of the Flesh Eaters, they have lived deep beneath the surface of the Lost Land for centuries. After being exiled from their former home, they took to the mountains of Galyanna for shelter. Legend tells that they can hear the beat of a heart and smell the blood of an intruder from miles away. Like their cousins, the Flesh Eaters, they also lust for warm flesh and blood and will occasionally journey to the surface under the cover of night in search of helpless victims to drag back to their lair for them to either devour or feed to their giant spider pets. "
 	          android:textColor="#cccccc" />
   
     </ScrollView>

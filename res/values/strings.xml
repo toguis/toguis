@@ -51,7 +51,7 @@
     <string name="general_message_error">Error</string>
     <string name="general_save_db_error">Ha ocurrido un error al almacenar la información</string>
     <string name="general_db_error">Ha ocurrido un error al acceder al servicio</string>
-    <string name="general_web_service_base_url">http://192.168.1.100/ToguisWebServices/</string>
+    <string name="general_web_service_base_url">http://192.168.1.101/ToguisWebServices/</string>
     <string name="general_google_play_not_installed">Google play debe estar instalado</string>
     <string name="general_progress_message">Cargando puntos de interes, por favor espera&#8230;</string>
     <string name="general_toggle_button_text"></string>
@@ -76,6 +76,8 @@
     <string name="general_menus_cancel">Cancelar</string>
     <string name="general_menus_clear">Limpiar</string>
     <string name="general_menus_refresh">Refrescar</string>
+    <string name="general_menus_ok">Aceptar</string>
+    
     <string name="swipe_content_tab_site">Sitios</string>
     <string name="swipe_content_tab_map">Mapa</string>
     <string name="swipe_content_tab_ar">Realidad RA</string>
@@ -83,6 +85,9 @@
     <string name="poi_detail_title_activity">PoiDetailActivity</string>
 	<string name="poi_detail_image_description">image placeholder</string>
 	<string name="poi_detail_txt_rating_text">Puntaje: </string>
-	<string name="poi_detail_txt_description_text">Descripción: </string>
+	<string name="poi_detail_txt_description_text">Descripción: </string>	
+	<string name="dialog_search_txt_search_hint">Buscar</string>
+	<string name="dialog_rating_txt_rating_dialog_title_text">Califica este sitio!</string>
+	<string name="dialog_rating_txt_rating_note">Nota: Esta es tu calificación personal</string>
 	
 </resources>

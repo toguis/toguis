@@ -16,6 +16,7 @@ import co.edu.uniajc.vtf.utils.ResourcesManager;
 public class PoiDetailController implements ModelListener{
 	private IPoiDetail coView;
 	private PoiDetailModel coModel;
+	private double cdRating;
 	
 	public PoiDetailController(IPoiDetail pView) {
 		this.coView = pView;
@@ -23,7 +24,6 @@ public class PoiDetailController implements ModelListener{
 		String lsBaseUrl = loResource.getStringResource(R.string.general_web_service_base_url);
 		this.coModel = new PoiDetailModel(lsBaseUrl);
 		this.coModel.addModelListener(this);	
-
 	}
 
 	public void getPoiDetailAsync(String pUserName, int pPoiId, int pLanguageId){
@@ -33,10 +33,11 @@ public class PoiDetailController implements ModelListener{
 	private void getPoiDetail(PointOfInterestEntity pData){
 		this.coView.setTitle(pData.getTitle());
 		this.coView.setDescription(pData.getDescription());
-		this.coView.setRating(pData.getRating());			
+		this.coView.setRating(pData.getAvgRating());			
 		this.coView.setImage(pData.getImage());
 		this.coView.setFavorite(pData.isFavorite());
 		this.coView.setVisited(pData.isVisited());
+		this.coView.setPersonalRating(pData.getRating());
 	}
 	
 	public void setFavoriteAsync(String pUserName, int pPoiId){
@@ -59,6 +60,19 @@ public class PoiDetailController implements ModelListener{
 		}
 	}
 	
+	public void setRatingAsync(String pUserName, int pPoiId, double pRating){
+		this.cdRating = pRating;
+		this.coModel.setRatingAsync(pUserName, pPoiId, pRating);	
+		
+	}
+	
+	private void setRating(int pData){
+		if(pData == 0){
+			this.coView.setPersonalRating(this.cdRating);
+			this.coView.loadData();
+		}
+	}
+	
 	public void navigateHome(MenuItem item){
 		switch (item.getItemId()) {
 			case android.R.id.home:
@@ -77,7 +91,11 @@ public class PoiDetailController implements ModelListener{
 		}	
 		else if(type == 2){
 			this.setVisited((Integer) pData);
-		}			
+		}	
+		else if(type == 3){
+			this.setRating((Integer) pData);
+		}	
+		this.coView.hideProgressDialog();
 	}
 
 	@Override
@@ -86,5 +104,6 @@ public class PoiDetailController implements ModelListener{
 		AlertDialogManager.showAlertDialog((Activity)this.coView, loResource.getStringResource(R.string.general_message_error), loResource.getStringResource(R.string.general_db_error), AlertDialogManager.ERROR);			
 		this.coView.setFavorite(!this.coView.isFavorite());
 		this.coView.setVisited(!this.coView.wasVisited());
+		this.coView.hideProgressDialog();
 	}	
 }

@@ -8,6 +8,7 @@
         android:id="@+id/txtSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="@string/dialog_search_txt_search_hint"
         android:inputType="text" >
 
         <requestFocus />
