@@ -10,7 +10,7 @@ import co.edu.uniajc.vtf.utils.BaseModel;
 import co.edu.uniajc.vtf.utils.ModelListener;
 import co.edu.uniajc.vtf.utils.RestAsyncTask;
 
-public class ListSitesModel extends BaseModel{
+public class ListSitesModel extends BaseModel {
 
 	public ListSitesModel(String pBaseUrl) {
 		super.csBaseUrl = pBaseUrl;

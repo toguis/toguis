@@ -6,8 +6,8 @@ import android.support.v4.app.NavUtils;
 import android.util.Patterns;
 import android.view.MenuItem;
 import android.widget.Toast;
-import co.edu.uniajc.vtf.ContentActivity;
 import co.edu.uniajc.vtf.R;
+import co.edu.uniajc.vtf.content.SwipeContentActivity;
 import co.edu.uniajc.vtf.security.ConfigLoginActivity;
 import co.edu.uniajc.vtf.security.interfaces.ICreateAccount;
 import co.edu.uniajc.vtf.security.model.CreateAccountModel;
@@ -82,7 +82,7 @@ public class CreateAccountController implements ModelListener {
 		}
 	}
 	
-	public void createAccountResult(int pResult){
+	private void createAccount(int pResult){
 		ResourcesManager loResource = new ResourcesManager((Activity)this.coView);	
 		String lsMessage =  "";
 		
@@ -129,7 +129,7 @@ public class CreateAccountController implements ModelListener {
 	
 	public void navigateContent(){
 		Activity loActivity = (Activity)coView;
-		Intent loIntent = new Intent(loActivity, ContentActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK);
+		Intent loIntent = new Intent(loActivity, SwipeContentActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK);
 		loActivity.startActivity(loIntent);	
 		((Activity)coView).finish();
 	}
@@ -137,7 +137,7 @@ public class CreateAccountController implements ModelListener {
 	@Override
 	public void onGetData(Object pData, int type) {
 		if(type == 0){
-			this.createAccountResult((Integer)pData);
+			this.createAccount((Integer)pData);
 		}		
 	}
 

@@ -94,6 +94,7 @@
             android:layout_weight="1"
             android:background="@null"
             android:contentDescription="@string/poi_detail_image_description"
+            android:onClick="onClick_OpenComments"
             android:paddingTop="2dp"
             android:src="@drawable/message48" />
         

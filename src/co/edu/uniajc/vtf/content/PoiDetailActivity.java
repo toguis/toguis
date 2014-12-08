@@ -127,6 +127,10 @@ public class PoiDetailActivity extends Activity implements IPoiDetail {
 		this.coController.setVisitedAsync(loSession.getUserName(), this.ciPoiId);
 	}
 	
+	public void onClick_OpenComments(View view){
+		this.coController.navigateComments(this.ciPoiId);
+	}
+	
 	public void onClick_SetRating(View view){
 		Dialog loDialog = this.createDialog();
 		loDialog.setCanceledOnTouchOutside(false);	

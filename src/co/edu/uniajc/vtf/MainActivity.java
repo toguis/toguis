@@ -1,16 +1,9 @@
 package co.edu.uniajc.vtf;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.EditText;
-import co.edu.uniajc.vtf.content.ListSitesFragment;
 import co.edu.uniajc.vtf.controller.MainController;
 import co.edu.uniajc.vtf.interfaces.IMain;
-import co.edu.uniajc.vtf.utils.OptionsEntity;
-import co.edu.uniajc.vtf.utils.OptionsManager;
 
 public class MainActivity extends Activity implements IMain {
 	private MainController coController;
