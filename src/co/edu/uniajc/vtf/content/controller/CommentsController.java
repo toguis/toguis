@@ -3,7 +3,11 @@ package co.edu.uniajc.vtf.content.controller;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.support.v4.app.NavUtils;
+import android.view.MenuItem;
 import co.edu.uniajc.vtf.R;
+import co.edu.uniajc.vtf.content.PoiDetailActivity;
 import co.edu.uniajc.vtf.content.interfaces.IComments;
 import co.edu.uniajc.vtf.content.model.CommentEntity;
 import co.edu.uniajc.vtf.content.model.CommentsModel;
@@ -39,6 +43,15 @@ public class CommentsController implements ModelListener{
 		if(pData == 0){
 			this.coView.blankFields();
 			this.coView.loadData();
+		}
+	}
+	
+	public void navigateHome(MenuItem item){
+		switch (item.getItemId()) {
+			case android.R.id.home:
+				Intent loUpIntent = new Intent((Activity)this.coView, PoiDetailActivity.class);
+				loUpIntent.putExtra("id", this.coView.getPoiId());
+				NavUtils.navigateUpTo((Activity)this.coView, loUpIntent);
 		}
 	}
 	

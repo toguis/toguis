@@ -11,4 +11,6 @@ public interface IListSites {
 	ListPointsAdapter getAdapter();	
 	void setAdapterData(ArrayList<PointOfInterestEntity> pPoints);
 	Location getCurrentLocation();
+	void showProgressDialog();
+	void hideProgressDialog();
 }

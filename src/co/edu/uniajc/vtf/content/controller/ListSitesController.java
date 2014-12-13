@@ -54,23 +54,21 @@ public class ListSitesController implements ModelListener{
 		
 		Location loCurrentLocation = this.coView.getCurrentLocation();
 		
-			if(pForceLoad){
-				if(loCurrentLocation != null){
-					this.coModel.getSiteListAsync(lsUserName, liCityId, lboMonument, lboMuseum, lboHotel, lboRestaurant, lboInterest, lboBuilding, lboTransport, lboEvent, liLanguage, loCurrentLocation.getLatitude(), loCurrentLocation.getLongitude(), liArea, lsSearch);	
-				}				
-			}
-			else {
-				ExtendedApplicationContext loContext = (ExtendedApplicationContext)((Fragment)this.coView).getActivity().getApplication();
-				ArrayList<PointOfInterestEntity> loPoints = loContext.getBufferPoints();	
-				if(loPoints != null){
-					this.coView.setAdapterData(loPoints);		
-				}
-				else if(loCurrentLocation != null){
-					this.coModel.getSiteListAsync(lsUserName, liCityId, lboMonument, lboMuseum, lboHotel, lboRestaurant, lboInterest, lboBuilding, lboTransport, lboEvent, liLanguage, loCurrentLocation.getLatitude(), loCurrentLocation.getLongitude(), liArea, lsSearch);
-				}			
+		if(pForceLoad){
+			if(loCurrentLocation != null){
+				this.coModel.getSiteListAsync(lsUserName, liCityId, lboMonument, lboMuseum, lboHotel, lboRestaurant, lboInterest, lboBuilding, lboTransport, lboEvent, liLanguage, loCurrentLocation.getLatitude(), loCurrentLocation.getLongitude(), liArea, lsSearch);	
 			}				
-		
-
+		}
+		else {
+			ExtendedApplicationContext loContext = (ExtendedApplicationContext)((Fragment)this.coView).getActivity().getApplication();
+			ArrayList<PointOfInterestEntity> loPoints = loContext.getBufferPoints();	
+			if(loPoints != null){
+				this.coView.setAdapterData(loPoints);		
+			}
+			else if(loCurrentLocation != null){
+				this.coModel.getSiteListAsync(lsUserName, liCityId, lboMonument, lboMuseum, lboHotel, lboRestaurant, lboInterest, lboBuilding, lboTransport, lboEvent, liLanguage, loCurrentLocation.getLatitude(), loCurrentLocation.getLongitude(), liArea, lsSearch);
+			}			
+		}				
 	}
 	
 	public void getSiteListAsync(){
@@ -102,6 +100,7 @@ public class ListSitesController implements ModelListener{
 	public void onError(Object pData, int type) {
 		ResourcesManager loResource = new ResourcesManager(((Fragment)this.coView).getActivity());
 		AlertDialogManager.showAlertDialog(((Fragment)this.coView).getActivity(), loResource.getStringResource(R.string.general_message_error), loResource.getStringResource(R.string.general_db_error), AlertDialogManager.ERROR);			
+		this.coView.hideProgressDialog();
 	}	
 	
 }

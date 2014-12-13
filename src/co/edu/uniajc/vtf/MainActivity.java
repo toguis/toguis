@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import co.edu.uniajc.vtf.controller.MainController;
 import co.edu.uniajc.vtf.interfaces.IMain;
+import co.edu.uniajc.vtf.utils.OptionsEntity;
+import co.edu.uniajc.vtf.utils.OptionsManager;
 
 public class MainActivity extends Activity implements IMain {
 	private MainController coController;
@@ -12,12 +14,11 @@ public class MainActivity extends Activity implements IMain {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-       	/*OptionsManager loOptions = new OptionsManager(this); 
+       	OptionsManager loOptions = new OptionsManager(this); 
     	OptionsEntity loOptionsData = loOptions.getOptions();
 
-    	loOptionsData.setFilterMonument(true);
-    	loOptionsData.setFilterMuseum(true);
-    	loOptions.createOptions(loOptionsData);*/
+    	loOptionsData.setArea(5000);
+    	loOptions.createOrUpdateOptions(loOptionsData);
     	
 		this.coController = new MainController(this);	
 		this.coController.StartTimer();

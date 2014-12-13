@@ -21,6 +21,7 @@ import co.edu.uniajc.vtf.utils.SessionManager;
 import com.facebook.Session;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.plus.Plus;
 
 public class SwipeContentActivity extends FragmentActivity  implements  ActionBar.TabListener,GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,LogoutListener {
@@ -91,7 +92,7 @@ public class SwipeContentActivity extends FragmentActivity  implements  ActionBa
 			case 0:
 				return new ListSitesFragment();		
 			case 1:
-				return new MapSitesFragmenty();
+				return new MapSitesFragment();
 			case 2:
 				return new RALauncherFragment();
 			case 3:
@@ -220,7 +221,7 @@ public class SwipeContentActivity extends FragmentActivity  implements  ActionBa
     	//Load the fragment list on page select
     	if(pPosition == 0){
     		//this part is a selective loading for the list site fragment, because we need load when the user
-    		//swipe the tab and the same select the tab 0
+    		//swipe the tab and that user select the tab 0
        		String lsTag = "android:switcher:" + SwipeContentActivity.this.coViewPager.getId() + ":0";
     		ListSitesFragment loListSitesFragment = (ListSitesFragment)this.getSupportFragmentManager().findFragmentByTag(lsTag);
     		if(loListSitesFragment != null)

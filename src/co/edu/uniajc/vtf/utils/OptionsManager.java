@@ -93,7 +93,7 @@ public class OptionsManager {
 		return loOptions;
 	}
 	
-	public void createOptions(OptionsEntity pOptions){
+	public void createOrUpdateOptions(OptionsEntity pOptions){
 		if(this.coEditor != null){
 			this.coEditor.putInt(OPT_NAME, pOptions.getLanguageId());
 			this.coEditor.putBoolean(OPTION_FILTER_MONUMENT, pOptions.isFilterMonument());

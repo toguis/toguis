@@ -13,4 +13,5 @@ public interface IComments {
 	void setAdapterData(ArrayList<CommentEntity> pComments);
 	void loadData();
 	void blankFields();
+	int getPoiId();
 }

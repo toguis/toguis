@@ -82,7 +82,7 @@ public class ListSitesFragment extends Fragment implements
             	
     	this.coController = new ListSitesController(this);	
     	this.coLastLocation = null;    	
-    	ListSitesFragment.this.cboForceUpdate = true;
+    	this.cboForceUpdate = true;
     	this.loadList(LoadActions.CONNECT_AND_LOAD);
     	 
     }
@@ -325,7 +325,7 @@ public class ListSitesFragment extends Fragment implements
             	OptionsEntity loOptionsData = loOptions.getOptions();
             	EditText loSearchControl = (EditText)((AlertDialog)dialog).findViewById(R.id.txtSearch);
             	loOptionsData.setSearch(loSearchControl.getText().toString());
-            	loOptions.createOptions(loOptionsData);
+            	loOptions.createOrUpdateOptions(loOptionsData);
             	ListSitesFragment.this.cboForceUpdate = true;
             	ListSitesFragment.this.loadList(LoadActions.LOAD_DATA);
             	dialog.dismiss();
@@ -346,7 +346,7 @@ public class ListSitesFragment extends Fragment implements
             	OptionsManager loOptions = new OptionsManager(ListSitesFragment.this.getActivity()); 
             	OptionsEntity loOptionsData = loOptions.getOptions();
             	loOptionsData.setSearch("");
-            	loOptions.createOptions(loOptionsData);
+            	loOptions.createOrUpdateOptions(loOptionsData);
             	EditText loSearchControl = (EditText)((AlertDialog)dialog).findViewById(R.id.txtSearch);
             	loSearchControl.setText("");
             	ListSitesFragment.this.cboForceUpdate = true;
@@ -368,11 +368,13 @@ public class ListSitesFragment extends Fragment implements
         this.showProgressDialog();		
 	}
 	
-	private void showProgressDialog(){
+	@Override
+	public void showProgressDialog(){
 		this.coProgressDialog.show();
 	}
 
-	private void hideProgressDialog(){
+	@Override
+	public void hideProgressDialog(){
 		this.coProgressDialog.dismiss();
 	}
 

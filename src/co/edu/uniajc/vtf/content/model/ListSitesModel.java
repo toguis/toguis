@@ -17,7 +17,6 @@ public class ListSitesModel extends BaseModel {
 		super.csMethod = "";
 		super.coModelListener = new ArrayList<ModelListener>();		
 	}
-
 	
 	public void getSiteListAsync(String pUserName, 
 								 int pCityId,  

@@ -2,11 +2,13 @@ package co.edu.uniajc.vtf.content;
 
 import java.util.ArrayList;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -32,6 +34,8 @@ public class CommentsActivity extends Activity implements IComments{
 		setContentView(R.layout.activity_comments);
 		this.coController = new CommentsController(this);
 		this.ciPoiId = this.getIntent().getIntExtra("id", 0);
+		final ActionBar coActionBar = getActionBar();
+		coActionBar.setDisplayHomeAsUpEnabled(true);	
 		this.loadData();
 	}
 	
@@ -39,7 +43,7 @@ public class CommentsActivity extends Activity implements IComments{
 	public void loadData(){
 		ResourcesManager loResource = new ResourcesManager(this);
 		this.coProgressDialog = new ProgressDialog(this);
-		this.coProgressDialog.setMessage(loResource.getStringResource(R.string.general_progress_message));
+		this.coProgressDialog.setMessage(loResource.getStringResource(R.string.general_progress_message_loading));
 		this.coProgressDialog.setCanceledOnTouchOutside(false);
 		this.showProgressDialog();
 		this.coController.getCommentsAsync(this.ciPoiId);
@@ -153,4 +157,14 @@ public class CommentsActivity extends Activity implements IComments{
 		loInsertComment.setText("");
 	}
 	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		this.coController.navigateHome(item);
+		return super.onOptionsItemSelected(item);
+	}	
+	
+	@Override
+	public int getPoiId(){
+		return  this.ciPoiId;
+	}
 }
