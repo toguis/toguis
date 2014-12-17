@@ -10,7 +10,9 @@ public interface IListSites {
 	void setAdapter(ListPointsAdapter pAdapter);
 	ListPointsAdapter getAdapter();	
 	void setAdapterData(ArrayList<PointOfInterestEntity> pPoints);
+	void setAdapterData(ArrayList<PointOfInterestEntity> pPoints, boolean triggerEvent);
 	Location getCurrentLocation();
 	void showProgressDialog();
 	void hideProgressDialog();
+	
 }

@@ -1,10 +1,13 @@
 package co.edu.uniajc.vtf.content;
 
+import java.util.ArrayList;
+
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -13,6 +16,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import co.edu.uniajc.vtf.R;
 import co.edu.uniajc.vtf.content.ListSitesFragment.LoadActions;
+import co.edu.uniajc.vtf.content.interfaces.ILoadExtenalDataFromList;
+import co.edu.uniajc.vtf.content.interfaces.ILoadExtenalDataFromMap;
+import co.edu.uniajc.vtf.content.model.PointOfInterestEntity;
 import co.edu.uniajc.vtf.security.ConfigLoginActivity;
 import co.edu.uniajc.vtf.security.model.LogoutListener;
 import co.edu.uniajc.vtf.utils.ResourcesManager;
@@ -21,10 +27,15 @@ import co.edu.uniajc.vtf.utils.SessionManager;
 import com.facebook.Session;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.plus.Plus;
 
-public class SwipeContentActivity extends FragmentActivity  implements  ActionBar.TabListener,GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,LogoutListener {
+public class SwipeContentActivity extends FragmentActivity  implements  
+		ActionBar.TabListener,
+		GoogleApiClient.ConnectionCallbacks, 
+		GoogleApiClient.OnConnectionFailedListener,
+		LogoutListener,
+		ILoadExtenalDataFromMap,
+		ILoadExtenalDataFromList{
 	private AppSectionsPagerAdapter coAppSectionsPagerAdapter;
 	private ViewPager coViewPager;
 	
@@ -73,7 +84,7 @@ public class SwipeContentActivity extends FragmentActivity  implements  ActionBa
 		
 	}
 	
-	public static class AppSectionsPagerAdapter extends FragmentPagerAdapter {
+	public class AppSectionsPagerAdapter extends FragmentPagerAdapter {
         private Fragment mCurrentFragment;
 
         public Fragment getCurrentFragment() {
@@ -90,9 +101,13 @@ public class SwipeContentActivity extends FragmentActivity  implements  ActionBa
 		public Fragment getItem(int arg0) {
 			switch(arg0){
 			case 0:
-				return new ListSitesFragment();		
+				ListSitesFragment loSites = new ListSitesFragment();	
+				loSites.addLoadListeners(SwipeContentActivity.this);
+				return loSites;		
 			case 1:
-				return new MapSitesFragment();
+				MapSitesFragment loMap = new MapSitesFragment();
+				loMap.addLoadListeners(SwipeContentActivity.this);
+				return loMap;
 			case 2:
 				return new RALauncherFragment();
 			case 3:
@@ -235,5 +250,28 @@ public class SwipeContentActivity extends FragmentActivity  implements  ActionBa
     	}		
     	
 	}
+
+	@Override
+	public void loadDataFromList(ArrayList<PointOfInterestEntity> pPoints, Location pLastLocation) {
+		String lsTag = "android:switcher:" + SwipeContentActivity.this.coViewPager.getId() + ":1";
+		MapSitesFragment loMapSitesFragment = (MapSitesFragment)this.getSupportFragmentManager().findFragmentByTag(lsTag);
+		if(loMapSitesFragment != null){
+			loMapSitesFragment.setLastLocation(pLastLocation);
+			loMapSitesFragment.setAdapterData(pPoints, false);
+		}
+	}
+
+	@Override
+	public void loadDataFromMap(ArrayList<PointOfInterestEntity> pPoints, Location pLastLocation) {
+   		String lsTag = "android:switcher:" + SwipeContentActivity.this.coViewPager.getId() + ":0";
+		ListSitesFragment loListSitesFragment = (ListSitesFragment)this.getSupportFragmentManager().findFragmentByTag(lsTag);
+		if(loListSitesFragment != null){
+			loListSitesFragment.setLastLocation(pLastLocation);
+			loListSitesFragment.setAdapterData(pPoints, false);
+		}
+			 	
+		
+	}
+
 	
 }

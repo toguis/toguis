@@ -23,9 +23,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import co.edu.uniajc.vtf.R;
 import co.edu.uniajc.vtf.content.controller.ListSitesController;
 import co.edu.uniajc.vtf.content.interfaces.IListSites;
+import co.edu.uniajc.vtf.content.interfaces.ILoadExtenalDataFromList;
 import co.edu.uniajc.vtf.content.model.PointOfInterestEntity;
 import co.edu.uniajc.vtf.utils.OptionsEntity;
 import co.edu.uniajc.vtf.utils.OptionsManager;
@@ -50,6 +52,7 @@ public class ListSitesFragment extends Fragment implements
     private LocationRequest coLocationRequest;
     private boolean cboForceUpdate;
     private ProgressDialog coProgressDialog;
+    private ArrayList<ILoadExtenalDataFromList> coLoadTargets;
     
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_sites_list, container, false);        
@@ -78,8 +81,8 @@ public class ListSitesFragment extends Fragment implements
         .addConnectionCallbacks(this)
         .addOnConnectionFailedListener(this)
         .addApi(LocationServices.API)
-        .build();
-            	
+        .build();           	
+        
     	this.coController = new ListSitesController(this);	
     	this.coLastLocation = null;    	
     	this.cboForceUpdate = true;
@@ -90,6 +93,13 @@ public class ListSitesFragment extends Fragment implements
     public void onClickListItem(AdapterView<?> parent, View view, int position, long id){
     	int liPoiId = ((PointOfInterestEntity)this.getAdapter().getItem(position)).getId();
     	this.coController.navigatePoiDetail(liPoiId);
+    }
+    
+    public void addLoadListeners(ILoadExtenalDataFromList pLoadListener){
+    	if(this.coLoadTargets == null){
+    		this.coLoadTargets = new ArrayList<ILoadExtenalDataFromList>();
+    	}
+    	this.coLoadTargets.add(pLoadListener);
     }
     
     @Override
@@ -220,14 +230,24 @@ public class ListSitesFragment extends Fragment implements
     	ListView loList = (ListView)this.getView().findViewById(R.id.lstPoints);
 		return (ListPointsAdapter)loList.getAdapter();
 	}
-
+	
 	@Override
 	public void setAdapterData(ArrayList<PointOfInterestEntity> pPoints) {		
+		this.setAdapterData(pPoints, true);
+	}
+	
+	@Override
+	public void setAdapterData(ArrayList<PointOfInterestEntity> pPoints, boolean triggerEvent) {		
+		if(triggerEvent){
+			for(ILoadExtenalDataFromList loadTarget : this.coLoadTargets){
+				loadTarget.loadDataFromList(pPoints, this.coLastLocation);
+			}			
+		}
 		this.hideProgressDialog();
     	ListPointsAdapter loAdapter = new ListPointsAdapter(this.getActivity(), pPoints);
     	this.setAdapter(loAdapter);		
 	}
-
+	
 	@Override
 	public void onLocationChanged(Location location) {				
 		this.coLastLocation = location;
@@ -257,7 +277,10 @@ public class ListSitesFragment extends Fragment implements
 
 	@Override
 	public Location getCurrentLocation() {
-		this.coLastLocation = LocationServices.FusedLocationApi.getLastLocation(coGoogleApiClient);		
+		Location loLastLocation = LocationServices.FusedLocationApi.getLastLocation(coGoogleApiClient);	
+		if(loLastLocation != null){
+			this.coLastLocation = loLastLocation;
+		}	
 		return this.coLastLocation;
 	}
 
@@ -268,20 +291,27 @@ public class ListSitesFragment extends Fragment implements
 	
 	//load the list when we connect with google play services
 	public void loadList(LoadActions pLoadActions){
-		if(pLoadActions == LoadActions.CONNECT_AND_LOAD){
-			this.coGoogleApiClient.connect();
-		}
-		else if(pLoadActions == LoadActions.LOAD_DATA){
-			if(this.coGoogleApiClient.isConnected()){
-				this.createLocationRequest();				
-			}
-			else{
+		if(googlePlusIsInstalled()){
+			if(pLoadActions == LoadActions.CONNECT_AND_LOAD){
 				this.coGoogleApiClient.connect();
 			}
+			else if(pLoadActions == LoadActions.LOAD_DATA){
+				if(this.coGoogleApiClient.isConnected()){
+					this.createLocationRequest();				
+				}
+				else{
+					this.coGoogleApiClient.connect();
+				}
+			}
+			else if(pLoadActions == LoadActions.LOAD_CACHE){
+				this.coController.getSiteListAsync(this.cboForceUpdate);
+			}			
 		}
-		else if(pLoadActions == LoadActions.LOAD_CACHE){
-			this.coController.getSiteListAsync(this.cboForceUpdate);
+		else{
+           	ResourcesManager loResource = new ResourcesManager(this.getActivity());
+            Toast.makeText(this.getActivity().getApplicationContext(), loResource.getStringResource(R.string.general_google_play_not_installed), Toast.LENGTH_SHORT).show();
 		}
+
 	}
 	
 	public void unloadList(){
@@ -378,6 +408,14 @@ public class ListSitesFragment extends Fragment implements
 		this.coProgressDialog.dismiss();
 	}
 
+	public Location getLastLocation(){
+		return this.coLastLocation;
+	}
+	
+	public void setLastLocation(Location pLastLocation){
+		this.coLastLocation = pLastLocation;
+	}
+	
 	public enum LoadActions{
 		CONNECT_AND_LOAD,
 		LOAD_DATA,

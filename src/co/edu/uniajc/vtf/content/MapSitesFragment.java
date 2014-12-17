@@ -3,26 +3,38 @@ package co.edu.uniajc.vtf.content;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.graphics.Paint;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.InflateException;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import co.edu.uniajc.vtf.R;
 import co.edu.uniajc.vtf.content.ListSitesFragment.LoadActions;
 import co.edu.uniajc.vtf.content.controller.MapSitesController;
+import co.edu.uniajc.vtf.content.interfaces.ILoadExtenalDataFromList;
+import co.edu.uniajc.vtf.content.interfaces.ILoadExtenalDataFromMap;
 import co.edu.uniajc.vtf.content.interfaces.IMapSites;
 import co.edu.uniajc.vtf.content.model.PointOfInterestEntity;
+import co.edu.uniajc.vtf.utils.OptionsEntity;
+import co.edu.uniajc.vtf.utils.OptionsManager;
 import co.edu.uniajc.vtf.utils.ResourcesManager;
 
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
@@ -53,6 +65,7 @@ public class MapSitesFragment extends Fragment implements
     private GoogleMap coMap;
     private static View coView;
     HashMap<Marker, PointOfInterestEntity> coData = new HashMap<Marker, PointOfInterestEntity>();
+    private ArrayList<ILoadExtenalDataFromMap> coLoadTargets;
     
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
     	if (coView != null) {
@@ -72,7 +85,7 @@ public class MapSitesFragment extends Fragment implements
     public void onActivityCreated(Bundle state) {
     	super.onActivityCreated(state);	
     	this.setUpMap();
-    	this.loadList(LoadActions.CONNECT_AND_LOAD);
+    	//this.loadList(LoadActions.CONNECT_AND_LOAD);
     }
     
     @Override
@@ -88,11 +101,18 @@ public class MapSitesFragment extends Fragment implements
         .addOnConnectionFailedListener(this)
         .addApi(LocationServices.API)
         .build();
-            	
+
     	this.coController = new MapSitesController(this);	
     	this.coLastLocation = null;    	
     	this.cboForceUpdate = true;    	 
     	
+    }
+    
+    public void addLoadListeners(ILoadExtenalDataFromMap pLoadListener){
+    	if(this.coLoadTargets == null){
+    		this.coLoadTargets = new ArrayList<ILoadExtenalDataFromMap>();
+    	}   	
+    	this.coLoadTargets.add(pLoadListener);
     }
     
     @Override
@@ -208,51 +228,66 @@ public class MapSitesFragment extends Fragment implements
     
 	@Override
 	public Location getCurrentLocation() {
-		this.coLastLocation = LocationServices.FusedLocationApi.getLastLocation(coGoogleApiClient);		
+		Location loLastLocation = LocationServices.FusedLocationApi.getLastLocation(coGoogleApiClient);	
+		if(loLastLocation != null){
+			this.coLastLocation = loLastLocation;
+		}	
 		return this.coLastLocation;
 	}
 
+	
+	
 	@Override
-	public void setAdapterData(ArrayList<PointOfInterestEntity> pData) {
+	public void setAdapterData(ArrayList<PointOfInterestEntity> pData, boolean triggerEvent) {
+		if(triggerEvent){
+			for(ILoadExtenalDataFromMap loadTarget : this.coLoadTargets){
+				loadTarget.loadDataFromMap(pData, this.coLastLocation);
+			}			
+		}
+
 		this.hideProgressDialog();
-        
+		this.coMap.clear();
+		ResourcesManager loResource = new ResourcesManager(this.getActivity());
 		
 		for (PointOfInterestEntity point:  pData){
 	        MarkerOptions loMarkerOption = new MarkerOptions().position(new LatLng(point.getLatitude(),point.getLongitude()));
 	        BitmapDescriptor loBitmapDescriptor = null; 
 			switch(point.getSiteType()){
 				case 1:
-					loBitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.monument24);
+					loBitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.monument32);
 					break;
 				case 2:
-					loBitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.museum24);
+					loBitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.museum32);
 					break;
 				case 3:
-					loBitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.hotel24);
+					loBitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.hotel32);
 					break;
 				case 4:
-					loBitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.restaurant24);
+					loBitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.restaurant32);
 					break;
 				case 5:
-					loBitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.interest24);
+					loBitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.interest32);
 					break;
 				case 6:
-					loBitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.building24);
+					loBitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.building32);
 					break;
 				case 7:
-					loBitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.transport24);
+					loBitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.transport32);
 					break;
 				case 8:
-					loBitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.events24);
+					loBitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.events32);
 					break;									
 			}	        
 	        loMarkerOption.icon(loBitmapDescriptor);		
 	        Marker loMarker = this.coMap.addMarker(loMarkerOption);
 	        coData.put(loMarker, point);
 		}
-		
 		Location loLocation = this.getCurrentLocation();
-		LatLng loPosition = new LatLng(loLocation.getLatitude(),loLocation.getLongitude());
+		if(loLocation == null){
+			loLocation = this.coLastLocation;
+		}
+	
+		LatLng loPosition = new LatLng(loLocation.getLatitude(), loLocation.getLongitude());
 		CameraPosition cameraPosition = new CameraPosition.Builder() 
 			.target(loPosition)			// Sets location
 		    .zoom(17)                   // Sets the zoom
@@ -261,13 +296,18 @@ public class MapSitesFragment extends Fragment implements
 		    .build();                   // Creates a CameraPosition from the builder
 		this.coMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 		
-        MarkerOptions loMarkerMyPos = new MarkerOptions().position(loPosition).title("My position");
+        MarkerOptions loMarkerMyPos = new MarkerOptions().position(loPosition).title(loResource.getStringResource(R.string.general_map_current_position));
         this.coMap.addMarker(loMarkerMyPos);
         
 		MapMarkerInfoWindowAdapter loAdpater = new MapMarkerInfoWindowAdapter(coData);
 		this.coMap.setInfoWindowAdapter(loAdpater);
 	}
 
+	
+	@Override
+	public void setAdapterData(ArrayList<PointOfInterestEntity> pData) {
+		this.setAdapterData(pData, true);
+	}
 	
 	@Override
 	public void onLocationChanged(Location location) {
@@ -299,22 +339,34 @@ public class MapSitesFragment extends Fragment implements
 		
 	}
 
+	public boolean googlePlusIsInstalled(){
+		int liErrorCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this.getActivity());
+		return liErrorCode == ConnectionResult.SUCCESS ? true : false;
+	}
+	
 	//load the list when we connect with google play services
 	public void loadList(LoadActions pLoadActions){
-		if(pLoadActions == LoadActions.CONNECT_AND_LOAD){
-			this.coGoogleApiClient.connect();
-		}
-		else if(pLoadActions == LoadActions.LOAD_DATA){
-			if(this.coGoogleApiClient.isConnected()){
-				this.createLocationRequest();				
-			}
-			else{
+		if(googlePlusIsInstalled()){
+			if(pLoadActions == LoadActions.CONNECT_AND_LOAD){
 				this.coGoogleApiClient.connect();
 			}
+			else if(pLoadActions == LoadActions.LOAD_DATA){
+				if(this.coGoogleApiClient.isConnected()){
+					this.createLocationRequest();				
+				}
+				else{
+					this.coGoogleApiClient.connect();
+				}
+			}
+			else if(pLoadActions == LoadActions.LOAD_CACHE){
+				this.coController.getSiteListAsync(this.cboForceUpdate);
+			}			
 		}
-		else if(pLoadActions == LoadActions.LOAD_CACHE){
-			this.coController.getSiteListAsync(this.cboForceUpdate);
+		else{
+           	ResourcesManager loResource = new ResourcesManager(this.getActivity());
+            Toast.makeText(this.getActivity().getApplicationContext(), loResource.getStringResource(R.string.general_google_play_not_installed), Toast.LENGTH_SHORT).show();
 		}
+
 	}
 	
 	public void unloadList(){
@@ -340,5 +392,82 @@ public class MapSitesFragment extends Fragment implements
 		this.coProgressDialog.dismiss();
 	}
 
-
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {		
+	    inflater.inflate(R.menu.menu_fragment_sites_list, menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.action_search:
+				Dialog loDialog = this.createDialog();
+				loDialog.setCanceledOnTouchOutside(false);
+				loDialog.show();
+		    	OptionsManager loOptions = new OptionsManager(this.getActivity()); 
+		    	OptionsEntity loOptionsData = loOptions.getOptions();
+		    	EditText loSearchControl = (EditText)loDialog.findViewById(R.id.txtSearch);
+		    	loSearchControl.setText(loOptionsData.getSearch());				
+				break;
+			case R.id.action_refresh:
+				MapSitesFragment.this.cboForceUpdate = true;
+				this.loadList(LoadActions.LOAD_DATA);
+				break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	
+	public Dialog createDialog(){
+    	LayoutInflater loInflater = this.getActivity().getLayoutInflater(); 	
+    	
+    	AlertDialog.Builder loAlert = new AlertDialog.Builder(getActivity());
+    	loAlert.setView(loInflater.inflate(R.layout.dialog_search, null));
+    	loAlert.setPositiveButton(R.string.general_menus_search, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+            	OptionsManager loOptions = new OptionsManager(MapSitesFragment.this.getActivity()); 
+            	OptionsEntity loOptionsData = loOptions.getOptions();
+            	EditText loSearchControl = (EditText)((AlertDialog)dialog).findViewById(R.id.txtSearch);
+            	loOptionsData.setSearch(loSearchControl.getText().toString());
+            	loOptions.createOrUpdateOptions(loOptionsData);
+            	MapSitesFragment.this.cboForceUpdate = true;
+            	MapSitesFragment.this.loadList(LoadActions.LOAD_DATA);
+            	dialog.dismiss();
+            }
+        });
+    	
+    	loAlert.setNegativeButton(R.string.general_menus_cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+            	dialog.cancel();
+            	dialog.dismiss();
+            }
+        });
+    	
+    	loAlert.setNeutralButton(R.string.general_menus_clear, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+            	OptionsManager loOptions = new OptionsManager(MapSitesFragment.this.getActivity()); 
+            	OptionsEntity loOptionsData = loOptions.getOptions();
+            	loOptionsData.setSearch("");
+            	loOptions.createOrUpdateOptions(loOptionsData);
+            	EditText loSearchControl = (EditText)((AlertDialog)dialog).findViewById(R.id.txtSearch);
+            	loSearchControl.setText("");
+            	MapSitesFragment.this.cboForceUpdate = true;
+            	MapSitesFragment.this.loadList(LoadActions.LOAD_DATA);   
+            	dialog.dismiss();
+            }
+        });	
+    	loAlert.setCancelable(false);
+    	return loAlert.create();		
+    }
+	
+	public Location getLastLocation(){
+		return this.coLastLocation;
+	}
+	
+	public void setLastLocation(Location pLastLocation){
+		this.coLastLocation = pLastLocation;
+	}
+	
 }
