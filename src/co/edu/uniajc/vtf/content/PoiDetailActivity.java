@@ -11,15 +11,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 import co.edu.uniajc.vtf.R;
-import co.edu.uniajc.vtf.content.ListSitesFragment.LoadActions;
 import co.edu.uniajc.vtf.content.controller.PoiDetailController;
 import co.edu.uniajc.vtf.content.interfaces.IPoiDetail;
+import co.edu.uniajc.vtf.content.model.PointOfInterestEntity;
 import co.edu.uniajc.vtf.utils.OptionsEntity;
 import co.edu.uniajc.vtf.utils.OptionsManager;
 import co.edu.uniajc.vtf.utils.ResourcesManager;
@@ -30,6 +29,7 @@ public class PoiDetailActivity extends Activity implements IPoiDetail {
 	private PoiDetailController coController; 
 	private int ciPoiId;
 	private double cdPersonalRating;
+	private PointOfInterestEntity coPoint;
 	
 	@Override
 	public double getPersonalRating() {
@@ -92,7 +92,13 @@ public class PoiDetailActivity extends Activity implements IPoiDetail {
 		TextView loControl = (TextView) this.findViewById(R.id.txtDetailDescription);
 		loControl.setText(pDescription);		
 	}
-
+	
+	@Override
+	public void setAddress(String pAddress) {
+		TextView loControl = (TextView) this.findViewById(R.id.txtPoiAddress);
+		loControl.setText(pAddress);
+	}
+	
 	@Override
 	public void setFavorite(boolean pIsFavorite) {
 		ToggleButton loControl =  (ToggleButton) this.findViewById(R.id.tglFavorite);
@@ -138,8 +144,15 @@ public class PoiDetailActivity extends Activity implements IPoiDetail {
     	RatingBar loRatingBar = (RatingBar)loDialog.findViewById(R.id.rtbRatingPoi);  	
     	TextView loRatingValue = (TextView)loDialog.findViewById(R.id.txtRatingValue);  	
     	loRatingBar.setRating((float)PoiDetailActivity.this.cdPersonalRating);
-    	loRatingValue.setText(String.format("%.2f",PoiDetailActivity.this.cdPersonalRating)); 
-			
+    	loRatingValue.setText(String.format("%.2f",PoiDetailActivity.this.cdPersonalRating)); 		
+	}
+	
+	public void onClick_OpenMap(View view){
+		this.coController.navigateToRouteMap();
+	}
+	
+	public void onCreateRoute(View view){
+		this.coController.navigateComments(this.ciPoiId);
 	}
 	
 	@Override
@@ -181,6 +194,27 @@ public class PoiDetailActivity extends Activity implements IPoiDetail {
     	loAlert.setCancelable(false);
     	return loAlert.create();		
     }
+
+	@Override
+	public void setPoiData(PointOfInterestEntity pPoint) {
+		this.coPoint = pPoint;
+	}
+
+	@Override
+	public PointOfInterestEntity getPoiData(){
+		
+		/*//I don't care about the image data, so I can clone it and deleted it
+		PointOfInterestEntity loPoint = null;
+		try {
+			loPoint = this.coPoint.clone();
+			loPoint.setImage("");
+		} catch (CloneNotSupportedException e) {
+			//if exception, I use the original instance.
+			loPoint = this.coPoint;
+		}*/
+		return this.coPoint;
+	}
 	
 	
+
 }

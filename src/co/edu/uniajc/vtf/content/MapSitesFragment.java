@@ -25,7 +25,6 @@ import android.widget.Toast;
 import co.edu.uniajc.vtf.R;
 import co.edu.uniajc.vtf.content.ListSitesFragment.LoadActions;
 import co.edu.uniajc.vtf.content.controller.MapSitesController;
-import co.edu.uniajc.vtf.content.interfaces.ILoadExtenalDataFromList;
 import co.edu.uniajc.vtf.content.interfaces.ILoadExtenalDataFromMap;
 import co.edu.uniajc.vtf.content.interfaces.IMapSites;
 import co.edu.uniajc.vtf.content.model.PointOfInterestEntity;
@@ -155,6 +154,7 @@ public class MapSitesFragment extends Fragment implements
                     }
                 });
             	this.coMap.setBuildingsEnabled(true);
+            	this.coMap.setTrafficEnabled(true);
             	this.coMap.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
                     @Override
                     public void onInfoWindowClick(Marker marker) {
@@ -291,7 +291,7 @@ public class MapSitesFragment extends Fragment implements
 		CameraPosition cameraPosition = new CameraPosition.Builder() 
 			.target(loPosition)			// Sets location
 		    .zoom(17)                   // Sets the zoom
-		    .bearing(90)                // Sets the orientation of the camera to east
+		    .bearing(0)                // Sets the orientation of the camera to east
 		    .tilt(30)                   // Sets the tilt of the camera to 30 degrees
 		    .build();                   // Creates a CameraPosition from the builder
 		this.coMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));

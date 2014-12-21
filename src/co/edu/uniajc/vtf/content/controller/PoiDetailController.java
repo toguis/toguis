@@ -2,10 +2,12 @@ package co.edu.uniajc.vtf.content.controller;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 import co.edu.uniajc.vtf.R;
 import co.edu.uniajc.vtf.content.CommentsActivity;
+import co.edu.uniajc.vtf.content.NavigationActivity;
 import co.edu.uniajc.vtf.content.SwipeContentActivity;
 import co.edu.uniajc.vtf.content.interfaces.IPoiDetail;
 import co.edu.uniajc.vtf.content.model.PoiDetailModel;
@@ -39,6 +41,8 @@ public class PoiDetailController implements ModelListener{
 		this.coView.setFavorite(pData.isFavorite());
 		this.coView.setVisited(pData.isVisited());
 		this.coView.setPersonalRating(pData.getRating());
+		this.coView.setAddress(pData.getAddress());
+		this.coView.setPoiData(pData);
 	}
 	
 	public void setFavoriteAsync(String pUserName, int pPoiId){
@@ -86,6 +90,15 @@ public class PoiDetailController implements ModelListener{
 		Activity loActivity = ((Activity)this.coView);
 		Intent loIntent = new Intent(loActivity, CommentsActivity.class);
 		loIntent.putExtra("id", pPoiId);		
+		loActivity.startActivity(loIntent);		
+	}
+	
+	public void navigateToRouteMap(){
+		Activity loActivity = ((Activity)this.coView);
+		Intent loIntent = new Intent(loActivity, NavigationActivity.class);
+		Bundle loBundle = new Bundle();	
+		loBundle.putParcelable("destiny", this.coView.getPoiData());
+		loIntent.putExtras(loBundle);
 		loActivity.startActivity(loIntent);		
 	}
 	

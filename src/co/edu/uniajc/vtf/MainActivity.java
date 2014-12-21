@@ -18,6 +18,7 @@ public class MainActivity extends Activity implements IMain {
     	OptionsEntity loOptionsData = loOptions.getOptions();
 
     	loOptionsData.setArea(5000);
+    	loOptionsData.setLanguageIsoId("es");
     	loOptions.createOrUpdateOptions(loOptionsData);
     	
 		this.coController = new MainController(this);	

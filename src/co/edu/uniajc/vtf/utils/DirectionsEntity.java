@@ -2,9 +2,14 @@ package co.edu.uniajc.vtf.utils;
 
 import java.util.ArrayList;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.os.Parcelable.Creator;
+import co.edu.uniajc.vtf.content.model.PointOfInterestEntity;
+
 import com.google.android.gms.maps.model.LatLng;
 
-public class DirectionsEntity {
+public class DirectionsEntity implements Parcelable{
 	private ArrayList<LatLng> coGeopoints;
 	private String csDistance;
 	private String csDuration;
@@ -34,6 +39,34 @@ public class DirectionsEntity {
 	public void setInstructions(String instructions) {
 		csInstructions = instructions;
 	}
+	@Override
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel in, int flags) {
+		in.writeString(this.csDistance);
+		in.writeString(this.csDuration);
+		in.writeString(this.csInstructions);
+	}	
+
 	
+    public static final Parcelable.Creator<DirectionsEntity> CREATOR = new Creator<DirectionsEntity>() {  
+		 public DirectionsEntity createFromParcel(Parcel source) {  
+			 DirectionsEntity loDirection = new DirectionsEntity();  
+			 loDirection.csDistance = source.readString();
+			 loDirection.csDuration = source.readString();
+			 loDirection.csInstructions = source.readString();		
+		     return loDirection;  
+		 }
+
+		@Override
+		public DirectionsEntity[] newArray(int size) {
+			// TODO Auto-generated method stub
+			return new DirectionsEntity[size];
+		}  
+    };
 	
 }

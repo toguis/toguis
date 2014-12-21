@@ -2,6 +2,7 @@ package co.edu.uniajc.vtf.utils;
 
 public class OptionsEntity {
 	private int ciLanguageId;
+	private String csLanguageIsoId;
 	private boolean cboFilterMonument;
 	private boolean cboFilterMuseum;
 	private boolean cboFilterHotel;
@@ -19,6 +20,12 @@ public class OptionsEntity {
 	}
 	public void setLanguageId(int languageId) {
 		ciLanguageId = languageId;
+	}
+	public String getLanguageIsoId() {
+		return csLanguageIsoId;
+	}
+	public void setLanguageIsoId(String pLanguageIsoId) {
+		this.csLanguageIsoId = pLanguageIsoId;
 	}
 	public boolean isFilterMonument() {
 		return cboFilterMonument;

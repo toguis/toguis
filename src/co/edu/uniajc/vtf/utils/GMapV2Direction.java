@@ -30,10 +30,10 @@ public class GMapV2Direction {
 
     public GMapV2Direction() { }
 
-    public Document getDocument(LatLng start, LatLng end, String mode) {
+    public Document getDocument(LatLng start, LatLng end, String mode,String language ) {
         String url = "http://maps.googleapis.com/maps/api/directions/xml?" 
                 + "origin=" + start.latitude + "," + start.longitude  
-                + "&destination=" + end.latitude + "," + end.longitude 
+                + "&destination=" + end.latitude + "," + end.longitude + "&language=" + language
                 + "&sensor=false&units=metric&mode=" + MODE_WALKING;
 
         try {
@@ -108,7 +108,7 @@ public class GMapV2Direction {
         return node1.getTextContent();
     }
 
-    public ArrayList<LatLng> getDirection (Document doc) {
+    public ArrayList<DirectionsEntity> getDirection (Document doc) {
         NodeList nl1, nl2, nl3;
         
         ArrayList<DirectionsEntity> loListDirections = new  ArrayList<DirectionsEntity>();
@@ -153,12 +153,19 @@ public class GMapV2Direction {
                 loDataNode = nl3.item(getNodeIndex(nl3, "text"));
                 loDirectionPoint.setDuration(loDataNode.getTextContent());        
                 
+                locationNode = nl2.item(getNodeIndex(nl2, "distance"));
+                nl3 = locationNode.getChildNodes();
+                loDataNode = nl3.item(getNodeIndex(nl3, "text"));
+                loDirectionPoint.setDistance(loDataNode.getTextContent());     
+
+                locationNode = nl2.item(getNodeIndex(nl2, "html_instructions"));
+                loDirectionPoint.setInstructions(locationNode.getTextContent());   
                 
                 loListDirections.add(loDirectionPoint);
             }
         }
 
-        return listGeopoints;
+        return loListDirections;
     }
 
     private int getNodeIndex(NodeList nl, String nodename) {

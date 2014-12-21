@@ -6,19 +6,27 @@
     tools:context=".NavigationActivity" >
 
     <fragment
-    	android:id="@+id/map"
+        android:id="@+id/routeMap"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         class="com.google.android.gms.maps.SupportMapFragment" />
 
-    <Button
-        android:id="@+id/bNavigation"
+    <ImageView
+        android:id="@+id/btnLocate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_margin="5dp"
-        android:text="Navigate" />
+        android:onClick="onClick_Locate"
+        android:src="@drawable/locate64" />
+
+    <ImageView
+        android:id="@+id/btnRoute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/btnLocate"
+        android:onClick="onClick_Route"
+        android:src="@drawable/route64" />
 
 </RelativeLayout>

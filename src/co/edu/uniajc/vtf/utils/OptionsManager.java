@@ -21,6 +21,7 @@ public class OptionsManager {
 	private static final String OPTION_CITY = "cityId";
 	private static final String OPTION_RANGE_AREA = "area";
 	private static final String OPTION_SEARCH = "search";
+	private static final String OPTION_LANG_ISO_ID = "isoid";
 	
 	public OptionsManager(Context pContext){
 		this.coContext = pContext;
@@ -90,6 +91,7 @@ public class OptionsManager {
 		loOptions.setCityId(this.coShared.getInt(OPTION_CITY, 1));
 		loOptions.setArea(this.coShared.getInt(OPTION_RANGE_AREA, 100));
 		loOptions.setSearch(this.coShared.getString(OPTION_SEARCH, ""));
+		loOptions.setLanguageIsoId(this.coShared.getString(OPTION_LANG_ISO_ID, "en"));
 		return loOptions;
 	}
 	
@@ -107,6 +109,7 @@ public class OptionsManager {
 			this.coEditor.putInt(OPTION_CITY, pOptions.getCityId());
 			this.coEditor.putInt(OPTION_RANGE_AREA, pOptions.getArea());
 			this.coEditor.putString(OPTION_SEARCH, pOptions.getSearch());
+			this.coEditor.putString(OPTION_LANG_ISO_ID, pOptions.getLanguageIsoId());
 			this.coEditor.commit();
 		}
 	}

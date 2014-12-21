@@ -1,6 +1,6 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/LinearLayout1"
+    android:id="@+id/scrContentDescription"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/tile_repeat"
@@ -10,7 +10,12 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="co.edu.uniajc.vtf.content.PoiDetailActivity" >
-
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:orientation="vertical">
+        
     <TextView
         android:id="@+id/lblDetailTitle"
         android:layout_width="fill_parent"
@@ -84,6 +89,7 @@
             android:layout_weight="1"
             android:background="@null"
             android:contentDescription="@string/poi_detail_image_description"
+            android:onClick="onClick_OpenMap"
             android:paddingTop="2dp"
             android:src="@drawable/go_map48" />
 
@@ -132,6 +138,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start|center_vertical"
+            android:layout_marginEnd="15dp"
             android:layout_marginRight="15dp"
             android:gravity="center"
             android:text="@string/poi_detail_txt_rating_text"
@@ -155,7 +162,10 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="15dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:gravity="end"
             android:text="0.0"
             android:textColor="#cccccc"
@@ -164,32 +174,55 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp" >
+
+        <TextView
+            android:id="@+id/txtAddressLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center_vertical"
+            android:text="@string/poi_detail_txt_address_text"
+            android:textColor="#cccccc"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtPoiAddress"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center_vertical"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:textColor="#cccccc" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </LinearLayout>
+
     <TextView
         android:id="@+id/txtDescriptionLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
         android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
         android:gravity="center"
         android:text="@string/poi_detail_txt_description_text"
         android:textColor="#cccccc"
         android:textSize="15sp"
         android:textStyle="bold" />
-	
 
+      <TextView
+          android:id="@+id/txtDetailDescription"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:textColor="#cccccc" />
+ 
 
-    <ScrollView
-        android:id="@+id/scrContentDescription"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="vertical"
-    	android:fillViewport="true" >
-	
-	      <TextView
-	          android:id="@+id/txtDetailDescription"
-	          android:layout_width="fill_parent"
-	          android:layout_height="wrap_content"
-	          android:textColor="#cccccc" />
-  
-    </ScrollView>
-
-</LinearLayout>
+	</LinearLayout>
+	</ScrollView>

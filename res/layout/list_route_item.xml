@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/tile_repeat"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+		<ImageView
+		    android:id="@+id/imgRouteIcon"
+		    android:layout_width="wrap_content"
+		    android:layout_height="70dp"
+		    android:contentDescription="@string/list_point_item_img_point_content_description"
+		    android:paddingBottom="20dp"
+		    android:paddingLeft="8dp"
+		    android:paddingRight="8dp"
+		    android:paddingTop="20dp"
+		    android:scaleType="matrix"
+		    android:src="@drawable/route48" />
+		
+	    <LinearLayout
+	        android:layout_width="0dp"
+	        android:layout_height="70dp"
+	        android:layout_weight="0.71"
+	        android:orientation="vertical" >
+	
+	        <TextView
+	            android:id="@+id/lblInstruction"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:maxLines="2"
+	            android:minLines="2"
+	            android:paddingLeft="5dp"
+	            android:paddingRight="5dp"
+	            android:paddingTop="10dp"
+	            android:text="@string/list_point_item_lbl_point_title_text"
+	            android:textColor="#cccccc"
+	            android:textSize="12sp" />
+	
+		   <LinearLayout
+		        android:layout_width="fill_parent"
+		        android:layout_height="20dp"
+		        android:orientation="horizontal" >
+		
+		        <TextView
+		            android:id="@+id/lblDistance"
+		            android:layout_width="wrap_content"
+		            android:layout_height="fill_parent"
+		            android:paddingLeft="5dp"
+		            android:paddingRight="5dp"
+		            android:paddingTop="5dp"
+		            android:text="0Km"
+		            android:textColor="#cccccc"
+		            android:textSize="12sp" />
+		
+		         <TextView
+		             android:id="@+id/lblDuration"
+		             android:layout_width="wrap_content"
+		             android:layout_height="fill_parent"
+		             android:paddingLeft="5dp"
+		             android:paddingRight="5dp"
+		             android:paddingTop="5dp"
+		             android:text="0 Mins"
+		             android:textColor="#cccccc"
+		             android:textSize="12sp" />
+		
+		    </LinearLayout>
+	
+		</LinearLayout>
+        
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imgSep"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:contentDescription="@string/poi_detail_image_description"
+        android:scaleType="fitXY"
+        android:src="@drawable/line" />
+ 
+</LinearLayout>
