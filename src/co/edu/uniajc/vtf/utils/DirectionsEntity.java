@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.Parcelable.Creator;
-import co.edu.uniajc.vtf.content.model.PointOfInterestEntity;
 
 import com.google.android.gms.maps.model.LatLng;
 

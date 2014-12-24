@@ -69,10 +69,19 @@ public class SwipeContentActivity extends FragmentActivity  implements
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		
 		ResourcesManager loResource = new ResourcesManager(this);		
-		actionBar.addTab(actionBar.newTab().setText(loResource.getStringResource(R.string.swipe_content_tab_site)).setTabListener(this));
-		actionBar.addTab(actionBar.newTab().setText(loResource.getStringResource(R.string.swipe_content_tab_map)).setTabListener(this));
-		actionBar.addTab(actionBar.newTab().setText(loResource.getStringResource(R.string.swipe_content_tab_ar)).setTabListener(this));
-		actionBar.addTab(actionBar.newTab().setText(loResource.getStringResource(R.string.swipe_content_tab_settings)).setTabListener(this));
+
+		actionBar.addTab(actionBar.newTab()
+				 .setTabListener(this)
+				 .setIcon(R.drawable.list48));		
+		actionBar.addTab(actionBar.newTab()
+				 .setTabListener(this)
+				 .setIcon(R.drawable.map48));
+		actionBar.addTab(actionBar.newTab()
+				 .setTabListener(this)
+				 .setIcon(R.drawable.ra48));
+		actionBar.addTab(actionBar.newTab()
+				 .setTabListener(this)
+				 .setIcon(R.drawable.options48));
 		
 		//get the google api client 
 		this.coApiClient = new GoogleApiClient.Builder(this)
