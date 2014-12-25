@@ -97,7 +97,7 @@ public class OptionsManager {
 	
 	public void createOrUpdateOptions(OptionsEntity pOptions){
 		if(this.coEditor != null){
-			this.coEditor.putInt(OPT_NAME, pOptions.getLanguageId());
+			this.coEditor.putInt(OPTION_LANGUAGE, pOptions.getLanguageId());
 			this.coEditor.putBoolean(OPTION_FILTER_MONUMENT, pOptions.isFilterMonument());
 			this.coEditor.putBoolean(OPTION_FILTER_MUSEUM, pOptions.isFilterMuseum());
 			this.coEditor.putBoolean(OPTION_FILTER_HOTEL, pOptions.isFilterHotel());

@@ -51,7 +51,7 @@
     <string name="general_message_error">Error</string>
     <string name="general_save_db_error">Ha ocurrido un error al almacenar la información</string>
     <string name="general_db_error">Ha ocurrido un error al acceder al servicio</string>
-    <string name="general_web_service_base_url">http://192.168.1.100/ToguisWebServices/</string>
+    <string name="general_web_service_base_url">http://192.168.1.101/ToguisWebServices/</string>
     <string name="general_google_play_not_installed">Google play debe estar instalado</string>
     <string name="general_progress_message">Cargando puntos de interes, por favor espera&#8230;</string>
     <string name="general_progress_message_loading">Cargando, por favor espera&#8230;</string>
@@ -98,5 +98,16 @@
     <string name="title_activity_navigation">Mapa de navegación</string>
     <string name="title_activity_navigation_route">Ruta de navegación</string>
     <string name="title_activity_poi_image">PoiImageActivity</string>
-
+	<string name="settings_lbl_monuments_text">Ver monumentos</string>
+	<string name="settings_lbl_museums_text">Ver museos</string>
+	<string name="settings_lbl_hotels_text">Ver hoteles</string>
+	<string name="settings_lbl_restaurants_text">Ver restaurantes</string>
+	<string name="settings_lbl_interest_text">Ver sitio de interes</string>
+	<string name="settings_lbl_buildings_text">Ver obras arquitectonicas</string>
+	<string name="settings_lbl_transport_text">Ver medios de transporte</string>
+	<string name="settings_lbl_events_text">Ver eventos</string>
+	<string name="settings_lbl_distance_text">Distancia Máxima Kms (0 Km = infinito)</string>
+	<string name="settings_lbl_cities_text">Ciudad seleccionada</string>
+	<string name="settings_lbl_language_text">Lenguaje</string>
+	<string name="settings_btn_save_settings_text">Guardar</string>
 </resources>

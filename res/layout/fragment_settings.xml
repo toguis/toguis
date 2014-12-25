@@ -1,15 +1,318 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView1"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/tile_repeat"
+    android:layout_height="wrap_content"
+    android:background="@drawable/tile_repeat" >
+
+<LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"   
     android:orientation="vertical" >
 
+    
     <Button
         android:id="@+id/btnSessionLogout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="deleteSesion" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp" >
+
+        <CheckBox
+            android:id="@+id/chkMonuments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:button="@drawable/toguis_checkbutton"
+            android:checked="false" />
+
+        <TextView
+            android:id="@+id/txtMonuments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="@string/settings_lbl_monuments_text"
+            android:textColor="#cccccc"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+        
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:padding="5dp" >
+
+        <CheckBox
+            android:id="@+id/chkMuseums"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/toguis_checkbutton"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true" />
+
+        <TextView
+            android:id="@+id/txtMuseums"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="@string/settings_lbl_museums_text"
+            android:textColor="#cccccc"
+            android:textSize="16sp"
+            android:textStyle="bold"  />
+        
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:padding="5dp" >
+
+        <CheckBox
+            android:id="@+id/chkHotel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:button="@drawable/toguis_checkbutton"
+            android:layout_alignParentRight="true" />
+
+        <TextView
+            android:id="@+id/txtHotel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="@string/settings_lbl_hotels_text"
+            android:textColor="#cccccc" 
+            android:textSize="16sp"
+            android:textStyle="bold" />
+        
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:padding="5dp" >
+
+        <CheckBox
+            android:id="@+id/chkRestaurant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/toguis_checkbutton"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true" />
+
+        <TextView
+            android:id="@+id/txtRestaurant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="@string/settings_lbl_restaurants_text"
+            android:textColor="#cccccc" 
+            android:textSize="16sp"
+            android:textStyle="bold" />
+        
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:padding="5dp" >
+
+        <CheckBox
+            android:id="@+id/chkInterest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/toguis_checkbutton"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true" />
+
+        <TextView
+            android:id="@+id/txtInterest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="@string/settings_lbl_interest_text"
+            android:textColor="#cccccc" 
+            android:textSize="16sp"
+            android:textStyle="bold" />
+        
+    </RelativeLayout>   
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:padding="5dp" >
+
+        <CheckBox
+            android:id="@+id/chkBuilding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/toguis_checkbutton"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true" />
+
+        <TextView
+            android:id="@+id/txtBuilding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="@string/settings_lbl_buildings_text"
+            android:textColor="#cccccc" 
+            android:textSize="16sp"
+            android:textStyle="bold" />
+        
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:padding="5dp" >
+
+        <CheckBox
+            android:id="@+id/chkTransport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/toguis_checkbutton"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true" />
+
+        <TextView
+            android:id="@+id/txtTransport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="@string/settings_lbl_transport_text"
+            android:textColor="#cccccc" 
+            android:textSize="16sp"
+            android:textStyle="bold" />
+        
+    </RelativeLayout>  
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:padding="5dp" >
+
+        <CheckBox
+            android:id="@+id/chkEvent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/toguis_checkbutton"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true" />
+
+        <TextView
+            android:id="@+id/txtEvent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="@string/settings_lbl_events_text"
+            android:textColor="#cccccc" 
+            android:textSize="16sp"
+            android:textStyle="bold" />
+        
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:paddingTop="2dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/line2" />
+
+    <TextView
+        android:id="@+id/txtDistance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="deleteSesion"
-        android:text="Button" />
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:text="@string/settings_lbl_distance_text"
+        android:textColor="#cccccc"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
+    <SeekBar
+        android:id="@+id/seekDistance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/txtDistanceValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0 Kms"
+        android:textColor="#cccccc" />
+    
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:paddingTop="2dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/line2" />
+    
+    <TextView
+        android:id="@+id/lblCities"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_lbl_cities_text"
+        android:textColor="#cccccc"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <Spinner
+        android:id="@+id/spnCities"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:paddingTop="2dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/line2" />
+
+    <TextView
+        android:id="@+id/lblLanguage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_lbl_language_text"
+        android:textColor="#cccccc"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <Spinner
+        android:id="@+id/spnLanguage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btnSaveSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="@string/settings_btn_save_settings_text" />
+                        
 </LinearLayout>
+</ScrollView>
