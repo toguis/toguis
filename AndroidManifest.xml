@@ -10,7 +10,7 @@
 
     <uses-sdk
         android:minSdkVersion="14"
-        android:targetSdkVersion="19" />
+        android:targetSdkVersion="21" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -37,7 +37,8 @@
 
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:theme="@style/FullscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -82,12 +83,13 @@
         </activity>
         <activity
             android:name=".content.SwipeContentActivity"
-            android:label="@string/title_activity_swipe_content" 
-            android:screenOrientation="portrait">
+            android:label="@string/title_activity_swipe_content"
+            android:configChanges="orientation|keyboardHidden|screenSize" >
         </activity>
         <activity
             android:name=".content.PoiDetailActivity"
-            android:label="@string/poi_detail_title_activity" >
+            android:label="@string/poi_detail_title_activity" 
+            android:configChanges="orientation|keyboardHidden|screenSize" >
         </activity>
         <activity
             android:name=".content.CommentsActivity"
@@ -98,8 +100,15 @@
             android:label="@string/title_activity_navigation" >
         </activity>
         <activity
-            android:name="co.edu.uniajc.vtf.content.NavigationRouteActivity"
+            android:name=".content.NavigationRouteActivity"
             android:label="@string/title_activity_navigation_route" >
+        </activity>
+        <activity
+            android:name=".content.PoiImageActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/FullscreenTheme"
+            android:label="@string/title_activity_poi_image" >
+
         </activity>
     </application>
 

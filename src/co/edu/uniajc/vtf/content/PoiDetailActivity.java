@@ -215,6 +215,8 @@ public class PoiDetailActivity extends Activity implements IPoiDetail {
 		return this.coPoint;
 	}
 	
-	
+	public void onClick_OpenImage(View view){
+		this.coController.navigateToImageView(this.coPoint);
+	}
 
 }

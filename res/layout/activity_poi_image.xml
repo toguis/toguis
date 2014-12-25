@@ -1,0 +1,27 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/tile_repeat"
+    tools:context="co.edu.uniajc.vtf.content.PoiImageActivity" >
+
+	<RelativeLayout
+	    android:id="@+id/relView"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent" 
+	    android:orientation="vertical" >
+	
+	    <ImageView
+	        android:id="@+id/imgPoiImageView"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentStart="true"
+	        android:layout_centerVertical="true"
+	        android:contentDescription="@string/poi_detail_image_description"
+	        android:scaleType="fitXY"
+	        android:src="@drawable/tab_selected_focused" />
+	
+	</RelativeLayout>
+
+</FrameLayout>

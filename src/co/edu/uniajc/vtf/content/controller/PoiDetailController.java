@@ -3,16 +3,19 @@ package co.edu.uniajc.vtf.content.controller;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 import co.edu.uniajc.vtf.R;
 import co.edu.uniajc.vtf.content.CommentsActivity;
 import co.edu.uniajc.vtf.content.NavigationActivity;
+import co.edu.uniajc.vtf.content.PoiImageActivity;
 import co.edu.uniajc.vtf.content.SwipeContentActivity;
 import co.edu.uniajc.vtf.content.interfaces.IPoiDetail;
 import co.edu.uniajc.vtf.content.model.PoiDetailModel;
 import co.edu.uniajc.vtf.content.model.PointOfInterestEntity;
 import co.edu.uniajc.vtf.utils.AlertDialogManager;
+import co.edu.uniajc.vtf.utils.ExtendedApplicationContext;
 import co.edu.uniajc.vtf.utils.ModelListener;
 import co.edu.uniajc.vtf.utils.ResourcesManager;
 
@@ -37,7 +40,7 @@ public class PoiDetailController implements ModelListener{
 		this.coView.setTitle(pData.getTitle());
 		this.coView.setDescription(pData.getDescription());
 		this.coView.setRating(pData.getAvgRating());			
-		this.coView.setImage(pData.getImage());
+		this.coView.setImage(pData.getBitmapImage());
 		this.coView.setFavorite(pData.isFavorite());
 		this.coView.setVisited(pData.isVisited());
 		this.coView.setPersonalRating(pData.getRating());
@@ -100,6 +103,14 @@ public class PoiDetailController implements ModelListener{
 		loBundle.putParcelable("destiny", this.coView.getPoiData());
 		loIntent.putExtras(loBundle);
 		loActivity.startActivity(loIntent);		
+	}
+	
+	public void navigateToImageView(PointOfInterestEntity pData){
+		ExtendedApplicationContext loContext = (ExtendedApplicationContext)((Activity)this.coView).getApplication();
+		loContext.setData(pData.getImage());
+		Activity loActivity = ((Activity)this.coView);
+		Intent loIntent = new Intent(loActivity, PoiImageActivity.class);
+		loActivity.startActivity(loIntent);	
 	}
 	
 	@Override

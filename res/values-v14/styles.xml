@@ -32,4 +32,9 @@
     <style name="ActionBarTabStyle" parent="@android:style/Widget.Holo.ActionBar.TabView">
         <item name="android:background">@drawable/toguis_tab_bar</item>
     </style>
+    
+
+
+
+
 </resources>

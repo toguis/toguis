@@ -60,10 +60,14 @@ public class PointOfInterestEntity implements Parcelable{
         this.csDescription = description;
     }
     
-    public Bitmap getImage() {
+    public Bitmap getBitmapImage(){
         byte[] loData = Base64.decode(this.csImage, Base64.DEFAULT);
         Bitmap loBitmap = BitmapFactory.decodeByteArray(loData, 0, loData.length);	
-        return loBitmap;
+        return loBitmap;   	
+    }
+    
+    public String getImage() {
+        return this.csImage;
     }
     
     public void setImage(String image) {

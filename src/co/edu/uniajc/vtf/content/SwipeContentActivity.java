@@ -67,8 +67,6 @@ public class SwipeContentActivity extends FragmentActivity  implements
 		
 		actionBar.setHomeButtonEnabled(false);
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		
-		ResourcesManager loResource = new ResourcesManager(this);		
 
 		actionBar.addTab(actionBar.newTab()
 				 .setTabListener(this)
