@@ -19,4 +19,15 @@ public interface ISettings {
 	int getLanguageValue();
 	String getLanguageISOValue();
 	int getCityValue();
+	void setMonumentValue(boolean pValue);
+	void setMuseumValue(boolean pValue);
+	void setRestaurantValue(boolean pValue);
+	void setInterestValue(boolean pValue);
+	void setBuildingValue(boolean pValue);
+	void setTransportValue(boolean pValue);
+	void setHotelValue(boolean pValue);
+	void setEventValue(boolean pValue);
+	void setDistanceValue(int pValue);
+	void setLanguageValue(int pValue);
+	void setCityValue(int pValue);
 }

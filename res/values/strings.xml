@@ -58,6 +58,7 @@
     <string name="general_toggle_button_text"></string>
     <string name="general_load_map_error">No ha sido posible cargar el mapa</string>
     <string name="general_map_current_position">Mi posición</string>
+    <string name="general_setting_save_data">Configuración almacenada con éxito</string>
     <string name="title_activity_forgot_password">Recuperar contraseña</string>
     <string name="forgot_password_lbl_message_text">Por favor escribe el email que usas para ingresar</string>
     <string name="forgot_password_txt_verify_email_hint">email@domain.com</string>

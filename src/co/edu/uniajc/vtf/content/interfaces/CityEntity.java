@@ -4,7 +4,7 @@ public class CityEntity {
 	private int Id;
 	private String Name;
 	private int WOEId;
-	
+
 	public int getId() {
 		return Id;
 	}

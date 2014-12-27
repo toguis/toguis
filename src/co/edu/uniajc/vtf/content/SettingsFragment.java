@@ -2,6 +2,7 @@ package co.edu.uniajc.vtf.content;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,12 +11,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Spinner;
 import android.widget.TextView;
 import co.edu.uniajc.vtf.R;
@@ -39,6 +42,8 @@ public class SettingsFragment extends Fragment implements ISettings{
 	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {			
 		return inflater.inflate(R.layout.fragment_settings, container, false);     
     }
+	
+           
 	
     @Override
     public void onActivityCreated(Bundle state) {
@@ -96,6 +101,29 @@ public class SettingsFragment extends Fragment implements ISettings{
     		
     	});
     	
+    	SeekBar loSeekDistance = (SeekBar)this.getView().findViewById(R.id.seekDistance);
+    	loSeekDistance.setOnSeekBarChangeListener(new OnSeekBarChangeListener(){
+
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress,
+					boolean fromUser) {
+				TextView loDistance = (TextView)SettingsFragment.this.getView().findViewById(R.id.txtDistanceValue);
+				loDistance.setText(progress + " Kms");				
+			}
+
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+				// TODO Auto-generated method stub
+				
+			}
+    		
+    	});
     	this.coController = new SettingsController(this);
     	this.coController.getLanguagesAsync();
     	
@@ -133,7 +161,7 @@ public class SettingsFragment extends Fragment implements ISettings{
 		}
 		
 		public long getItemId(int position){
-		   return position;
+		   return this.coItems.get(position).getId();
 		}
 		
 	    @Override
@@ -149,7 +177,7 @@ public class SettingsFragment extends Fragment implements ISettings{
 				
 	        TextView loSpinnerlabel = (TextView)loView.findViewById(R.id.lblSpinnerText);
 	        loSpinnerlabel.setText(this.coItems.get(position).getName());
-
+	        
 	        return loSpinnerlabel;
 	    }
 
@@ -177,7 +205,7 @@ public class SettingsFragment extends Fragment implements ISettings{
 		}
 		
 		public long getItemId(int position){
-		   return position;
+			return this.coItems.get(position).getId();
 		}
 		
 	    @Override
@@ -193,7 +221,7 @@ public class SettingsFragment extends Fragment implements ISettings{
 				
 	        TextView loSpinnerlabel = (TextView)loView.findViewById(R.id.lblSpinnerText);
 	        loSpinnerlabel.setText(this.coItems.get(position).getName());
-
+	        
 	        return loSpinnerlabel;
 	    }
 
@@ -201,14 +229,16 @@ public class SettingsFragment extends Fragment implements ISettings{
 	    public View getDropDownView(int position, View convertView, ViewGroup parent) {
 	        return this.getView(position, convertView, parent);
 	    }
+	    
 	}
 	
 	@Override
-	public void setCities(List<CityEntity> pData){
+	public void setCities(List<CityEntity> pData){	
 		Spinner loSpinner = (Spinner) this.getView().findViewById(R.id.spnCities);
 		SpinnerCityAdapter loAdapter = new SpinnerCityAdapter(this.getActivity().getBaseContext(),R.layout.spinner_item, pData);
 		loSpinner.setAdapter(loAdapter);	
 		this.coCityAdapter = loAdapter;
+		this.coController.loadSettings();
 	}
 	
 	@Override
@@ -221,7 +251,7 @@ public class SettingsFragment extends Fragment implements ISettings{
 	}
 	
 	public void SaveSettings(){
-		this.coController.SaveSettings();
+		this.coController.saveSettings();
 		getLanguageValue();
 	}
 	
@@ -232,9 +262,21 @@ public class SettingsFragment extends Fragment implements ISettings{
 	}
 	
 	@Override
+	public void setMonumentValue(boolean pValue){
+		CheckBox loControl = (CheckBox)this.getView().findViewById(R.id.chkMonuments);
+		loControl.setChecked(pValue);
+	}
+	
+	@Override
 	public boolean getMuseumValue(){
 		CheckBox loControl = (CheckBox)this.getView().findViewById(R.id.chkMuseums);
 		return loControl.isChecked();
+	}
+	
+	@Override
+	public void setMuseumValue(boolean pValue){
+		CheckBox loControl = (CheckBox)this.getView().findViewById(R.id.chkMuseums);
+		loControl.setChecked(pValue);
 	}
 	
 	@Override
@@ -244,9 +286,21 @@ public class SettingsFragment extends Fragment implements ISettings{
 	}
 	
 	@Override
+	public void setRestaurantValue(boolean pValue){
+		CheckBox loControl = (CheckBox)this.getView().findViewById(R.id.chkRestaurant);
+		loControl.setChecked(pValue);
+	}
+	
+	@Override
 	public boolean getInterestValue(){
 		CheckBox loControl = (CheckBox)this.getView().findViewById(R.id.chkInterest);
 		return loControl.isChecked();
+	}
+	
+	@Override
+	public void setInterestValue(boolean pValue){
+		CheckBox loControl = (CheckBox)this.getView().findViewById(R.id.chkInterest);
+		loControl.setChecked(pValue);
 	}
 	
 	@Override
@@ -256,9 +310,21 @@ public class SettingsFragment extends Fragment implements ISettings{
 	}
 	
 	@Override
+	public void setBuildingValue(boolean pValue){
+		CheckBox loControl = (CheckBox)this.getView().findViewById(R.id.chkBuilding);
+		loControl.setChecked(pValue);
+	}
+	
+	@Override
 	public boolean getTransportValue(){
 		CheckBox loControl = (CheckBox)this.getView().findViewById(R.id.chkTransport);
 		return loControl.isChecked();
+	}
+	
+	@Override
+	public void setTransportValue(boolean pValue){
+		CheckBox loControl = (CheckBox)this.getView().findViewById(R.id.chkTransport);
+		loControl.setChecked(pValue);
 	}
 	
 	@Override
@@ -268,9 +334,21 @@ public class SettingsFragment extends Fragment implements ISettings{
 	}
 	
 	@Override
+	public void setHotelValue(boolean pValue){
+		CheckBox loControl = (CheckBox)this.getView().findViewById(R.id.chkHotel);
+		loControl.setChecked(pValue);
+	}
+	
+	@Override
 	public boolean getEventValue(){
 		CheckBox loControl = (CheckBox)this.getView().findViewById(R.id.chkEvent);
 		return loControl.isChecked();
+	}
+	
+	@Override
+	public void setEventValue(boolean pValue){
+		CheckBox loControl = (CheckBox)this.getView().findViewById(R.id.chkEvent);
+		loControl.setChecked(pValue);
 	}
 	
 	@Override
@@ -280,8 +358,22 @@ public class SettingsFragment extends Fragment implements ISettings{
 	}
 	
 	@Override
+	public void setDistanceValue(int pValue){
+		SeekBar loControl = (SeekBar)this.getView().findViewById(R.id.seekDistance);
+		loControl.setProgress(pValue);
+	}
+	
+	@Override
 	public int getLanguageValue(){
 		return this.coLanguageAdapter.getItem(this.ciSelectedLanguageId).getId();
+	}
+	
+	@Override
+	public void setLanguageValue(int pValue){
+		Spinner loSpinner = (Spinner) this.getView().findViewById(R.id.spnLanguage);
+		this.coLanguageAdapter.notifyDataSetChanged();
+		int liPosition = getAdapterPositionById(this.coLanguageAdapter,pValue);
+		loSpinner.setSelection(liPosition);
 	}
 	
 	@Override
@@ -293,9 +385,33 @@ public class SettingsFragment extends Fragment implements ISettings{
 	public int getCityValue(){
 		return this.coLanguageAdapter.getItem(this.ciSelectedCityId).getId();
 	}
+	
+	@Override
+	public void setCityValue(int pValue){
+		Spinner loSpinner = (Spinner) this.getView().findViewById(R.id.spnCities);
+		this.coCityAdapter.notifyDataSetChanged();
+		int liPosition = getAdapterPositionById(this.coCityAdapter,pValue);
+		loSpinner.setSelection(liPosition);
+		
+	}
+	
+    public int getAdapterPositionById(Adapter adapter, final long id) throws NoSuchElementException {
+        final int count = adapter.getCount();
+
+        for (int pos = 0; pos < count; pos++) {
+            if (id == adapter.getItemId(pos)) {
+            	int liPosition = pos;
+                return liPosition;
+            }    
+        }
+
+        return 0;
+    }
+	
 }
 
 //falta
-//toast de confirmacion
-//visualizar el valor del slider
-//falta cargar datos
+//toast de confirmacion - ok
+//visualizar el valor del slider - ok
+//falta cargar datos - ok
+//cambiar lenguaje al iniciar
