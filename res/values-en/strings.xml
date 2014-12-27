@@ -109,6 +109,6 @@
 	<string name="settings_lbl_events_text">Ver eventos</string>
 	<string name="settings_lbl_distance_text">Distancia Máxima Kms (0 Km = infinito)</string>
 	<string name="settings_lbl_cities_text">Ciudad seleccionada</string>
-	<string name="settings_lbl_language_text">Lenguage</string>
+	<string name="settings_lbl_language_text">Language</string>
 	<string name="settings_btn_save_settings_text">Guardar</string>
 </resources>
