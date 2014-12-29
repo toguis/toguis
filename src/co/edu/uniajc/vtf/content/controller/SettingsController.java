@@ -89,11 +89,12 @@ public class SettingsController implements ModelListener{
 	}
 	
 	public void loadSettings(){
-	    coHandler.postDelayed(new Runnable() { 
-	         public void run() { 
-	        	 loadSettings(SettingsController.this.coView);
-	         } 
-	    }, 500);
+	    coHandler.postDelayed(
+			new Runnable() { 
+		         public void run() { 
+		        	 loadSettings(SettingsController.this.coView);
+		         } 
+		    }, 500);
 	}
 	
 	private void setLocal(String pISOLang) {

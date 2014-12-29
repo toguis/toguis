@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 import co.edu.uniajc.vtf.R;
@@ -37,6 +38,17 @@ public class ARViewActivity extends Activity {
 			Toast.makeText(getApplicationContext(), "can't create Architect View", Toast.LENGTH_SHORT).show();
 			Log.e(this.getClass().getName(), "Exception in ArchitectView.onCreate()", rex);
 		}	
+		
+		Handler hdl = new Handler();
+		hdl.postDelayed(
+			new Runnable() { 
+				public void run() { 
+					ARViewActivity.this.architectView.setLocation(3.43879, -76.52206339, 100, 10);
+				} 
+	    	}, 6000
+    	);
+
+		
 	}
 	
 	@Override
