@@ -51,7 +51,6 @@
     <string name="general_message_error">Error</string>
     <string name="general_save_db_error">Ha ocurrido un error al almacenar la información</string>
     <string name="general_db_error">Ha ocurrido un error al acceder al servicio</string>
-    <string name="general_web_service_base_url">http://192.168.1.101/ToguisWebServices/</string>
     <string name="general_google_play_not_installed">Google play debe estar instalado</string>
     <string name="general_progress_message">Cargando puntos de interes, por favor espera&#8230;</string>
     <string name="general_progress_message_loading">Cargando, por favor espera&#8230;</string>

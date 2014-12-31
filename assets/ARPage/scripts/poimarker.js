@@ -7,6 +7,7 @@ function POIMarker(poiData){
 	var markerLocation = new AR.GeoLocation(poiData.latitude, poiData.longitude, poiData.altitude);
     this.animationGroup_idle = null;
     this.animationGroup_selected = null;
+    this.distanceToUser = 0.0;
     
 	this.drawable_idle = new AR.ImageDrawable(World.markerImageResource[poiData.type - 1], 2.5, {
         zOrder: 0,
@@ -48,8 +49,6 @@ function POIMarker(poiData){
             indicator: this.directionIndicatorDrawable
         }
     });
-    
-
 }
 POIMarker.prototype.getOnClickTrigger = function(marker) {
     return function() {
@@ -149,4 +148,8 @@ POIMarker.prototype.setDeselected = function(marker) {
     marker.drawable_sel.onClick = null;
     marker.animationGroup_idle.start();
 };
+
+POIMarker.prototype.updateDistance = function(marker, distance){
+	marker.distLabel.text = distance.toFixed(2).toString() + ' Km';
+}
 

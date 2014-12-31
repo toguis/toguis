@@ -116,7 +116,7 @@ public class SwipeContentActivity extends FragmentActivity  implements
 				loMap.addLoadListeners(SwipeContentActivity.this);
 				return loMap;
 			case 2:
-				return new RALauncherFragment();
+				return new ARLauncherFragment();
 			case 3:
 				SettingsFragment loSettingFrament = new SettingsFragment();
 				loSettingFrament.AddLogoutListener((LogoutListener)this.coFragment);

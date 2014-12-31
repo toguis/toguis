@@ -19,12 +19,12 @@ public class PoiImageActivity extends Activity {
 	private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
 	private static final boolean TOGGLE_ON_CLICK = true;
 	private static final int HIDER_FLAGS = SystemUiHider.FLAG_HIDE_NAVIGATION;
-	private SystemUiHider mSystemUiHider;
-	private Handler mHideHandler = new Handler();
-	Runnable mHideRunnable = new Runnable() {
+	private SystemUiHider coSystemUiHider;
+	private Handler coHideHandler = new Handler();
+	Runnable coHideRunnable = new Runnable() {
 		@Override
 		public void run() {
-			mSystemUiHider.hide();
+			coSystemUiHider.hide();
 		}
 	};
 	
@@ -36,18 +36,18 @@ public class PoiImageActivity extends Activity {
 		
 		// Set up an instance of SystemUiHider to control the system UI for
 		// this activity.
-		mSystemUiHider = SystemUiHider.getInstance(this, contentView,
+		coSystemUiHider = SystemUiHider.getInstance(this, contentView,
 				HIDER_FLAGS);
-		mSystemUiHider.setup();
+		coSystemUiHider.setup();
 
 		// Set up the user interaction to manually show or hide the system UI.
 		contentView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				if (TOGGLE_ON_CLICK) {
-					mSystemUiHider.toggle();
+					coSystemUiHider.toggle();
 				} else {
-					mSystemUiHider.show();
+					coSystemUiHider.show();
 				}
 			}
 		});
@@ -72,8 +72,8 @@ public class PoiImageActivity extends Activity {
 	};
 	
 	private void delayedHide(int delayMillis) {
-		mHideHandler.removeCallbacks(mHideRunnable);
-		mHideHandler.postDelayed(mHideRunnable, delayMillis);
+		coHideHandler.removeCallbacks(coHideRunnable);
+		coHideHandler.postDelayed(coHideRunnable, delayMillis);
 	}
 	
 	private void loadData(String pData){

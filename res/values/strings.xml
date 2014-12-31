@@ -51,7 +51,7 @@
     <string name="general_message_error">Error</string>
     <string name="general_save_db_error">Ha ocurrido un error al almacenar la información</string>
     <string name="general_db_error">Ha ocurrido un error al acceder al servicio</string>
-    <string name="general_web_service_base_url">http://192.168.1.101/ToguisWebServices/</string>
+    <string name="general_web_service_base_url">http://192.168.1.100/ToguisWebServices/</string>
     <string name="general_google_play_not_installed">Google play debe estar instalado</string>
     <string name="general_progress_message">Cargando puntos de interes, por favor espera&#8230;</string>
     <string name="general_progress_message_loading">Cargando, por favor espera&#8230;</string>
@@ -59,6 +59,7 @@
     <string name="general_load_map_error">No ha sido posible cargar el mapa</string>
     <string name="general_map_current_position">Mi posición</string>
     <string name="general_setting_save_data">Configuración almacenada con éxito</string>
+    <string name="general_ar_error">No ha sido posible crear la vista de realidad aumentada</string>
     <string name="title_activity_forgot_password">Recuperar contraseña</string>
     <string name="forgot_password_lbl_message_text">Por favor escribe el email que usas para ingresar</string>
     <string name="forgot_password_txt_verify_email_hint">email@domain.com</string>
@@ -112,5 +113,5 @@
     <string name="settings_lbl_language_text">Lenguaje</string>
     <string name="settings_btn_save_settings_text">Guardar</string>
     <string name="title_activity_arview">ARViewActivity</string>
-
+	<string name="ar_lbl_ar_text">Toca para iniciar</string>
 </resources>

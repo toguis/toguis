@@ -22,6 +22,7 @@
     <uses-permission android:name="android.permission.ACCESS_GPS" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -53,6 +54,11 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/FullscreenTheme" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>             
         </activity>
         <activity
             android:name=".security.LoginActivity"
@@ -120,12 +126,8 @@
         </activity>
         <activity
             android:name="co.edu.uniajc.vtf.ar.ARViewActivity"
-            android:label="@string/title_activity_arview" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>            
+            android:label="@string/title_activity_arview" 
+            android:theme="@style/FullscreenTheme">           
         </activity>
     </application>
 

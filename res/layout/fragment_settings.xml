@@ -230,7 +230,7 @@
     </RelativeLayout>
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/imgAR"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="5dp"
@@ -253,7 +253,7 @@
         android:id="@+id/seekDistance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:max="1000" />
+        android:max="100" />
 
     <TextView
         android:id="@+id/txtDistanceValue"
