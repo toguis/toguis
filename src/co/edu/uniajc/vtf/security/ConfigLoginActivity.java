@@ -48,17 +48,22 @@ public class ConfigLoginActivity extends Activity implements IConfigLogin,
     private boolean cboIntentInProgress;
     private ConnectionResult coConnectionResult;
     private boolean cboSignInClicked;
-    
+    private boolean cboCancelFBAuth;
    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_config_login);
 		this.coController = new ConfigLoginController(this);	
+		
+		if(this.getIntent().hasExtra("no_fb_auth")){
+			this.cboCancelFBAuth = this.getIntent().getIntExtra("no_fb_auth", 0) == 0 ? false : true;
+		}
+		
+		
 		this.configureGoogleSession();
 		this.configureFacebookSession(savedInstanceState);
 	}
-	
 	
 	//Facebook configuration
 	private void configureFacebookSession(Bundle savedInstanceState){
@@ -78,19 +83,28 @@ public class ConfigLoginActivity extends Activity implements IConfigLogin,
 	}
 	
 	@Override
-	public void onUserInfoFetched(GraphUser user) {
-		if(user != null){
+	public void onUserInfoFetched(GraphUser user) {		
+		if(this.cboCancelFBAuth){
+			try{
+				this.cboCancelFBAuth = false;
+				if(Session.getActiveSession() != null)
+					Session.getActiveSession().closeAndClearTokenInformation();
+			}
+			catch(Exception ex){
+				
+			}
+		}
+		else if(user != null){
 			ConfigLoginActivity.this.coFacebookUser = user;	
 			this.ciSignInType = SessionManager.FACEBOOK_SESSION;
 			ConfigLoginActivity.this.coController.createSession(SessionManager.FACEBOOK_SESSION);
 			ConfigLoginActivity.this.coController.navigateContent();
 			try {
-				ConfigLoginActivity.this.finish();;
+				ConfigLoginActivity.this.finish();
 			} catch (Throwable e) {
 
 			}
 		}	
-		
 	}
 	
 	@Override
@@ -117,7 +131,6 @@ public class ConfigLoginActivity extends Activity implements IConfigLogin,
 		}	
 	}
 	
-
 	@Override
 	public void onConnectionFailed(ConnectionResult result) {
 		if (!cboIntentInProgress) {
@@ -141,8 +154,7 @@ public class ConfigLoginActivity extends Activity implements IConfigLogin,
 
 	@Override
 	public void onConnectionSuspended(int cause) {
-		this.coGoogleSignInHelper.connect();
-		
+		this.coGoogleSignInHelper.connect();	
 	}
 
 	private void resolveSignInError() {
@@ -166,11 +178,9 @@ public class ConfigLoginActivity extends Activity implements IConfigLogin,
 		else{
 			ResourcesManager loResource = new ResourcesManager(this);	
 			AlertDialogManager.showAlertDialog(this, loResource.getStringResource(R.string.general_message_warning), loResource.getStringResource(R.string.general_google_play_not_installed), AlertDialogManager.WARNING);
-		}
-			
+		}			
 	}
-	
-	
+
 	public boolean googlePlusIsInstalled(){
 		int liErrorCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
 		return liErrorCode == ConnectionResult.SUCCESS ? true : false;
@@ -190,7 +200,6 @@ public class ConfigLoginActivity extends Activity implements IConfigLogin,
 	        }
 	    }
 	}
-	
 	
 	public void onClick_GoLogin(View view){
 		this.coController.navigateLoginView();

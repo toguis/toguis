@@ -21,7 +21,6 @@ import co.edu.uniajc.vtf.content.interfaces.ILoadExtenalDataFromMap;
 import co.edu.uniajc.vtf.content.model.PointOfInterestEntity;
 import co.edu.uniajc.vtf.security.ConfigLoginActivity;
 import co.edu.uniajc.vtf.security.model.LogoutListener;
-import co.edu.uniajc.vtf.utils.ResourcesManager;
 import co.edu.uniajc.vtf.utils.SessionManager;
 
 import com.facebook.Session;
@@ -87,8 +86,7 @@ public class SwipeContentActivity extends FragmentActivity  implements
 			.addOnConnectionFailedListener(this)		
 			.addApi(Plus.API)
 			.addScope(Plus.SCOPE_PLUS_PROFILE)
-			.build();		
-		
+			.build();			
 	}
 	
 	public class AppSectionsPagerAdapter extends FragmentPagerAdapter {
@@ -155,20 +153,17 @@ public class SwipeContentActivity extends FragmentActivity  implements
 			if (coSignInClicked) {
 				resolveSignInError();
 			}
-		}	
-		
+		}			
 	}
 
 	@Override
 	public void onConnected(Bundle connectionHint) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
 
 	@Override
 	public void onConnectionSuspended(int cause) {
-		this.coApiClient.connect();
-		
+		this.coApiClient.connect();		
 	}
 	
 	public void deleteSesion(){
@@ -182,15 +177,17 @@ public class SwipeContentActivity extends FragmentActivity  implements
 				if(coApiClient.isConnected()){
 					Plus.AccountApi.clearDefaultAccount(coApiClient);
 					coApiClient.disconnect();					
-				}
-				
+				}			
 		}
-		
-		loSession.endSession();
+				
 		//implements inside of a controller
     	Intent loIntent = new Intent(this, ConfigLoginActivity.class);
+		if(loSession.getSessionType() == SessionManager.FACEBOOK_SESSION){
+			loIntent.putExtra("no_fb_auth", 1);
+		}
+		loSession.endSession();
     	this.startActivity(loIntent);
-    	this.finish();		
+    	this.finish();				
 	}
 
 	@Override

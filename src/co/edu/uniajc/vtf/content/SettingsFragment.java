@@ -125,11 +125,9 @@ public class SettingsFragment extends Fragment implements ISettings{
     		
     	});
     	this.coController = new SettingsController(this);
-    	this.coController.getLanguagesAsync();
-    	
-	
+    	this.coController.getLanguagesAsync();	
     }
-    
+     
 	public void startLogout()
 	{
 		for(LogoutListener item : this.coModelListener){
@@ -409,9 +407,3 @@ public class SettingsFragment extends Fragment implements ISettings{
     }
 	
 }
-
-//falta
-//toast de confirmacion - ok
-//visualizar el valor del slider - ok
-//falta cargar datos - ok
-//cambiar lenguaje al iniciar
