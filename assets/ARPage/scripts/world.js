@@ -3,10 +3,11 @@ var World = {
 	markerImageResource : [],
 	markerImageResourceSelected : [],
 	markerList: null,
-	markerRawData: null,
 	markerImageIndicator: null,
 	currentMarker: null,
-	resourceLoaded: false,
+	addedMessage: "",
+	errorMessage: "",
+	searchMessage: "",
 	loadBasicData : function loadBasicDataFn(){
 		World.markerImageResource.push(new AR.ImageResource("images/ar_monument.png"));
 		World.markerImageResource.push(new AR.ImageResource("images/ar_museum.png"));
@@ -51,99 +52,30 @@ var World = {
 		var info = document.getElementById("info");
 		try{
 			World.updateDistanceToUserValues();
-			//info.innerHTML = "Todo OK " + World.markerList[0].poiData.latitude;
 		}
 		catch(err){
 			
-			info.innerHTML = "Error trying retrieving data: " + err;				
+			$("#status-message").html(World.errorMessage + ": " + err);	
+			$("#popupInfo").popup("open");
+			setTimeout(function(){
+				$("#popupInfo").popup("close");
+			}, 5000);	
 		}
-		
-		//World.loadBasicData();
-		//World.loadPoisFromJsonData(World.markerRawData,lat,lon,alt);
-		//World.loadBasicData();
-		/*var poiData = {
-				"id": 1,
-				"longitude": (lon + 0.0002),
-				"latitude": (lat + 0.0002),
-				"altitude": 100.0,
-				"distance" : 0,
-				"type" : 1,
-				"title": "el gato del rio",
-				"description": "el gato del rio"
-			};	
-		var currentLocation = new AR.GeoLocation(lat, lon);
-		var markerLocation = new AR.GeoLocation(poiData.latitude, poiData.longitude, poiData.altitude);
-		var distance = currentLocation.distanceTo(markerLocation) / 1000.0;
-		poiData.distance = distance;
-		//World.markerList.push(new POIMarker(poiData));
-		var poiData2 = {
-				"id": 2,
-				"longitude": (lon - 0.01),
-				"latitude": (lat - 0.01),
-				"altitude": 100.0,
-				"distance" : 0,
-				"type" : 1,
-				"title": "hotel inter",
-				"description":"hotel inter"
-			};	
-		markerLocation = new AR.GeoLocation(poiData2.latitude, poiData2.longitude, poiData2.altitude);
-		distance = currentLocation.distanceTo(markerLocation) / 1000.0;
-		poiData2.distance = distance;
-		var data = '['+ JSON.stringify(poiData) + ',' + JSON.stringify(poiData2) + ']';
-	    World.loadPoisFromJsonData(JSON.parse(data), lat,lon,alt);
-		
-		/*World.markerList.push(new POIMarker(poiData2));
-		
-		/*var poiImage = new AR.ImageResource("images/ar_monument.png");
-		var markerLocation = new AR.GeoLocation(poiData.latitude, poiData.longitude, poiData.altitude);
-		var markerImageDrawable_idle = new AR.ImageDrawable(poiImage, 2.5, {
-			zOrder: 0,
-			opacity: 1.0
-		});
-
-		var location1 = new AR.GeoLocation(lat, lon);
-		var location2 = new AR.GeoLocation(poiData.latitude, poiData.longitude);
-		var dist = location1.distanceTo(location2) / 1000.0;
-		
-		var titleLabel = new AR.Label(poiData.title, 0.3, {
-	        zOrder: 1,
-	        offsetY: -1.1,
-	        style: {
-	            textColor: '#ffffff',
-	            fontStyle: AR.CONST.FONT_STYLE.BOLD
-	        }
-	    });
-		
-		var distLabel = new AR.Label(dist.toFixed(2).toString() + ' Km', 0.25, {
-	        zOrder: 1,
-	        offsetY: -0.75,
-	        style: {
-	            textColor: '#ffffff',
-	            fontStyle: AR.CONST.FONT_STYLE.BOLD
-	        }
-	    });
-		
-		var markerObject = new AR.GeoObject(markerLocation, {
-			drawables: {
-				cam: [markerImageDrawable_idle, titleLabel, distLabel]
-			}
-		});
-		
-		var info = document.getElementById("info");
-		info.innerHTML = "2 elements added";*/
-		
+		$("#info").hide();
 		
 	},
-	loadPoisFromJsonData: function loadPoisFromJsonDataFn(poiData, lat, lon, alt) {
+	loadPoisFromJsonData: function loadPoisFromJsonDataFn(poiData, lat, lon, alt, addedMessage, errorMessage, searchMessage) {
 		AR.context.destroyAll();
+		World.addedMessage = addedMessage;
+		World.errorMessage = errorMessage;
+		World.searchMessage = searchMessage;
+		PoiRadar.show();
 		World.markerImageResource = [];
 		World.markerImageResourceSelected = [];	
 		World.markerList = [];
 		World.loadBasicData();		
-		World.markerRawData = "hola";
 		var currentLocation = new AR.GeoLocation(lat, lon);
-		var info = document.getElementById("info");
-		info.innerHTML = poiData.length + " elements counted";	
+		$("#info").html(World.searchMessage);
 		
 		try{
 			for(i = 0; i < poiData.length ; i++){
@@ -161,18 +93,27 @@ var World = {
 				};	
 				World.markerList.push(new POIMarker(singlePoi));
 			}	
-			info.innerHTML = poiData.length + " elements added ";
-			
+			$("#status-message").html(poiData.length + " " + World.addedMessage);
 		}
 		catch(err){
-			info.innerHTML = "Error trying retrieving data: " + err;
+			$("#status-message").html(World.errorMessage + ": " + err);
 		}
+		
+		$("#popupInfo").popup("open");
+		setTimeout(function(){
+			$("#popupInfo").popup("close");
+		}, 5000);	
 	},
 	updateDistanceToUserValues: function updateDistanceToUserValuesFn() {
 		for (var i = 0; i < World.markerList.length; i++) {
 			World.markerList[i].updateDistance(World.markerList[i], World.markerList[i].markerObject.locations[0].distanceToUser() / 1000.0);
 		}
-	}
+	},
+	onPoiDetailButtonClicked: function onPoiDetailButtonClickedFn() {
+		var currentMarker = World.currentMarker;
+		var architectSdkUrl = "architectsdk://markerselected?id=" + encodeURIComponent(currentMarker.poiData.id);
+		document.location = architectSdkUrl;
+	},
 }
 
 AR.context.onLocationChanged = World.locationChanged;

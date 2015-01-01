@@ -8,12 +8,16 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.support.v4.app.Fragment;
 import android.view.WindowManager;
 import android.widget.Toast;
 import co.edu.uniajc.vtf.R;
+import co.edu.uniajc.vtf.content.PoiDetailActivity;
 import co.edu.uniajc.vtf.content.model.PointOfInterestEntity;
 import co.edu.uniajc.vtf.utils.ExtendedApplicationContext;
 import co.edu.uniajc.vtf.utils.ResourcesManager;
@@ -48,7 +52,22 @@ public class ARViewActivity extends Activity implements
 				double ldLatitude = ARViewActivity.this.coLastLocation.getLatitude();
 				double ldLongitude = ARViewActivity.this.coLastLocation.getLongitude();
 				double ldAltitude = ARViewActivity.this.coLastLocation.getAltitude();
-				String lsScript = ARViewActivity.this.callJavaScript("World.loadPoisFromJsonData", new String[] { ARViewActivity.this.coPois.toString(),String.valueOf(ldLatitude),String.valueOf(ldLongitude),String.valueOf(ldAltitude)});
+				ResourcesManager loResource = new ResourcesManager(ARViewActivity.this);
+				String lsARAddedMessage = "'" + loResource.getStringResource(R.string.ar_added_data_text) + "'";
+				String lsARErrorMessage = "'" + loResource.getStringResource(R.string.ar_error_data_text) + "'";				
+				String lsARSearchMessage = "'" + loResource.getStringResource(R.string.ar_search_text) + "'";
+						
+				String lsScript = ARViewActivity.this.callJavaScript("World.loadPoisFromJsonData", 
+						new String[] { 
+							ARViewActivity.this.coPois.toString(),
+							String.valueOf(ldLatitude),
+							String.valueOf(ldLongitude),
+							String.valueOf(ldAltitude),
+							lsARAddedMessage,
+							lsARErrorMessage,
+							lsARSearchMessage
+						}
+				);
 				if(!ARViewActivity.this.cboDataLoaded){
 					ARViewActivity.this.architectView.callJavascript(lsScript);
 					ARViewActivity.this.cboDataLoaded = true;
@@ -69,7 +88,7 @@ public class ARViewActivity extends Activity implements
 
 				@Override
 				public boolean urlWasInvoked(String uriString) {
-					return false;
+					return ARViewActivity.this.listenURL(uriString);
 				}
 			};
 			this.architectView.registerUrlListener(this.urlListener);
@@ -86,8 +105,7 @@ public class ARViewActivity extends Activity implements
         .addApi(LocationServices.API)
         .build();    
         
-        this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-       
+        this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);      
         this.loadPosition();
        
 	}
@@ -226,4 +244,17 @@ public class ARViewActivity extends Activity implements
 		return methodName + "( " + argumentsString.toString() + " );" ;		
 	}
 
+	public boolean listenURL(String uriString) {
+		Uri invokedUri = Uri.parse(uriString);
+		if ("markerselected".equalsIgnoreCase(invokedUri.getHost())) {
+			final Intent poiDetailIntent = new Intent(ARViewActivity.this, PoiDetailActivity.class);
+			String lsId = invokedUri.getQueryParameter("id");
+			poiDetailIntent.putExtra("id", Integer.parseInt(lsId));
+			ARViewActivity.this.startActivity(poiDetailIntent);
+			return true;
+		}	
+		else{
+			return false;
+		}
+	}
 }

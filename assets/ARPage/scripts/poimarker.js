@@ -43,10 +43,33 @@ function POIMarker(poiData){
         verticalAnchor: AR.CONST.VERTICAL_ANCHOR.TOP
     });
     
+    this.radarCircle = new AR.Circle(0.03, {
+        horizontalAnchor: AR.CONST.HORIZONTAL_ANCHOR.CENTER,
+        opacity: 0.8,
+        style: {
+            fillColor: "#ffffff"
+        }
+    });
+
+    this.radarCircleSelected = new AR.Circle(0.05, {
+        horizontalAnchor: AR.CONST.HORIZONTAL_ANCHOR.CENTER,
+        opacity: 0.8,
+        style: {
+            fillColor: "#ff6600"
+        }
+    });
+
+    this.radardrawables = [];
+    this.radardrawables.push(this.radarCircle);
+
+    this.radardrawablesSelected = [];
+    this.radardrawablesSelected.push(this.radarCircleSelected);
+    
     this.markerObject = new AR.GeoObject(markerLocation, {
         drawables: {
             cam: [this.drawable_idle, this.drawable_sel, this.titleLabel, this.distLabel],
-            indicator: this.directionIndicatorDrawable
+            indicator: this.directionIndicatorDrawable,
+            radar: this.radardrawables
         }
     });
 }
@@ -105,6 +128,7 @@ POIMarker.prototype.setSelected = function(marker) {
     marker.directionIndicatorDrawable.enabled = true;
     marker.drawable_idle.onClick = null;
     marker.drawable_sel.onClick = POIMarker.prototype.getOnClickTrigger(marker);
+    marker.markerObject.drawables.radar = marker.radardrawablesSelected;
     marker.animationGroup_selected.start();
 };
 
@@ -146,6 +170,7 @@ POIMarker.prototype.setDeselected = function(marker) {
     marker.directionIndicatorDrawable.enabled = false;
     marker.drawable_idle.onClick = POIMarker.prototype.getOnClickTrigger(marker);
     marker.drawable_sel.onClick = null;
+    marker.markerObject.drawables.radar = marker.radardrawables;
     marker.animationGroup_idle.start();
 };
 
