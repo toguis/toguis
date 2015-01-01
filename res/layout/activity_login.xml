@@ -16,7 +16,8 @@
         android:layout_toRightOf="@+id/lblPassword"
         android:ems="10"
         android:hint="@string/login_txt_email_hint"
-        android:inputType="textEmailAddress" >
+        android:inputType="textEmailAddress"
+        android:textColor="#cccccc" >
 
         <requestFocus />
     </EditText>
@@ -41,7 +42,8 @@
         android:layout_alignParentRight="true"
         android:ems="10"
         android:hint="@string/login_txt_password_hint"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:textColor="#cccccc" />
 
     <TextView
         android:id="@+id/lblPassword"

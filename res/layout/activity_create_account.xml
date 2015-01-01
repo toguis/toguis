@@ -17,7 +17,8 @@
         android:ems="10"
         android:hint="@string/create_account_txt_email_hint"
         android:inputType="textEmailAddress"
-        android:maxLength="250" >
+        android:maxLength="250"
+        android:textColor="#cccccc" >
 
         <requestFocus />
     </EditText>
@@ -28,6 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/txtEmail"
         android:layout_alignBottom="@+id/txtEmail"
+        android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:text="@string/create_account_lbl_email_text"
         android:textColor="#cccccc" />
@@ -43,7 +45,8 @@
         android:ems="10"
         android:hint="@string/create_account_txt_password_hint"
         android:inputType="textPassword"
-        android:maxLength="50" />
+        android:maxLength="50"
+        android:textColor="#cccccc" />
 
     <TextView
         android:id="@+id/lblPassword"
@@ -76,7 +79,8 @@
         android:ems="10"
         android:hint="@string/create_account_txt_repeat_password_hint"
         android:inputType="textPassword"
-        android:maxLength="50" />
+        android:maxLength="50"
+        android:textColor="#cccccc" />
 
     <TextView
         android:id="@+id/lblNames"
@@ -98,7 +102,8 @@
         android:layout_toRightOf="@+id/lblPassword"
         android:ems="10"
         android:hint="@string/create_account_txt_names_hint"
-        android:maxLength="250" />
+        android:maxLength="250"
+        android:textColor="#cccccc" />
 
     <TextView
         android:id="@+id/lblGender"
@@ -122,17 +127,43 @@
             android:id="@+id/rbtFemale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/create_account_rbt_female_text"
+            android:button="@drawable/toguis_radiobutton"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:textColor="#cccccc" />
-
-        <RadioButton
-            android:id="@+id/rbtMale"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="@string/create_account_rbt_male_text"
-            android:textColor="#cccccc" />
-
+        
+	      <TextView
+	        android:id="@+id/lblWomanLabel"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignBottom="@+id/radioGroup1"
+	        android:layout_toRightOf="@+id/radioGroup1"
+	        android:paddingLeft="5dp"
+	        android:paddingRight="5dp"
+	        android:text="@string/create_account_rbt_female_text"
+	        android:textColor="#cccccc" />
+	            
+	    <RadioButton
+	        android:id="@+id/rbtMale"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignBaseline="@+id/lblWomanLabel"
+	        android:layout_alignBottom="@+id/lblWomanLabel"
+	        android:layout_toRightOf="@+id/lblWomanLabel"
+	        android:button="@drawable/toguis_radiobutton"
+	        android:checked="true"
+	        android:paddingLeft="5dp"
+	        android:paddingRight="5dp"
+	        android:textColor="#cccccc" />
+	    
+	    <TextView
+	        android:id="@+id/lblManLabel"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignBottom="@+id/rbtMale"
+	        android:layout_toRightOf="@+id/rbtMale"
+	        android:text="@string/create_account_rbt_male_text"
+	        android:textColor="#cccccc" />	    
     </RadioGroup>
 
     <Button
