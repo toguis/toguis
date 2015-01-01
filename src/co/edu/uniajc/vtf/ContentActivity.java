@@ -1,3 +1,11 @@
+/***********************************************************************************************
+ * Project: Tourist Guide System Toguis
+ * University: UNIAJC
+ * Authors: Julieth Candia and Carlos Morante
+ * Year: 2014 - 2015
+ * Version: 1.0 
+ * License: GPL V2
+ ***********************************************************************************************/
 package co.edu.uniajc.vtf;
 
 import android.app.Activity;
@@ -22,7 +30,7 @@ public class ContentActivity extends Activity implements GoogleApiClient.Connect
     private boolean mIntentInProgress;
     private ConnectionResult mConnectionResult;
     private boolean mSignInClicked;
-    
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -48,7 +56,6 @@ public class ContentActivity extends Activity implements GoogleApiClient.Connect
 			case SessionManager.GOOGLE_SESSION:	
 				if(coApiClient.isConnected()){
 					Plus.AccountApi.clearDefaultAccount(coApiClient);
-					//Plus.AccountApi.revokeAccessAndDisconnect(coApiClient);
 					coApiClient.disconnect();					
 				}
 				

@@ -1,3 +1,11 @@
+/***********************************************************************************************
+ * Project: Tourist Guide System Toguis
+ * University: UNIAJC
+ * Authors: Julieth Candia and Carlos Morante
+ * Year: 2014 - 2015
+ * Version: 1.0 
+ * License: GPL V2
+ ***********************************************************************************************/
 package co.edu.uniajc.vtf.content;
 
 import java.util.ArrayList;
@@ -86,13 +94,6 @@ public class CommentsActivity extends Activity implements IComments{
 			CommentEntity loCommentData = this.coData.get(position);
 			TextView loName = (TextView)loView.findViewById(R.id.txtCommentName);
 			loName.setText(loCommentData.getName());
-			
-			//SessionManager loSession = new SessionManager(coContext);   		
-			//String lsUserName = loSession.getUserName();		
-			
-			/*if(lsUserName.equals(loCommentData.getUserName())){
-				loName.setTextColor(Color.parseColor("#FF6600"));
-			}*/
 			
 			TextView loComment = (TextView)loView.findViewById(R.id.txtComment);
 			loComment.setText(loCommentData.getComment());

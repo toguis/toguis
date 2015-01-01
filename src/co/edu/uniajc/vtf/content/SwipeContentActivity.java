@@ -1,3 +1,11 @@
+/***********************************************************************************************
+ * Project: Tourist Guide System Toguis
+ * University: UNIAJC
+ * Authors: Julieth Candia and Carlos Morante
+ * Year: 2014 - 2015
+ * Version: 1.0 
+ * License: GPL V2
+ ***********************************************************************************************/
 package co.edu.uniajc.vtf.content;
 
 import java.util.ArrayList;
@@ -59,7 +67,6 @@ public class SwipeContentActivity extends FragmentActivity  implements
 		coViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-            	//SwipeContentActivity.this.loadSitesList(position);
                 actionBar.setSelectedNavigationItem(position);
             }
         });	
@@ -272,10 +279,6 @@ public class SwipeContentActivity extends FragmentActivity  implements
 		if(loListSitesFragment != null){
 			loListSitesFragment.setLastLocation(pLastLocation);
 			loListSitesFragment.setAdapterData(pPoints, false);
-		}
-			 	
-		
+		}			 	
 	}
-
-	
 }

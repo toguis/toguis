@@ -1,3 +1,11 @@
+/***********************************************************************************************
+ * Project: Tourist Guide System Toguis
+ * University: UNIAJC
+ * Authors: Julieth Candia and Carlos Morante
+ * Year: 2014 - 2015
+ * Version: 1.0 
+ * License: GPL V2
+ ***********************************************************************************************/
 package co.edu.uniajc.vtf.content.controller;
 
 import java.util.ArrayList;
@@ -23,8 +31,7 @@ public class ListSitesController implements ModelListener{
 
 	private IListSites coView;
 	private ListSitesModel coModel;
-	//private Location coLastKnownLocation;
-	
+
 	public ListSitesController(IListSites pView) {
 		this.coView = pView;
 		ResourcesManager loResource = new ResourcesManager(((Fragment)this.coView).getActivity());

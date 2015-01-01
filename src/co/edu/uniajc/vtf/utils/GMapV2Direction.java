@@ -1,7 +1,13 @@
-/*******************************************************************************
-*Provided by: Emil Adjiev
-*WebSite: http://blog-emildesign.rhcloud.com/?p=822
-********************************************************************************/
+/***********************************************************************************************
+ * Project: Tourist Guide System Toguis
+ * University: UNIAJC
+ * Authors: Julieth Candia and Carlos Morante
+ * Year: 2014 - 2015
+ * Version: 1.0 
+ * License: GPL V2
+ * Original code by: Emil Adjiev
+ * WebSite: http://blog-emildesign.rhcloud.com/?p=822
+ ***********************************************************************************************/
 package co.edu.uniajc.vtf.utils;
 
 import java.io.InputStream;

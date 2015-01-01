@@ -1,3 +1,11 @@
+/***********************************************************************************************
+ * Project: Tourist Guide System Toguis
+ * University: UNIAJC
+ * Authors: Julieth Candia and Carlos Morante
+ * Year: 2014 - 2015
+ * Version: 1.0 
+ * License: GPL V2
+ ***********************************************************************************************/
 package co.edu.uniajc.vtf.content;
 
 import java.util.ArrayList;
@@ -84,7 +92,6 @@ public class MapSitesFragment extends Fragment implements
     public void onActivityCreated(Bundle state) {
     	super.onActivityCreated(state);	
     	this.setUpMap();
-    	//this.loadList(LoadActions.CONNECT_AND_LOAD);
     }
     
     @Override

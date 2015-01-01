@@ -1,11 +1,17 @@
+/***********************************************************************************************
+ * Project: Tourist Guide System Toguis
+ * University: UNIAJC
+ * Authors: Julieth Candia and Carlos Morante
+ * Year: 2014 - 2015
+ * Version: 1.0 
+ * License: GPL V2
+ ***********************************************************************************************/
 package co.edu.uniajc.vtf.utils;
-
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import co.edu.uniajc.vtf.R;
-
 
 public class AlertDialogManager {
 	public static final int WARNING = 0;

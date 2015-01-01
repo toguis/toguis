@@ -1,3 +1,11 @@
+/***********************************************************************************************
+ * Project: Tourist Guide System Toguis
+ * University: UNIAJC
+ * Authors: Julieth Candia and Carlos Morante
+ * Year: 2014 - 2015
+ * Version: 1.0 
+ * License: GPL V2
+ ***********************************************************************************************/
 package co.edu.uniajc.vtf.content;
 
 import android.app.ActionBar;
@@ -202,16 +210,6 @@ public class PoiDetailActivity extends Activity implements IPoiDetail {
 
 	@Override
 	public PointOfInterestEntity getPoiData(){
-		
-		/*//I don't care about the image data, so I can clone it and deleted it
-		PointOfInterestEntity loPoint = null;
-		try {
-			loPoint = this.coPoint.clone();
-			loPoint.setImage("");
-		} catch (CloneNotSupportedException e) {
-			//if exception, I use the original instance.
-			loPoint = this.coPoint;
-		}*/
 		return this.coPoint;
 	}
 	

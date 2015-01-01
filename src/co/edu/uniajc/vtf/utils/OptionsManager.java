@@ -1,3 +1,11 @@
+/***********************************************************************************************
+ * Project: Tourist Guide System Toguis
+ * University: UNIAJC
+ * Authors: Julieth Candia and Carlos Morante
+ * Year: 2014 - 2015
+ * Version: 1.0 
+ * License: GPL V2
+ ***********************************************************************************************/
 package co.edu.uniajc.vtf.utils;
 
 import android.content.Context;
@@ -29,54 +37,6 @@ public class OptionsManager {
 		this.coEditor = this.coShared.edit();
 	}
 		
-	/*public int getLanguageId() {
-		return this.coShared.getInt(OPTION_LANGUAGE, 1);
-	}
-	
-	public boolean isFilterMonument() {
-		return this.coShared.getBoolean(OPTION_FILTER_MONUMENT, true);
-	}
- 
-	public boolean isFilterMuseum() {
-		return this.coShared.getBoolean(OPTION_FILTER_MUSEUM, true);
-	}
- 
-	public boolean isFilterHotel() {
-		return this.coShared.getBoolean(OPTION_FILTER_HOTEL, true);
-	}
- 
-	public boolean isFilterRestaurant() {
-		return this.coShared.getBoolean(OPTION_FILTER_RESTAURANT, true);
-	}
- 
-	public boolean isFilterInterest() {
-		return this.coShared.getBoolean(OPTION_FILTER_INTEREST, true);
-	}
- 
-	public boolean isFilterBuilding() {
-		return this.coShared.getBoolean(OPTION_FILTER_BUILDING, true);
-	}
- 
-	public boolean isFilterTransport() {
-		return this.coShared.getBoolean(OPTION_FILTER_TRANSPORT, true);
-	}
- 
-	public boolean isFilterEvent() {
-		return this.coShared.getBoolean(OPTION_FILTER_EVENT, true);
-	}
- 
-	public int getCityId() {
-		return this.coShared.getInt(OPTION_CITY, 1);
-	}
- 
-	public int getArea() {
-		return this.coShared.getInt(OPTION_RANGE_AREA, 10);
-	}
-
-	public String getSearch(){
-		return this.coShared.getString(OPTION_SEARCH, "");
-	}
-	*/
 	public OptionsEntity getOptions(){
 		OptionsEntity loOptions = new OptionsEntity();
 		loOptions.setLanguageId(this.coShared.getInt(OPTION_LANGUAGE, 1));

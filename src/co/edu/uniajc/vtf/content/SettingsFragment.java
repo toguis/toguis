@@ -1,3 +1,11 @@
+/***********************************************************************************************
+ * Project: Tourist Guide System Toguis
+ * University: UNIAJC
+ * Authors: Julieth Candia and Carlos Morante
+ * Year: 2014 - 2015
+ * Version: 1.0 
+ * License: GPL V2
+ ***********************************************************************************************/
 package co.edu.uniajc.vtf.content;
 
 import java.util.ArrayList;
@@ -42,9 +50,7 @@ public class SettingsFragment extends Fragment implements ISettings{
 	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {			
 		return inflater.inflate(R.layout.fragment_settings, container, false);     
     }
-	
-           
-	
+	       
     @Override
     public void onActivityCreated(Bundle state) {
     	super.onActivityCreated(state);	

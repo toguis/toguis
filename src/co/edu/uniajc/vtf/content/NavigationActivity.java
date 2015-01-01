@@ -1,3 +1,11 @@
+/***********************************************************************************************
+ * Project: Tourist Guide System Toguis
+ * University: UNIAJC
+ * Authors: Julieth Candia and Carlos Morante
+ * Year: 2014 - 2015
+ * Version: 1.0 
+ * License: GPL V2
+ ***********************************************************************************************/
 package co.edu.uniajc.vtf.content;
 
 import java.util.ArrayList;
@@ -51,17 +59,12 @@ public class NavigationActivity extends FragmentActivity implements
 	GoogleApiClient.ConnectionCallbacks,
 	GoogleApiClient.OnConnectionFailedListener,
 	LocationListener{
-	/*private static final LatLng AMSTERDAM = new LatLng(52.37518, 4.895439);
-	private static final LatLng PARIS = new LatLng(48.856132, 2.352448);
-	private static final LatLng FRANKFURT = new LatLng(50.111772, 8.682632);*/
-	
-	//private PointOfInterestEntity coCurrent;
+
 	private LatLng coCurrentPosition;
 	private PointOfInterestEntity coDestiny;
 	private GoogleMap coMap;
 	private SupportMapFragment coFragment;
 	private LatLngBounds coLatlngBounds;
-	//private Button coNavigationButton;
 	private Polyline coNewPolyline;
 	private int ciWidth, ciHeight;
 	private ProgressDialog coProgressDialog;
@@ -78,12 +81,6 @@ public class NavigationActivity extends FragmentActivity implements
 		getSreenDimanstions();
 	    coFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.routeMap));
 		coMap = coFragment.getMap(); 	
-		/*PointOfInterestEntity poi = new PointOfInterestEntity();
-		poi.setLatitude(3.47095083);
-		poi.setLongitude(-76.52188227);*/
-		
-		
-		//this.coCurrent = (PointOfInterestEntity)this.getIntent().getParcelableExtra("current");
 		this.coDestiny = (PointOfInterestEntity)this.getIntent().getParcelableExtra("destiny");
 		
 		ResourcesManager loResource = new ResourcesManager(this);
@@ -98,33 +95,12 @@ public class NavigationActivity extends FragmentActivity implements
         .build();           	
         this.setUpMap();
         this.loadPosition();
-        
-		//coNavigationButton = (Button) findViewById(R.id.bNavigation);
-		//this.findDirections(this.coCurrent.getLatitude(), this.coCurrent.getLongitude(), this.coDestiny .getLatitude(), this.coDestiny.getLongitude(), GMapV2Direction.MODE_DRIVING );
-		
-		/*coNavigationButton.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				if (!cboIsTravelingToParis)
-				{
-					cboIsTravelingToParis = true;
-					findDirections( AMSTERDAM.latitude, AMSTERDAM.longitude,PARIS.latitude, PARIS.longitude, GMapV2Direction.MODE_DRIVING );
-				}
-				else
-				{
-					cboIsTravelingToParis = false;
-					findDirections( AMSTERDAM.latitude, AMSTERDAM.longitude, FRANKFURT.latitude, FRANKFURT.longitude, GMapV2Direction.MODE_DRIVING );  
-				}
-			}
-		});*/
 	}
 	
 	@Override
 	protected void onResume() {
 		
 		super.onResume();
-		//LatLng loCurrent = new LatLng(this.coCurrent.getLatitude(),this.coCurrent.getLongitude());
 		LatLng loDestiny = new LatLng(this.coDestiny.getLatitude(), this.coDestiny.getLongitude());
 		
 		if(this.coCurrentPosition != null){
@@ -152,7 +128,6 @@ public class NavigationActivity extends FragmentActivity implements
 		coNewPolyline = coMap.addPolyline(rectLine);
 		if (pDirectionPoints.size() > 0)
 		{
-			//LatLng loCurrent = new LatLng(this.coCurrent.getLatitude(),this.coCurrent.getLongitude());
 			this.setAdapterData();
 			LatLng loDestiny = new LatLng(this.coDestiny.getLatitude(), this.coDestiny.getLongitude());
 	    	coLatlngBounds = createLatLngBoundsObject(this.coCurrentPosition, loDestiny);
