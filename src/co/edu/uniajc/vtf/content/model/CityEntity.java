@@ -6,7 +6,7 @@
  * Version: 1.0 
  * License: GPL V2
  ***********************************************************************************************/
-package co.edu.uniajc.vtf.content.interfaces;
+package co.edu.uniajc.vtf.content.model;
 
 public class CityEntity {
 	private int Id;

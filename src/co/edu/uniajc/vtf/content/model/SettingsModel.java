@@ -14,7 +14,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import co.edu.uniajc.vtf.content.interfaces.CityEntity;
 import co.edu.uniajc.vtf.utils.BaseModel;
 import co.edu.uniajc.vtf.utils.ModelListener;
 import co.edu.uniajc.vtf.utils.RestAsyncTask;

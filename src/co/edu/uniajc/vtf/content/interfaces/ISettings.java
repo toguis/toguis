@@ -10,6 +10,7 @@ package co.edu.uniajc.vtf.content.interfaces;
 
 import java.util.List;
 
+import co.edu.uniajc.vtf.content.model.CityEntity;
 import co.edu.uniajc.vtf.content.model.LanguageEntity;
 
 public interface ISettings {
