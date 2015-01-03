@@ -8,10 +8,12 @@
  ***********************************************************************************************/
 package co.edu.uniajc.vtf.content.model;
 
+import android.content.Context;
+
 public class MapSitesModel extends ListSitesModel{
 
-	public MapSitesModel(String pBaseUrl) {
-		super(pBaseUrl);
+	public MapSitesModel(String pBaseUrl, Context pContext) {
+		super(pBaseUrl, pContext);
 	}
 
 }

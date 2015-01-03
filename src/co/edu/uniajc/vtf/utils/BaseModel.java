@@ -10,11 +10,13 @@ package co.edu.uniajc.vtf.utils;
 
 import java.util.ArrayList;
 
+import android.content.Context;
+
 public abstract class BaseModel implements RestAsyncTaskListener {
 	protected String csMethod;
 	protected String csBaseUrl;
 	protected ArrayList<ModelListener> coModelListener;
-	
+	protected Context coContext;
 	public void addModelListener(ModelListener pModelListener){
 		this.coModelListener.add(pModelListener);
 	}

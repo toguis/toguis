@@ -36,7 +36,7 @@ public class MapSitesController implements ModelListener{
 		this.coView = pView;
 		ResourcesManager loResource = new ResourcesManager(((Fragment)this.coView).getActivity());
 		String lsBaseUrl = loResource.getStringResource(R.string.general_web_service_base_url);
-		this.coModel = new MapSitesModel(lsBaseUrl);
+		this.coModel = new MapSitesModel(lsBaseUrl,((Fragment)this.coView).getActivity());
 		this.coModel.addModelListener(this);		
 	}
 	

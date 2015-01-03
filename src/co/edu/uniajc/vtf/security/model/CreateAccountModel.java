@@ -11,6 +11,7 @@ package co.edu.uniajc.vtf.security.model;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import android.content.Context;
 import co.edu.uniajc.vtf.utils.BaseModel;
 import co.edu.uniajc.vtf.utils.DateUtilities;
 import co.edu.uniajc.vtf.utils.ModelListener;
@@ -18,18 +19,18 @@ import co.edu.uniajc.vtf.utils.RestAsyncTask;
 
 public class CreateAccountModel extends BaseModel  {
 		
-	public CreateAccountModel(String pBaseUrl) {
+	public CreateAccountModel(String pBaseUrl, Context pContext) {
 		super.csBaseUrl = pBaseUrl;
 		super.csMethod = "";
 		super.coModelListener = new ArrayList<ModelListener>();
-		
+		super.coContext = pContext;
 	}
 
 	public void createAccountAsync(UserEntity pUser){
 		String lsData = this.getFomattedData(pUser);
 		String lsQueryUrl = super.csBaseUrl + "ToguisSecurity.svc/create_user";		
 		super.csMethod = "createAccountAsync";
-		RestAsyncTask loTask = new RestAsyncTask();
+		RestAsyncTask loTask = new RestAsyncTask(super.coContext);
 		loTask.addAsyncTaskListener(this);		
 		loTask.execute("1",lsQueryUrl,lsData);
 	}
@@ -52,7 +53,6 @@ public class CreateAccountModel extends BaseModel  {
 			}							
 		}			
 	}
-	
 	
 	private String getFomattedData(UserEntity pUser){
 		StringBuilder loData = new StringBuilder();

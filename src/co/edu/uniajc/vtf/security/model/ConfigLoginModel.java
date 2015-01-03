@@ -11,6 +11,7 @@ package co.edu.uniajc.vtf.security.model;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import android.content.Context;
 import co.edu.uniajc.vtf.utils.BaseModel;
 import co.edu.uniajc.vtf.utils.DateUtilities;
 import co.edu.uniajc.vtf.utils.ModelListener;
@@ -20,17 +21,18 @@ public class ConfigLoginModel  extends BaseModel {
 	private int ciAuthId;
 	private UserEntity coUser;
 	
-	public ConfigLoginModel(String pBaseUrl) {
+	public ConfigLoginModel(String pBaseUrl, Context pContext) {
 		super.csBaseUrl = pBaseUrl;
 		super.csMethod = "";
 		super.coModelListener = new ArrayList<ModelListener>();		
+		super.coContext = pContext;
 	}
 	
 	public void updateAccountAsync(UserEntity pUser, int pAuthId){
 		String lsData = this.getFomattedData(pUser, pAuthId);
 		String lsQueryUrl = super.csBaseUrl + "ToguisSecurity.svc/update_user";		
 		super.csMethod = "updateAccountAsync";
-		RestAsyncTask loTask = new RestAsyncTask();
+		RestAsyncTask loTask = new RestAsyncTask(this.coContext);
 		loTask.addAsyncTaskListener(this);		
 		loTask.execute("1", lsQueryUrl, lsData);
 	}	
@@ -59,7 +61,7 @@ public class ConfigLoginModel  extends BaseModel {
 		String lsData = this.getFomattedData(pUser, pAuthId);
 		String lsQueryUrl = super.csBaseUrl + "ToguisSecurity.svc/create_user";		
 		super.csMethod = "createAccountAsync";
-		RestAsyncTask loTask = new RestAsyncTask();
+		RestAsyncTask loTask = new RestAsyncTask(this.coContext);
 		loTask.addAsyncTaskListener(this);		
 		loTask.execute("1", lsQueryUrl, lsData);
 	}	

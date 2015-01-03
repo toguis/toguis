@@ -37,7 +37,7 @@ public class SettingsController implements ModelListener{
 		this.coView = pView;
 		ResourcesManager loResource = new ResourcesManager(((Fragment)this.coView).getActivity());
 		String lsBaseUrl = loResource.getStringResource(R.string.general_web_service_base_url);
-		this.coModel = new SettingsModel(lsBaseUrl);
+		this.coModel = new SettingsModel(lsBaseUrl, ((Fragment)this.coView).getActivity());
 		this.coModel.addModelListener(this);
 		this.coHandler = new Handler(); 
 	}

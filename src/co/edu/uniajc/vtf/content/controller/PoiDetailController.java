@@ -36,7 +36,7 @@ public class PoiDetailController implements ModelListener{
 		this.coView = pView;
 		ResourcesManager loResource = new ResourcesManager((Activity)this.coView);
 		String lsBaseUrl = loResource.getStringResource(R.string.general_web_service_base_url);
-		this.coModel = new PoiDetailModel(lsBaseUrl);
+		this.coModel = new PoiDetailModel(lsBaseUrl, (Activity)this.coView);
 		this.coModel.addModelListener(this);	
 	}
 

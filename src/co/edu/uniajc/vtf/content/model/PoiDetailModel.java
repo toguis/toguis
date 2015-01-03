@@ -14,16 +14,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
 import co.edu.uniajc.vtf.utils.BaseModel;
 import co.edu.uniajc.vtf.utils.ModelListener;
 import co.edu.uniajc.vtf.utils.RestAsyncTask;
 
 public class PoiDetailModel extends BaseModel {
 
-	public PoiDetailModel(String pBaseUrl) {
+	public PoiDetailModel(String pBaseUrl, Context pContext) {
 		super.csBaseUrl = pBaseUrl;
 		super.csMethod = "";
-		super.coModelListener = new ArrayList<ModelListener>();		
+		super.coModelListener = new ArrayList<ModelListener>();
+		super.coContext = pContext;
 	}	
 	
 	public void getPoiDetailAsync(String pUserName, int pPoiId, int pLanguageId ){
@@ -34,7 +36,7 @@ public class PoiDetailModel extends BaseModel {
 		lsParams.append("language=").append(pLanguageId);	
 		lsQueryUrl += lsParams.toString();
 		super.csMethod = "getPoiDetailAsync";
-		RestAsyncTask loTask = new RestAsyncTask();
+		RestAsyncTask loTask = new RestAsyncTask(super.coContext);
 		loTask.addAsyncTaskListener(this);	
 		loTask.execute("0", lsQueryUrl);
 	}
@@ -97,7 +99,7 @@ public class PoiDetailModel extends BaseModel {
 		lsParams.append(pPoiId).append("/");		
 		lsParams.append(pValue);	
 		super.csMethod = "setFavoriteAsync";
-		RestAsyncTask loTask = new RestAsyncTask();
+		RestAsyncTask loTask = new RestAsyncTask(super.coContext);
 		loTask.addAsyncTaskListener(this);		
 		loTask.execute("1",lsQueryUrl +  lsParams.toString(),"");
 	}
@@ -122,7 +124,7 @@ public class PoiDetailModel extends BaseModel {
 		lsParams.append(pPoiId).append("/");		
 		lsParams.append(pValue);	
 		super.csMethod = "setFavoriteAsync";
-		RestAsyncTask loTask = new RestAsyncTask();
+		RestAsyncTask loTask = new RestAsyncTask(super.coContext);
 		loTask.addAsyncTaskListener(this);		
 		loTask.execute("1",lsQueryUrl +  lsParams.toString(),"");
 	}
@@ -147,7 +149,7 @@ public class PoiDetailModel extends BaseModel {
 		lsParams.append(pPoiId).append("/");		
 		lsParams.append(pRating);	
 		super.csMethod = "setRatingAsync";
-		RestAsyncTask loTask = new RestAsyncTask();
+		RestAsyncTask loTask = new RestAsyncTask(super.coContext);
 		loTask.addAsyncTaskListener(this);		
 		loTask.execute("1",lsQueryUrl +  lsParams.toString(),"");		
 	}

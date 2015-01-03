@@ -34,7 +34,7 @@ public class LoginController implements ModelListener {
 		this.coView = pView;
 		ResourcesManager loResource = new ResourcesManager((Activity)this.coView);
 		String lsBaseUrl = loResource.getStringResource(R.string.general_web_service_base_url);
-		this.coModel = new LoginModel(lsBaseUrl);
+		this.coModel = new LoginModel(lsBaseUrl, (Activity)this.coView);
 		this.coModel.addModelListener(this);
 	}
 	

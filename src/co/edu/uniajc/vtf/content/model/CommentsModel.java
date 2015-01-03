@@ -19,7 +19,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import co.edu.uniajc.vtf.security.model.UserEntity;
+import android.content.Context;
 import co.edu.uniajc.vtf.utils.BaseModel;
 import co.edu.uniajc.vtf.utils.DateUtilities;
 import co.edu.uniajc.vtf.utils.ModelListener;
@@ -27,10 +27,11 @@ import co.edu.uniajc.vtf.utils.RestAsyncTask;
 
 public class CommentsModel extends BaseModel {
 
-	public CommentsModel(String pBaseUrl) {
+	public CommentsModel(String pBaseUrl, Context pContext) {
 		super.csBaseUrl = pBaseUrl;
 		super.csMethod = "";
 		super.coModelListener = new ArrayList<ModelListener>();	
+		super.coContext = pContext;
 	}
 
 	public void getCommentsAsync(int pPoiId){
@@ -39,7 +40,7 @@ public class CommentsModel extends BaseModel {
 		lsParams.append("poiid=").append(pPoiId);
 		lsQueryUrl += lsParams.toString();
 		super.csMethod = "getCommentsAsync";
-		RestAsyncTask loTask = new RestAsyncTask();
+		RestAsyncTask loTask = new RestAsyncTask(super.coContext);
 		loTask.addAsyncTaskListener(this);	
 		loTask.execute("0", lsQueryUrl);
 	}
@@ -99,7 +100,7 @@ public class CommentsModel extends BaseModel {
 		String lsData = this.getFomattedData(pComment);
 		String lsQueryUrl = super.csBaseUrl + "ToguisPoints.svc/set_comment";
 		super.csMethod = "setCommentAsync";
-		RestAsyncTask loTask = new RestAsyncTask();
+		RestAsyncTask loTask = new RestAsyncTask(super.coContext);
 		loTask.addAsyncTaskListener(this);		
 		loTask.execute("1",lsQueryUrl,lsData);	
 	}

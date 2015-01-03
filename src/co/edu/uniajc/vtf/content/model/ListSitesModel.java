@@ -14,16 +14,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
 import co.edu.uniajc.vtf.utils.BaseModel;
 import co.edu.uniajc.vtf.utils.ModelListener;
 import co.edu.uniajc.vtf.utils.RestAsyncTask;
 
 public class ListSitesModel extends BaseModel {
 
-	public ListSitesModel(String pBaseUrl) {
+	public ListSitesModel(String pBaseUrl, Context pContext) {
 		super.csBaseUrl = pBaseUrl;
 		super.csMethod = "";
 		super.coModelListener = new ArrayList<ModelListener>();		
+		super.coContext = pContext;
 	}
 	
 	public void getSiteListAsync(String pUserName, 
@@ -64,7 +66,7 @@ public class ListSitesModel extends BaseModel {
 		}
 		lsQueryUrl += lsParams.toString();
 		super.csMethod = "getSiteListAsync";
-		RestAsyncTask loTask = new RestAsyncTask();
+		RestAsyncTask loTask = new RestAsyncTask(super.coContext);
 		loTask.addAsyncTaskListener(this);	
 		loTask.execute("0", lsQueryUrl);
 	}

@@ -36,7 +36,7 @@ public class ListSitesController implements ModelListener{
 		this.coView = pView;
 		ResourcesManager loResource = new ResourcesManager(((Fragment)this.coView).getActivity());
 		String lsBaseUrl = loResource.getStringResource(R.string.general_web_service_base_url);
-		this.coModel = new ListSitesModel(lsBaseUrl);
+		this.coModel = new ListSitesModel(lsBaseUrl,((Fragment)this.coView).getActivity());
 		this.coModel.addModelListener(this);
 	}
 

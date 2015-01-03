@@ -16,12 +16,12 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 public class RestAsyncTask extends AsyncTask<String, Long, String> {
@@ -29,11 +29,11 @@ public class RestAsyncTask extends AsyncTask<String, Long, String> {
 	private ArrayList<RestAsyncTaskListener> coAsyncTaskListener;
 	private boolean cbohasError;
 	
-	public RestAsyncTask(){		
+	public RestAsyncTask(Context pContext){		
 		HttpParams httpParameters = new BasicHttpParams();
 		HttpConnectionParams.setConnectionTimeout(httpParameters, 30000);
 		HttpConnectionParams.setSoTimeout(httpParameters, 10000);		
-		this.coClient = new DefaultHttpClient(httpParameters);
+		this.coClient = new ToguisHttpClient(httpParameters,pContext);
 		this.cbohasError = false;
 		this.coAsyncTaskListener = new ArrayList<RestAsyncTaskListener>();
 	}

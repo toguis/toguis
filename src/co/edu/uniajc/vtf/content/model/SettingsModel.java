@@ -14,22 +14,24 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
 import co.edu.uniajc.vtf.utils.BaseModel;
 import co.edu.uniajc.vtf.utils.ModelListener;
 import co.edu.uniajc.vtf.utils.RestAsyncTask;
 
 public class SettingsModel extends BaseModel {
 
-	public SettingsModel(String pBaseUrl) {
+	public SettingsModel(String pBaseUrl, Context pContext) {
 		super.csBaseUrl = pBaseUrl;
 		super.csMethod = "";
 		super.coModelListener = new ArrayList<ModelListener>();		
+		super.coContext = pContext;
 	}	
 	
 	public void getLanguagesAsync(){
 		String lsQueryUrl = super.csBaseUrl + "ToguisPoints.svc/get_languages";
 		super.csMethod = "getLanguagesAsync";
-		RestAsyncTask loTask = new RestAsyncTask();
+		RestAsyncTask loTask = new RestAsyncTask(super.coContext);
 		loTask.addAsyncTaskListener(this);	
 		loTask.execute("0", lsQueryUrl);
 	}
@@ -65,7 +67,7 @@ public class SettingsModel extends BaseModel {
 	public void getCitiesAsync(){
 		String lsQueryUrl = super.csBaseUrl + "ToguisPoints.svc/get_cities";
 		super.csMethod = "getCitiesAsync";
-		RestAsyncTask loTask = new RestAsyncTask();
+		RestAsyncTask loTask = new RestAsyncTask(super.coContext);
 		loTask.addAsyncTaskListener(this);	
 		loTask.execute("0", lsQueryUrl);
 	}

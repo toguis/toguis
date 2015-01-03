@@ -13,23 +13,24 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
 import co.edu.uniajc.vtf.utils.BaseModel;
 import co.edu.uniajc.vtf.utils.ModelListener;
 import co.edu.uniajc.vtf.utils.RestAsyncTask;
 
 public class LoginModel extends BaseModel {
 	
-	public LoginModel(String pBaseUrl){
+	public LoginModel(String pBaseUrl, Context pContext){
 		super.csBaseUrl = pBaseUrl;
 		super.csMethod = "";
 		super.coModelListener = new ArrayList<ModelListener>();
-		
+		super.coContext = pContext;
 	}
 	
 	public void getUserAsync(String pId){		
 		String lsQueryUrl = String.format(this.csBaseUrl + "ToguisSecurity.svc/get_user?login=%s", pId);
 		super.csMethod = "getUserAsync";
-		RestAsyncTask loTask = new RestAsyncTask();
+		RestAsyncTask loTask = new RestAsyncTask(super.coContext);
 		loTask.addAsyncTaskListener(this);		
 		loTask.execute("0",lsQueryUrl);
 	}
@@ -59,7 +60,6 @@ public class LoginModel extends BaseModel {
 			}	
 		}		
 	}
-	
 		
 	@Override
 	public void onQuerySuccessful(String pResult) {
