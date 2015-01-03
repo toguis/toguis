@@ -32,7 +32,7 @@ public class RestAsyncTask extends AsyncTask<String, Long, String> {
 	public RestAsyncTask(Context pContext){		
 		HttpParams httpParameters = new BasicHttpParams();
 		HttpConnectionParams.setConnectionTimeout(httpParameters, 30000);
-		HttpConnectionParams.setSoTimeout(httpParameters, 10000);		
+		HttpConnectionParams.setSoTimeout(httpParameters, 30000);		
 		this.coClient = new ToguisHttpClient(httpParameters,pContext);
 		this.cbohasError = false;
 		this.coAsyncTaskListener = new ArrayList<RestAsyncTaskListener>();
