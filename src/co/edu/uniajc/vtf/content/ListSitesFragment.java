@@ -241,7 +241,7 @@ public class ListSitesFragment extends Fragment implements
 	
 	@Override
 	public void setAdapterData(ArrayList<PointOfInterestEntity> pPoints) {	
-       	ResourcesManager loResource = new ResourcesManager(this.getActivity());
+       	ResourcesManager loResource = new ResourcesManager(this.getActivity()); 
         Toast.makeText(this.getActivity().getApplicationContext(), pPoints.size() + " " + loResource.getStringResource(R.string.ar_added_data_text), Toast.LENGTH_LONG).show();
         
 		this.setAdapterData(pPoints, true);
