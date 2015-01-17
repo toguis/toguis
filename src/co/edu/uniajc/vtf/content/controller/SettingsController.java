@@ -115,18 +115,24 @@ public class SettingsController implements ModelListener{
 	}
 	
 	private void loadSettings(ISettings pView){
-       	OptionsManager loOptions = new OptionsManager(((Fragment)this.coView).getActivity()); 
-    	OptionsEntity loOptionsData = loOptions.getOptions();	
-    	this.coView.setMonumentValue(loOptionsData.isFilterMonument());
-    	this.coView.setMuseumValue(loOptionsData.isFilterMuseum());
-    	this.coView.setHotelValue(loOptionsData.isFilterHotel());
-    	this.coView.setRestaurantValue(loOptionsData.isFilterRestaurant());
-    	this.coView.setInterestValue(loOptionsData.isFilterInterest());
-    	this.coView.setTransportValue(loOptionsData.isFilterTransport());
-    	this.coView.setBuildingValue(loOptionsData.isFilterBuilding());
-    	this.coView.setEventValue(loOptionsData.isFilterEvent());
-    	this.coView.setDistanceValue(loOptionsData.getArea());
-    	this.coView.setCityValue(loOptionsData.getCityId());
-    	this.coView.setLanguageValue(loOptionsData.getLanguageId());		
+		try{
+	       	OptionsManager loOptions = new OptionsManager(((Fragment)this.coView).getActivity()); 
+	    	OptionsEntity loOptionsData = loOptions.getOptions();	
+	    	this.coView.setMonumentValue(loOptionsData.isFilterMonument());
+	    	this.coView.setMuseumValue(loOptionsData.isFilterMuseum());
+	    	this.coView.setHotelValue(loOptionsData.isFilterHotel());
+	    	this.coView.setRestaurantValue(loOptionsData.isFilterRestaurant());
+	    	this.coView.setInterestValue(loOptionsData.isFilterInterest());
+	    	this.coView.setTransportValue(loOptionsData.isFilterTransport());
+	    	this.coView.setBuildingValue(loOptionsData.isFilterBuilding());
+	    	this.coView.setEventValue(loOptionsData.isFilterEvent());
+	    	this.coView.setDistanceValue(loOptionsData.getArea());
+	    	this.coView.setCityValue(loOptionsData.getCityId());
+	    	this.coView.setLanguageValue(loOptionsData.getLanguageId());			
+		}
+		catch(Exception ex){
+			
+		}
+		
 	}
 }

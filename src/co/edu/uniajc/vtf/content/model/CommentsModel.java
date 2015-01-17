@@ -8,6 +8,8 @@
  ***********************************************************************************************/
 package co.edu.uniajc.vtf.content.model;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -121,8 +123,16 @@ public class CommentsModel extends BaseModel {
 	private String getFomattedData(CommentEntity pComment){
 		StringBuilder loData = new StringBuilder();
 		String loDate = DateUtilities.getFormattedDate(Calendar.getInstance());
+		String lsEncondeComment = "";
+		try {
+			lsEncondeComment = URLEncoder.encode(pComment.getComment(), "utf-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		loData.append("{");
-		loData.append("\"COM_COMMENT\":\"").append(pComment.getComment()).append("\",");
+		loData.append("\"COM_COMMENT\":\"").append(lsEncondeComment).append("\",");
 		loData.append("\"COM_DATE\":\"" + loDate +  "\",");
 		loData.append("\"POI_ID\":\"").append(pComment.getPoiId()).append("\",");
 		loData.append("\"USR_ID\":\"").append(pComment.getUserName()).append("\"");

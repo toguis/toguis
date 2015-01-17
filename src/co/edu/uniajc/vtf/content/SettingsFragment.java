@@ -238,20 +238,30 @@ public class SettingsFragment extends Fragment implements ISettings{
 	
 	@Override
 	public void setCities(List<CityEntity> pData){	
-		Spinner loSpinner = (Spinner) this.getView().findViewById(R.id.spnCities);
-		SpinnerCityAdapter loAdapter = new SpinnerCityAdapter(this.getActivity().getBaseContext(),R.layout.spinner_item, pData);
-		loSpinner.setAdapter(loAdapter);	
-		this.coCityAdapter = loAdapter;
-		this.coController.loadSettings();
+		try{
+			Spinner loSpinner = (Spinner) this.getView().findViewById(R.id.spnCities);
+			SpinnerCityAdapter loAdapter = new SpinnerCityAdapter(this.getActivity().getBaseContext(),R.layout.spinner_item, pData);
+			loSpinner.setAdapter(loAdapter);	
+			this.coCityAdapter = loAdapter;
+			this.coController.loadSettings();			
+		}
+		catch(Exception ex){
+			
+		}
 	}
 	
 	@Override
 	public void setLanguages(List<LanguageEntity> pData){
-		Spinner loSpinner = (Spinner) this.getView().findViewById(R.id.spnLanguage);
-		SpinnerLanguageAdapter loAdapter = new SpinnerLanguageAdapter(this.getActivity().getBaseContext(),R.layout.spinner_item, pData);
-		loSpinner.setAdapter(loAdapter);
-		this.coLanguageAdapter = loAdapter;
-		this.coController.getCitiesAsync();
+		try{
+			Spinner loSpinner = (Spinner) this.getView().findViewById(R.id.spnLanguage);
+			SpinnerLanguageAdapter loAdapter = new SpinnerLanguageAdapter(this.getActivity().getBaseContext(),R.layout.spinner_item, pData);
+			loSpinner.setAdapter(loAdapter);
+			this.coLanguageAdapter = loAdapter;
+			this.coController.getCitiesAsync();
+		}
+		catch(Exception ex){
+			
+		}
 	}
 	
 	public void SaveSettings(){

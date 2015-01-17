@@ -23,6 +23,7 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import co.edu.uniajc.vtf.R;
 import co.edu.uniajc.vtf.content.ListSitesFragment.ListPointsAdapter;
 import co.edu.uniajc.vtf.content.controller.CommentsController;
@@ -150,6 +151,10 @@ public class CommentsActivity extends Activity implements IComments{
 			loComment.setUserName(lsUserName);
 			loComment.setPoiId(this.ciPoiId);
 			this.coController.setCommentAsync(loComment);			
+		}
+		else{
+	      	ResourcesManager loResource = new ResourcesManager(this); 
+	        Toast.makeText(this.getApplicationContext(), loResource.getStringResource(R.string.comments_message_empty), Toast.LENGTH_LONG).show();   			
 		}
 	}
 	
