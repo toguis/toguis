@@ -109,6 +109,24 @@ public class NavigationActivity extends FragmentActivity implements
 		}
 	}
 
+    @Override
+    public void onStop() {
+    	super.onStop();
+    	try{
+    		LocationServices.FusedLocationApi.removeLocationUpdates(coGoogleApiClient, this);	
+    	}catch(Exception ex){}
+    	this.hideProgressDialog();
+    }
+    
+       @Override
+    public void onPause() {
+    	super.onPause();
+    	try{
+    		LocationServices.FusedLocationApi.removeLocationUpdates(coGoogleApiClient, this);	
+    	}catch(Exception ex){}
+    	this.hideProgressDialog();
+    }
+       
 	@Override
 	public void handleGetDirectionsResult(ArrayList<DirectionsEntity> pDirectionPoints) {
 		this.hideProgressDialog();
@@ -185,7 +203,7 @@ public class NavigationActivity extends FragmentActivity implements
 	public void onLocationChanged(Location location) {
 		this.coLastLocation = location;
 		if(location.hasAccuracy()){
-			if(location.getAccuracy() <= 30){
+			if(location.getAccuracy() <= 40){
 				LocationServices.FusedLocationApi.removeLocationUpdates(coGoogleApiClient, this);	
 				this.coCurrentPosition = new LatLng(this.coLastLocation.getLatitude(),this.coLastLocation.getLongitude());
 				OptionsManager loOptions = new OptionsManager(this); 										

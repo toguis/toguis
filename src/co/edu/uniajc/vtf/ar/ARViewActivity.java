@@ -163,7 +163,7 @@ public class ARViewActivity extends Activity implements
 	public void onLocationChanged(Location location) {
 		this.coLastLocation = location;
 		if(location.hasAccuracy()){
-			if(location.getAccuracy() <= 20){			
+			if(location.getAccuracy() <= 40){			
 				this.callARView();				
 			}
 		}	

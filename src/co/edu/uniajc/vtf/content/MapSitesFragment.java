@@ -129,12 +129,18 @@ public class MapSitesFragment extends Fragment implements
     @Override
     public void onStop() {
     	super.onStop();
+    	try{
+    		LocationServices.FusedLocationApi.removeLocationUpdates(coGoogleApiClient, this);	
+    	}catch(Exception ex){}
     	this.hideProgressDialog();
     }
     
        @Override
     public void onPause() {
     	super.onPause();
+    	try{
+    		LocationServices.FusedLocationApi.removeLocationUpdates(coGoogleApiClient, this);	
+    	}catch(Exception ex){}	
     	this.hideProgressDialog();
     }
 
