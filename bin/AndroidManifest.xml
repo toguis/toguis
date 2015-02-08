@@ -22,7 +22,7 @@
     <uses-permission android:name="android.permission.ACCESS_GPS" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-	<uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -45,7 +45,7 @@
         android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyCTPBluUWZrVN2_CsB_GyQoJA9nIlcBuvc" />
+            android:value="AIzaSyBZIUF8UaUezgRpCzu_sFpRDtkjAIzSauM" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -58,7 +58,7 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>             
+            </intent-filter>
         </activity>
         <activity
             android:name=".security.LoginActivity"
@@ -124,10 +124,21 @@
             android:theme="@style/FullscreenTheme" >
         </activity>
         <activity
-            android:name="co.edu.uniajc.vtf.ar.ARViewActivity"
-            android:label="@string/title_activity_arview" 
-            android:theme="@style/FullscreenTheme">           
+            android:name=".ar.ARViewActivity"
+            android:label="@string/title_activity_arview"
+            android:theme="@style/FullscreenTheme" >
         </activity>
+        <activity
+            android:name=".NoNetworkActivity"
+            android:label="@string/title_activity_no_network" >
+        </activity>
+        
+        <receiver android:name=".receivers.NetworkStatusReceiver" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" >
+                </action>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

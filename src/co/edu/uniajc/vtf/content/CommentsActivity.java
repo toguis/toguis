@@ -13,7 +13,9 @@ import java.util.ArrayList;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -36,7 +38,9 @@ public class CommentsActivity extends Activity implements IComments{
 	private ProgressDialog coProgressDialog;
 	private CommentsController coController; 
 	private int ciPoiId;
-	
+    private BroadcastReceiver coNetReceiver;
+    private IntentFilter coIntentFilter;
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

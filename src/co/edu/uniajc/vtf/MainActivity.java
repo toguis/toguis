@@ -1,5 +1,5 @@
 /***********************************************************************************************
- * Project: Tourist Guide System Toguis
+	 * Project: Tourist Guide System Toguis
  * University: UNIAJC
  * Authors: Julieth Candia and Carlos Morante
  * Year: 2014 - 2015
@@ -11,7 +11,6 @@ package co.edu.uniajc.vtf;
 import java.util.Locale;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;

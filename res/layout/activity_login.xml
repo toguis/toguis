@@ -72,6 +72,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/btnSignIn"
         android:onClick="onClick_NavigateForgotPassword"
-        android:text="@string/login_btn_forgot_password_text" />
+        android:text="@string/login_btn_forgot_password_text"
+        android:visibility="invisible" />
 
 </RelativeLayout>

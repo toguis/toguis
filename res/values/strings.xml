@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="general_web_service_base_url">https://192.52.243.4/ToguisWebServices/</string>
+
+    <string name="general_web_service_base_url">https://192.168.1.102/ToguisWebServices/</string>
     <string name="keystore">The12@man</string>
     <string name="app_name">Toguis</string>
     <string name="action_settings">Configuration</string>
@@ -113,8 +114,12 @@
     <string name="settings_lbl_language_text">Language</string>
     <string name="settings_btn_save_settings_text">Save</string>
     <string name="title_activity_arview">ARViewActivity</string>
-	<string name="ar_lbl_ar_text">Touch to start</string>
-	<string name="ar_error_data_text">Error when trying to receive data</string>
-	<string name="ar_added_data_text">points added</string>
-	<string name="ar_search_text">Searching&#8230;</string>
+    <string name="ar_lbl_ar_text">Touch to start</string>
+    <string name="ar_error_data_text">Error when trying to receive data</string>
+    <string name="ar_added_data_text">points added</string>
+    <string name="ar_search_text">Searching&#8230;</string>
+    <string name="title_activity_no_network">Connection error</string>
+    <string name="hello_world">Hello world!</string>
+	<string name="nonetwork_lbl_nonet_text">You must be connected to internet to access Toguis!</string>
+	<string name="nonetwork_btn_try_text">Try again</string>
 </resources>
