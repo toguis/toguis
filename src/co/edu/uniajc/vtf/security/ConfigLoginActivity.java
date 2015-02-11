@@ -11,12 +11,15 @@ package co.edu.uniajc.vtf.security;
 import java.util.Arrays;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import co.edu.uniajc.vtf.R;
+import co.edu.uniajc.vtf.receivers.NetworkStatusReceiver;
 import co.edu.uniajc.vtf.security.controller.ConfigLoginController;
 import co.edu.uniajc.vtf.security.interfaces.IConfigLogin;
 import co.edu.uniajc.vtf.utils.AlertDialogManager;
@@ -234,6 +237,8 @@ public class ConfigLoginActivity extends Activity implements IConfigLogin,
 	@Override
 	public void onResume() {
 	    super.onResume();
+		ComponentName loComponent = new ComponentName(this, NetworkStatusReceiver.class);
+		this.getPackageManager().setComponentEnabledSetting(loComponent, PackageManager.COMPONENT_ENABLED_STATE_ENABLED  , PackageManager.DONT_KILL_APP);	
 	    this.coFacebookSignInHelper.onResume();
 	}
 
@@ -256,6 +261,8 @@ public class ConfigLoginActivity extends Activity implements IConfigLogin,
 	@Override
 	public void onPause() {
 	    super.onPause();
+		ComponentName loComponent = new ComponentName(this, NetworkStatusReceiver.class);
+		this.getPackageManager().setComponentEnabledSetting(loComponent, PackageManager.COMPONENT_ENABLED_STATE_DISABLED , PackageManager.DONT_KILL_APP);
 	    this.coFacebookSignInHelper.onPause();
 	}
 

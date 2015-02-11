@@ -11,7 +11,9 @@ package co.edu.uniajc.vtf.content;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -21,6 +23,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import co.edu.uniajc.vtf.R;
+import co.edu.uniajc.vtf.receivers.NetworkStatusReceiver;
 import co.edu.uniajc.vtf.utils.DirectionsEntity;
 
 public class NavigationRouteActivity extends Activity {
@@ -93,4 +96,18 @@ public class NavigationRouteActivity extends Activity {
 			return loView;
 		}	
     }
+    
+	@Override
+	protected void onPause() {
+		ComponentName loComponent = new ComponentName(this, NetworkStatusReceiver.class);
+		this.getPackageManager().setComponentEnabledSetting(loComponent, PackageManager.COMPONENT_ENABLED_STATE_DISABLED , PackageManager.DONT_KILL_APP);		
+		super.onPause();
+	}
+	
+	@Override
+	protected void onResume() {
+		ComponentName loComponent = new ComponentName(this, NetworkStatusReceiver.class);
+		this.getPackageManager().setComponentEnabledSetting(loComponent, PackageManager.COMPONENT_ENABLED_STATE_ENABLED  , PackageManager.DONT_KILL_APP);	
+		super.onResume();
+	}
 }

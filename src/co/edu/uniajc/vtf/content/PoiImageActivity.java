@@ -9,6 +9,8 @@
 package co.edu.uniajc.vtf.content;
 
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -18,6 +20,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import co.edu.uniajc.vtf.R;
+import co.edu.uniajc.vtf.receivers.NetworkStatusReceiver;
 import co.edu.uniajc.vtf.utils.ExtendedApplicationContext;
 import co.edu.uniajc.vtf.utils.SystemUiHider;
 
@@ -89,5 +92,19 @@ public class PoiImageActivity extends Activity {
         Bitmap loBitmap = BitmapFactory.decodeByteArray(loData, 0, loData.length);	
 		ImageView loImage = (ImageView)findViewById(R.id.imgPoiImageView);
 		loImage.setImageBitmap(loBitmap);
+	}
+	
+	@Override
+	protected void onPause() {
+		ComponentName loComponent = new ComponentName(this, NetworkStatusReceiver.class);
+		this.getPackageManager().setComponentEnabledSetting(loComponent, PackageManager.COMPONENT_ENABLED_STATE_DISABLED , PackageManager.DONT_KILL_APP);		
+		super.onPause();
+	}
+	
+	@Override
+	protected void onResume() {
+		ComponentName loComponent = new ComponentName(this, NetworkStatusReceiver.class);
+		this.getPackageManager().setComponentEnabledSetting(loComponent, PackageManager.COMPONENT_ENABLED_STATE_ENABLED  , PackageManager.DONT_KILL_APP);	
+		super.onResume();
 	}
 }

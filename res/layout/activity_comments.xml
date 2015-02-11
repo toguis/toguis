@@ -27,6 +27,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="@string/comments_txt_comment_hint"
+            android:maxLength="300"
             android:textColor="#cccccc" />
 
         <Button

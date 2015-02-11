@@ -14,8 +14,10 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -31,6 +33,7 @@ import co.edu.uniajc.vtf.content.ListSitesFragment.ListPointsAdapter;
 import co.edu.uniajc.vtf.content.controller.CommentsController;
 import co.edu.uniajc.vtf.content.interfaces.IComments;
 import co.edu.uniajc.vtf.content.model.CommentEntity;
+import co.edu.uniajc.vtf.receivers.NetworkStatusReceiver;
 import co.edu.uniajc.vtf.utils.ResourcesManager;
 import co.edu.uniajc.vtf.utils.SessionManager;
 
@@ -176,5 +179,19 @@ public class CommentsActivity extends Activity implements IComments{
 	@Override
 	public int getPoiId(){
 		return  this.ciPoiId;
+	}
+	
+	@Override
+	protected void onPause() {
+		ComponentName loComponent = new ComponentName(this, NetworkStatusReceiver.class);
+		this.getPackageManager().setComponentEnabledSetting(loComponent, PackageManager.COMPONENT_ENABLED_STATE_DISABLED , PackageManager.DONT_KILL_APP);		
+		super.onPause();
+	}
+	
+	@Override
+	protected void onResume() {
+		ComponentName loComponent = new ComponentName(this, NetworkStatusReceiver.class);
+		this.getPackageManager().setComponentEnabledSetting(loComponent, PackageManager.COMPONENT_ENABLED_STATE_ENABLED  , PackageManager.DONT_KILL_APP);	
+		super.onResume();
 	}
 }

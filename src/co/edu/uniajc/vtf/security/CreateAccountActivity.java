@@ -10,12 +10,15 @@ package co.edu.uniajc.vtf.security;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import co.edu.uniajc.vtf.R;
+import co.edu.uniajc.vtf.receivers.NetworkStatusReceiver;
 import co.edu.uniajc.vtf.security.controller.CreateAccountController;
 import co.edu.uniajc.vtf.security.interfaces.ICreateAccount;
 
@@ -115,5 +118,17 @@ public class CreateAccountActivity extends Activity implements ICreateAccount {
 		return super.onOptionsItemSelected(item);
 	}
 
-
+	@Override
+	protected void onPause() {
+		ComponentName loComponent = new ComponentName(this, NetworkStatusReceiver.class);
+		this.getPackageManager().setComponentEnabledSetting(loComponent, PackageManager.COMPONENT_ENABLED_STATE_DISABLED , PackageManager.DONT_KILL_APP);		
+		super.onPause();
+	}
+	
+	@Override
+	protected void onResume() {
+		ComponentName loComponent = new ComponentName(this, NetworkStatusReceiver.class);
+		this.getPackageManager().setComponentEnabledSetting(loComponent, PackageManager.COMPONENT_ENABLED_STATE_ENABLED  , PackageManager.DONT_KILL_APP);	
+		super.onResume();
+	}
 }

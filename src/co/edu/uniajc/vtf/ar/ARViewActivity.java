@@ -16,7 +16,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,6 +29,7 @@ import android.widget.Toast;
 import co.edu.uniajc.vtf.R;
 import co.edu.uniajc.vtf.content.PoiDetailActivity;
 import co.edu.uniajc.vtf.content.model.PointOfInterestEntity;
+import co.edu.uniajc.vtf.receivers.NetworkStatusReceiver;
 import co.edu.uniajc.vtf.utils.ExtendedApplicationContext;
 import co.edu.uniajc.vtf.utils.ResourcesManager;
 import co.edu.uniajc.vtf.wikitude.WikitudeLicence;
@@ -135,6 +138,8 @@ public class ARViewActivity extends Activity implements
 	@Override
 	protected void onResume() {
 		super.onResume();
+		ComponentName loComponent = new ComponentName(this, NetworkStatusReceiver.class);
+		this.getPackageManager().setComponentEnabledSetting(loComponent, PackageManager.COMPONENT_ENABLED_STATE_ENABLED  , PackageManager.DONT_KILL_APP);	
 		this.loadPosition();
 		if ( this.architectView != null ) {
 			this.architectView.onResume();
@@ -144,6 +149,8 @@ public class ARViewActivity extends Activity implements
 	@Override
 	protected void onPause() {
 		super.onPause();
+		ComponentName loComponent = new ComponentName(this, NetworkStatusReceiver.class);
+		this.getPackageManager().setComponentEnabledSetting(loComponent, PackageManager.COMPONENT_ENABLED_STATE_DISABLED , PackageManager.DONT_KILL_APP);	
 		LocationServices.FusedLocationApi.removeLocationUpdates(coGoogleApiClient, this);	
 		if ( this.architectView != null ) {
 			this.architectView.onPause();

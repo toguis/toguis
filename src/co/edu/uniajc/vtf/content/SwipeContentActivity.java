@@ -13,8 +13,10 @@ import java.util.ArrayList;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -27,6 +29,7 @@ import co.edu.uniajc.vtf.content.ListSitesFragment.LoadActions;
 import co.edu.uniajc.vtf.content.interfaces.ILoadExtenalDataFromList;
 import co.edu.uniajc.vtf.content.interfaces.ILoadExtenalDataFromMap;
 import co.edu.uniajc.vtf.content.model.PointOfInterestEntity;
+import co.edu.uniajc.vtf.receivers.NetworkStatusReceiver;
 import co.edu.uniajc.vtf.security.ConfigLoginActivity;
 import co.edu.uniajc.vtf.security.model.LogoutListener;
 import co.edu.uniajc.vtf.utils.SessionManager;
@@ -209,6 +212,20 @@ public class SwipeContentActivity extends FragmentActivity  implements
 	    if (this.coApiClient.isConnected()) {
 	    	this.coApiClient.disconnect();
 	    }
+	}
+	
+	@Override
+	protected void onPause() {
+		ComponentName loComponent = new ComponentName(this, NetworkStatusReceiver.class);
+		this.getPackageManager().setComponentEnabledSetting(loComponent, PackageManager.COMPONENT_ENABLED_STATE_DISABLED , PackageManager.DONT_KILL_APP);		
+		super.onPause();
+	}
+	
+	@Override
+	protected void onResume() {
+		ComponentName loComponent = new ComponentName(this, NetworkStatusReceiver.class);
+		this.getPackageManager().setComponentEnabledSetting(loComponent, PackageManager.COMPONENT_ENABLED_STATE_ENABLED  , PackageManager.DONT_KILL_APP);	
+		super.onResume();
 	}
 	
 	@Override

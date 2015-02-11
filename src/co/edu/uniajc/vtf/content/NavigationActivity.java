@@ -13,7 +13,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.app.ProgressDialog;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
@@ -28,6 +30,7 @@ import android.widget.Toast;
 import co.edu.uniajc.vtf.R;
 import co.edu.uniajc.vtf.content.interfaces.INavigation;
 import co.edu.uniajc.vtf.content.model.PointOfInterestEntity;
+import co.edu.uniajc.vtf.receivers.NetworkStatusReceiver;
 import co.edu.uniajc.vtf.utils.DirectionsEntity;
 import co.edu.uniajc.vtf.utils.GMapV2Direction;
 import co.edu.uniajc.vtf.utils.GetDirectionsAsyncTask;
@@ -99,8 +102,9 @@ public class NavigationActivity extends FragmentActivity implements
 	
 	@Override
 	protected void onResume() {
-		
 		super.onResume();
+		ComponentName loComponent = new ComponentName(this, NetworkStatusReceiver.class);
+		this.getPackageManager().setComponentEnabledSetting(loComponent, PackageManager.COMPONENT_ENABLED_STATE_ENABLED  , PackageManager.DONT_KILL_APP);					
 		LatLng loDestiny = new LatLng(this.coDestiny.getLatitude(), this.coDestiny.getLongitude());
 		
 		if(this.coCurrentPosition != null){
@@ -121,6 +125,8 @@ public class NavigationActivity extends FragmentActivity implements
        @Override
     public void onPause() {
     	super.onPause();
+   		ComponentName loComponent = new ComponentName(this, NetworkStatusReceiver.class);
+   		this.getPackageManager().setComponentEnabledSetting(loComponent, PackageManager.COMPONENT_ENABLED_STATE_DISABLED , PackageManager.DONT_KILL_APP);	  	
     	try{
     		LocationServices.FusedLocationApi.removeLocationUpdates(coGoogleApiClient, this);	
     	}catch(Exception ex){}

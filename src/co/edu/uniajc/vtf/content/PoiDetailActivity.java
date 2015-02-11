@@ -13,7 +13,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.ComponentName;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -27,6 +29,7 @@ import co.edu.uniajc.vtf.R;
 import co.edu.uniajc.vtf.content.controller.PoiDetailController;
 import co.edu.uniajc.vtf.content.interfaces.IPoiDetail;
 import co.edu.uniajc.vtf.content.model.PointOfInterestEntity;
+import co.edu.uniajc.vtf.receivers.NetworkStatusReceiver;
 import co.edu.uniajc.vtf.utils.OptionsEntity;
 import co.edu.uniajc.vtf.utils.OptionsManager;
 import co.edu.uniajc.vtf.utils.ResourcesManager;
@@ -217,4 +220,17 @@ public class PoiDetailActivity extends Activity implements IPoiDetail {
 		this.coController.navigateToImageView(this.coPoint);
 	}
 
+	@Override
+	protected void onPause() {
+		ComponentName loComponent = new ComponentName(this, NetworkStatusReceiver.class);
+		this.getPackageManager().setComponentEnabledSetting(loComponent, PackageManager.COMPONENT_ENABLED_STATE_DISABLED , PackageManager.DONT_KILL_APP);		
+		super.onPause();
+	}
+	
+	@Override
+	protected void onResume() {
+		ComponentName loComponent = new ComponentName(this, NetworkStatusReceiver.class);
+		this.getPackageManager().setComponentEnabledSetting(loComponent, PackageManager.COMPONENT_ENABLED_STATE_ENABLED  , PackageManager.DONT_KILL_APP);	
+		super.onResume();
+	}
 }
