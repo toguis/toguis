@@ -40,6 +40,7 @@ public class MapSitesController implements ModelListener{
 		this.coModel.addModelListener(this);		
 	}
 	
+	//get all sites from web service
 	public void getSiteListAsync(boolean pForceLoad){
 		SessionManager loSession = new SessionManager(((Fragment)this.coView).getActivity());  
 		OptionsManager loOptions = new OptionsManager(((Fragment)this.coView).getActivity()); 		

@@ -51,7 +51,10 @@ public class OptionsManager {
 		loOptions.setCityId(this.coShared.getInt(OPTION_CITY, 1));
 		loOptions.setArea(this.coShared.getInt(OPTION_RANGE_AREA, 100));
 		loOptions.setSearch(this.coShared.getString(OPTION_SEARCH, ""));
-		loOptions.setLanguageIsoId(this.coShared.getString(OPTION_LANG_ISO_ID, "en"));
+		
+		//get current system language
+		String lsLocale = java.util.Locale.getDefault().getLanguage();
+		loOptions.setLanguageIsoId(this.coShared.getString(OPTION_LANG_ISO_ID, lsLocale));
 		return loOptions;
 	}
 	

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+//Network broadcaster activiy
 public class NoNetworkActivity extends Activity {
 
 	@Override
@@ -24,6 +25,7 @@ public class NoNetworkActivity extends Activity {
 	}
 
 	public void onClick_Try(View view){
+		//try again to connect if the network signal come back
 		Intent loIntent = new Intent(NoNetworkActivity.this, MainActivity.class);
 		NoNetworkActivity.this.startActivity(loIntent);	
 		NoNetworkActivity.this.finish();		

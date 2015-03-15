@@ -43,6 +43,7 @@ import com.google.android.gms.location.LocationServices;
 import com.wikitude.architect.ArchitectView;
 import com.wikitude.architect.ArchitectView.ArchitectUrlListener;
 
+//AR Activity
 public class ARViewActivity extends Activity implements 
 	GoogleApiClient.ConnectionCallbacks,
 	GoogleApiClient.OnConnectionFailedListener,
@@ -60,14 +61,19 @@ public class ARViewActivity extends Activity implements
 		@Override
 		public void run() {
 			if(ARViewActivity.this.coLastLocation != null && !ARViewActivity.this.isFinishing()){
+				
+				//get current location
 				double ldLatitude = ARViewActivity.this.coLastLocation.getLatitude();
 				double ldLongitude = ARViewActivity.this.coLastLocation.getLongitude();
 				double ldAltitude = ARViewActivity.this.coLastLocation.getAltitude();
+				
+				//load text message resources to show in AR view 
 				ResourcesManager loResource = new ResourcesManager(ARViewActivity.this);
 				String lsARAddedMessage = "'" + loResource.getStringResource(R.string.ar_added_data_text) + "'";
 				String lsARErrorMessage = "'" + loResource.getStringResource(R.string.ar_error_data_text) + "'";				
 				String lsARSearchMessage = "'" + loResource.getStringResource(R.string.ar_search_text) + "'";
 						
+				//call AR View 
 				String lsScript = ARViewActivity.this.callJavaScript("World.loadPoisFromJsonData", 
 						new String[] { 
 							ARViewActivity.this.coPois.toString(),
@@ -82,7 +88,9 @@ public class ARViewActivity extends Activity implements
 				if(!ARViewActivity.this.cboDataLoaded){
 					ARViewActivity.this.architectView.callJavascript(lsScript);
 					ARViewActivity.this.cboDataLoaded = true;
-				}				
+				}		
+				
+				//Set the location 
 				ARViewActivity.this.architectView.setLocation(ldLatitude, ldLongitude, (float)ldAltitude );		
 			}
 		}
@@ -127,6 +135,7 @@ public class ARViewActivity extends Activity implements
 		if ( this.architectView != null ) {
 			this.architectView.onPostCreate();
 			try {
+				//here we load the html AR view
 				this.architectView.load("ARPage/ARView.html");
 
 			} catch (IOException e) {
@@ -170,6 +179,7 @@ public class ARViewActivity extends Activity implements
 	public void onLocationChanged(Location location) {
 		this.coLastLocation = location;
 		if(location.hasAccuracy()){
+			//if acccuracy is lower o equals than 40 call AR View
 			if(location.getAccuracy() <= 40){			
 				this.callARView();				
 			}
@@ -219,16 +229,19 @@ public class ARViewActivity extends Activity implements
         LocationServices.FusedLocationApi.requestLocationUpdates(coGoogleApiClient, coLocationRequest, this);	
 	}
 	
+	//call the AR view to inject json poi data
 	public void callARView(){
 		ExtendedApplicationContext loContext = (ExtendedApplicationContext)this.getApplication();
 		ArrayList<PointOfInterestEntity> loPoints = loContext.getBufferPoints();	
 		if(loPoints != null){
 			this.coPois = this.createJsonArray(loPoints).toString();
+			//here we create a thread to call the AR View
 			final Thread loThread = new Thread(this.coLoadData);
 			loThread.run();
 		}
 	}
 	
+	//Method that create json poi data
 	private JSONArray createJsonArray(ArrayList<PointOfInterestEntity> loPoints){
 		
 		final JSONArray loPois = new JSONArray();	
@@ -247,7 +260,8 @@ public class ARViewActivity extends Activity implements
 		
 		return loPois;
 	}
-	
+
+	//Method that build javascript AR view call
 	private String callJavaScript(final String methodName, final String[] arguments) {
 		final StringBuilder argumentsString = new StringBuilder("");
 		for (int i= 0; i<arguments.length; i++) {
@@ -259,6 +273,7 @@ public class ARViewActivity extends Activity implements
 		return methodName + "( " + argumentsString.toString() + " );" ;		
 	}
 
+	//Open detail activity through this method
 	public boolean listenURL(String uriString) {
 		Uri invokedUri = Uri.parse(uriString);
 		if ("markerselected".equalsIgnoreCase(invokedUri.getHost())) {

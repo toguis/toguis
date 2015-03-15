@@ -30,12 +30,14 @@ public class MainActivity extends Activity implements IMain {
        	OptionsManager loOptions = new OptionsManager(this); 
     	OptionsEntity loOptionsData = loOptions.getOptions();
 
+    	//load the language
     	String lsISOLang = loOptionsData.getLanguageIsoId();
     	this.setLocal(lsISOLang);   	
 		this.coController = new MainController(this);	
 		this.coController.StartTimer();
 	}
 	
+	//set local language before to start
 	private void setLocal(String pISOLang) {
 		Locale loLocale = new Locale(pISOLang);
 		Resources loResource = getResources();
