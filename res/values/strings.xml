@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="general_web_service_base_url">https://192.168.1.102/ToguisWebServices/</string>
+    <string name="general_web_service_base_url">https://192.52.243.12/ToguisWebServices/</string>
     <string name="keystore">The12@man</string>
     <string name="app_name">Toguis</string>
     <string name="action_settings">Configuration</string>

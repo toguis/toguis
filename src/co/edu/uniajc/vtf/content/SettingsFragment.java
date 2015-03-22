@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -35,6 +36,7 @@ import co.edu.uniajc.vtf.content.interfaces.ISettings;
 import co.edu.uniajc.vtf.content.model.CityEntity;
 import co.edu.uniajc.vtf.content.model.LanguageEntity;
 import co.edu.uniajc.vtf.security.model.LogoutListener;
+import co.edu.uniajc.vtf.utils.ResourcesManager;
 import co.edu.uniajc.vtf.utils.SessionManager;
 
 public class SettingsFragment extends Fragment implements ISettings{
@@ -43,7 +45,7 @@ public class SettingsFragment extends Fragment implements ISettings{
 	private int ciSelectedLanguageId;
 	private SpinnerCityAdapter coCityAdapter;
 	private int ciSelectedCityId;
-	
+	private ProgressDialog coProgressDialog;
 	protected ArrayList<LogoutListener> coModelListener;
 	private SettingsController coController;
 	
@@ -51,6 +53,15 @@ public class SettingsFragment extends Fragment implements ISettings{
 		return inflater.inflate(R.layout.fragment_settings, container, false);     
     }
 	       
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		ResourcesManager loResource = new ResourcesManager(this.getActivity());
+		this.coProgressDialog = new ProgressDialog(this.getActivity());
+		this.coProgressDialog.setMessage(loResource.getStringResource(R.string.general_progress_message_loading));
+		this.coProgressDialog.setCanceledOnTouchOutside(false);
+		super.onCreate(savedInstanceState);
+	}
+	
     @Override
     public void onActivityCreated(Bundle state) {
     	super.onActivityCreated(state);	
@@ -132,6 +143,7 @@ public class SettingsFragment extends Fragment implements ISettings{
     	});
     	this.coController = new SettingsController(this);
     	this.coController.getLanguagesAsync();	
+    	this.showProgressDialog();	
     }
      
 	public void startLogout()
@@ -190,8 +202,7 @@ public class SettingsFragment extends Fragment implements ISettings{
 	        return this.getView(position, convertView, parent);
 	    }
 	}
-	
-	
+		
 	public class SpinnerCityAdapter extends ArrayAdapter<CityEntity>{
 		private List<CityEntity> coItems;
 		
@@ -243,7 +254,8 @@ public class SettingsFragment extends Fragment implements ISettings{
 			SpinnerCityAdapter loAdapter = new SpinnerCityAdapter(this.getActivity().getBaseContext(),R.layout.spinner_item, pData);
 			loSpinner.setAdapter(loAdapter);	
 			this.coCityAdapter = loAdapter;
-			this.coController.loadSettings();			
+			this.coController.loadSettings();	
+			this.hideProgressDialog();	
 		}
 		catch(Exception ex){
 			
@@ -265,6 +277,7 @@ public class SettingsFragment extends Fragment implements ISettings{
 	}
 	
 	public void SaveSettings(){
+		//save the options included filters
 		this.coController.saveSettings();
 		getLanguageValue();
 	}
@@ -418,8 +431,16 @@ public class SettingsFragment extends Fragment implements ISettings{
                 return liPosition;
             }    
         }
-
         return 0;
     }
-	
+    
+	@Override
+	public void showProgressDialog(){
+		this.coProgressDialog.show();
+	}
+
+	@Override
+	public void hideProgressDialog(){
+		this.coProgressDialog.dismiss();
+	}
 }

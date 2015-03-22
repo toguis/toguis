@@ -60,6 +60,7 @@ public class GetDirectionsAsyncTask extends AsyncTask<Map<String, String>, Objec
         Map<String, String> paramMap = params[0];
         try
         {
+        	//get current position y call google api to get all data
             LatLng loFromPosition = new LatLng(Double.valueOf(paramMap.get(USER_CURRENT_LAT)) , Double.valueOf(paramMap.get(USER_CURRENT_LONG)));
             LatLng loToPosition = new LatLng(Double.valueOf(paramMap.get(DESTINATION_LAT)) , Double.valueOf(paramMap.get(DESTINATION_LONG)));
             GMapV2Direction loMapService = new GMapV2Direction();

@@ -39,4 +39,6 @@ public interface ISettings {
 	void setDistanceValue(int pValue);
 	void setLanguageValue(int pValue);
 	void setCityValue(int pValue);
+	void showProgressDialog();
+	void hideProgressDialog();
 }

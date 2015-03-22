@@ -135,6 +135,8 @@ public class NavigationActivity extends FragmentActivity implements
        
 	@Override
 	public void handleGetDirectionsResult(ArrayList<DirectionsEntity> pDirectionPoints) {
+		
+		//draw ad trace all lines with obtained google data
 		this.hideProgressDialog();
 		this.coDirectionPoints = pDirectionPoints;
 		PolylineOptions rectLine = new PolylineOptions().width(10).color(Color.RED);
@@ -186,6 +188,7 @@ public class NavigationActivity extends FragmentActivity implements
 	@SuppressWarnings("unchecked")
 	public void findDirections(double fromPositionDoubleLat, double fromPositionDoubleLong, double toPositionDoubleLat, double toPositionDoubleLong, String mode, String langIsoId)
 	{	      	
+		//get request to get all direction data
 		Map<String, String> loMap = new HashMap<String, String>();
 		loMap.put(GetDirectionsAsyncTask.USER_CURRENT_LAT, String.valueOf(fromPositionDoubleLat));
 		loMap.put(GetDirectionsAsyncTask.USER_CURRENT_LONG, String.valueOf(fromPositionDoubleLong));

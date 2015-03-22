@@ -37,6 +37,7 @@ public class GMapV2Direction {
     public GMapV2Direction() { }
 
     public Document getDocument(LatLng start, LatLng end, String mode,String language ) {
+    	//query the web service to get directions data
         String url = "http://maps.googleapis.com/maps/api/directions/xml?" 
                 + "origin=" + start.latitude + "," + start.longitude  
                 + "&destination=" + end.latitude + "," + end.longitude + "&language=" + language
@@ -118,7 +119,7 @@ public class GMapV2Direction {
         NodeList nl1, nl2, nl3;
         
         ArrayList<DirectionsEntity> loListDirections = new  ArrayList<DirectionsEntity>();
-
+        //format the data before to return it to the activity
         nl1 = doc.getElementsByTagName("step");
         if (nl1.getLength() > 0) {
             for (int i = 0; i < nl1.getLength(); i++) {
@@ -183,6 +184,8 @@ public class GMapV2Direction {
     }
 
     private ArrayList<LatLng> decodePoly(String encoded) {
+    	
+    	//help to decode the data of the polyline
         ArrayList<LatLng> poly = new ArrayList<LatLng>();
         int index = 0, len = encoded.length();
         int lat = 0, lng = 0;
