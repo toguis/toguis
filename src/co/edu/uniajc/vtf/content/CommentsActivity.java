@@ -49,7 +49,7 @@ public class CommentsActivity extends Activity implements IComments{
 		final ActionBar coActionBar = getActionBar();
 		coActionBar.setDisplayHomeAsUpEnabled(true);	
 		this.loadData();
-	}
+	} 
 	
 	@Override
 	public void loadData(){

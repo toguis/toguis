@@ -143,7 +143,7 @@ public class SettingsFragment extends Fragment implements ISettings{
     	});
     	this.coController = new SettingsController(this);
     	this.coController.getLanguagesAsync();	
-    	this.showProgressDialog();	
+    	this.showProgressDialog();	 
     }
      
 	public void startLogout()
