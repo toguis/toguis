@@ -98,6 +98,8 @@
     <string name="comments_btn_send_comment_text">Enviar</string>
     <string name="comments_txt_comment_hint">Escribe un comentario</string>
     <string name="comments_message_empty">Debes escribir un comentario</string>
+    <string name="comments_message_succesful">Mensage enviado</string>
+    <string name="comments_message_unsuccesful">Ha ocurrido un error al enviar el mensage</string>    
     <string name="title_activity_navigation">Mapa de navegación</string>
     <string name="title_activity_navigation_route">Ruta de navegación</string>
     <string name="title_activity_poi_image">PoiImageActivity</string>

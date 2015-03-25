@@ -52,6 +52,9 @@ public class CommentsController implements ModelListener{
 			this.coView.blankFields();
 			this.coView.loadData();
 		}
+		else{
+			this.coView.UnsuccessfulInsert();
+		}
 	}
 	
 	public void navigateHome(MenuItem item){

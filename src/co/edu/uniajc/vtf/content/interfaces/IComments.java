@@ -22,4 +22,5 @@ public interface IComments {
 	void loadData();
 	void blankFields();
 	int getPoiId();
+	void UnsuccessfulInsert();
 }

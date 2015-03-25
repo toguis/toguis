@@ -153,7 +153,8 @@ public class CommentsActivity extends Activity implements IComments{
 			loComment.setComment(lsComment);
 			loComment.setUserName(lsUserName);
 			loComment.setPoiId(this.ciPoiId);
-			this.coController.setCommentAsync(loComment);			
+			this.coController.setCommentAsync(loComment);	
+			this.showProgressDialog();
 		}
 		else{
 	      	ResourcesManager loResource = new ResourcesManager(this); 
@@ -161,9 +162,13 @@ public class CommentsActivity extends Activity implements IComments{
 		}
 	}
 	
+	@Override
 	public void blankFields(){
 		EditText loInsertComment = (EditText)this.findViewById(R.id.txtInsertComment);		
 		loInsertComment.setText("");
+		this.hideProgressDialog();
+		ResourcesManager loResource = new ResourcesManager(this); 
+		Toast.makeText(this.getApplicationContext(), loResource.getStringResource(R.string.comments_message_succesful), Toast.LENGTH_LONG).show();  
 	}
 	
 	@Override
@@ -171,6 +176,12 @@ public class CommentsActivity extends Activity implements IComments{
 		this.coController.navigateHome(item);
 		return super.onOptionsItemSelected(item);
 	}	
+	
+	@Override
+	public void UnsuccessfulInsert() {
+		ResourcesManager loResource = new ResourcesManager(this); 
+		Toast.makeText(this.getApplicationContext(), loResource.getStringResource(R.string.comments_message_unsuccesful), Toast.LENGTH_LONG).show();  			
+	}
 	
 	@Override
 	public int getPoiId(){
@@ -190,4 +201,5 @@ public class CommentsActivity extends Activity implements IComments{
 		this.getPackageManager().setComponentEnabledSetting(loComponent, PackageManager.COMPONENT_ENABLED_STATE_ENABLED  , PackageManager.DONT_KILL_APP);	
 		super.onResume();
 	}
+
 }
